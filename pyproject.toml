@@ -73,6 +73,9 @@ Issues = "https://github.com/turkic-nlp/turkicnlp/issues"
 [tool.setuptools.packages.find]
 include = ["turkicnlp*"]
 
+[tool.setuptools]
+include-package-data = true
+
 [tool.pytest.ini_options]
 testpaths = ["turkicnlp/tests"]
 markers = [

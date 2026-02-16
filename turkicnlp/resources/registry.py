@@ -82,7 +82,9 @@ class ModelRegistry:
             with open(catalog_path) as f:
                 cls._catalog = json.load(f)
         else:
-            cls._catalog = cls._fetch_remote_catalog()
+            cls._catalog = cls._load_packaged_catalog()
+            if cls._catalog is None:
+                cls._catalog = cls._fetch_remote_catalog()
         return cls._catalog
 
     @classmethod
@@ -90,11 +92,26 @@ class ModelRegistry:
         """Download catalog from remote."""
         import urllib.request
 
+        catalog_url = os.environ.get("TURKICNLP_CATALOG_URL", cls.CATALOG_URL)
         catalog_path = cls.default_dir() / "catalog.json"
         catalog_path.parent.mkdir(parents=True, exist_ok=True)
-        urllib.request.urlretrieve(cls.CATALOG_URL, catalog_path)
+        urllib.request.urlretrieve(catalog_url, catalog_path)
         with open(catalog_path) as f:
             return json.load(f)
+
+    @classmethod
+    def _load_packaged_catalog(cls) -> Optional[dict]:
+        """Load catalog bundled in the package, if present."""
+        try:
+            from importlib import resources
+        except ImportError:
+            return None
+
+        try:
+            with resources.open_text("turkicnlp.resources", "catalog.json") as f:
+                return json.load(f)
+        except (FileNotFoundError, ModuleNotFoundError):
+            return None
 
 
 class ProcessorRegistry:

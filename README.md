@@ -174,6 +174,15 @@ The table below shows all supported languages with their available scripts and p
 | **Beta** | Reasonable coverage, some gaps | Turkmen, Bashkir, Uyghur, Crimean Tatar, Chuvash |
 | **Prototype** | Limited coverage, experimental | Gagauz, Sakha, Karakalpak, Nogai, Kumyk, Karachay-Balkar, Altai, Tuvan, Khakas |
 
+### Model Catalog and Apertium Downloads
+
+TurkicNLP uses a model catalog to define download sources per language/script/processor. The catalog lives in:
+
+- `turkicnlp/resources/catalog.json` (packaged default)
+- Remote override: `ModelRegistry.CATALOG_URL` (or `TURKICNLP_CATALOG_URL`)
+
+For each language, the catalog stores the Apertium source repo and the expected FST script. When `turkicnlp.download()` is called, it reads the catalog and downloads precompiled `.hfst` binaries from the `url` fields. If a language has no URL configured, download will fail with a clear error until the catalog is populated with hosted binaries (for example, a `turkic-nlp/apertium-data` releases repository).
+
 ## Architecture
 
 TurkicNLP follows Stanza's modular pipeline design:
