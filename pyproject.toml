@@ -66,7 +66,7 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/turkic-nlp/turkicnlp"
-Documentation = "https://turkicnlp.readthedocs.io"
+Documentation = "https://turkic-nlp.github.io/toolkit"
 Repository = "https://github.com/turkic-nlp/turkicnlp"
 Issues = "https://github.com/turkic-nlp/turkicnlp/issues"
 

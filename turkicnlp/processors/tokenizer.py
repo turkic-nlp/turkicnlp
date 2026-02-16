@@ -45,7 +45,85 @@ class RegexTokenizer(Processor):
 
     def process(self, doc: Document) -> Document:
         """Split text into sentences and tokens."""
-        raise NotImplementedError("RegexTokenizer.process not yet implemented.")
+        text = doc.text
+
+        raw_sents = self.SENT_SPLIT.split(text)
+        raw_sents = [s.strip() for s in raw_sents if s.strip()]
+
+        char_offset = 0
+        for sent_text in raw_sents:
+            sentence = Sentence(text=sent_text)
+
+            word_id = 1
+            for match in self.TOKEN_SPLIT.finditer(sent_text):
+                raw_token = match.group()
+                token_start = char_offset + match.start()
+
+                punct_match = self.PUNCT_DETACH.match(raw_token)
+                if punct_match and punct_match.group(1):
+                    word_text = punct_match.group(1)
+                    word = Word(
+                        id=word_id,
+                        text=word_text,
+                        start_char=token_start,
+                        end_char=token_start + len(word_text),
+                    )
+                    token = Token(
+                        id=(word_id,),
+                        text=word_text,
+                        words=[word],
+                        start_char=token_start,
+                        end_char=token_start + len(word_text),
+                    )
+                    sentence.tokens.append(token)
+                    sentence.words.append(word)
+                    word_id += 1
+
+                    punct_text = punct_match.group(2)
+                    punct_start = token_start + len(word_text)
+                    for ch in punct_text:
+                        pw = Word(
+                            id=word_id,
+                            text=ch,
+                            upos="PUNCT",
+                            lemma=ch,
+                            start_char=punct_start,
+                            end_char=punct_start + 1,
+                        )
+                        pt = Token(
+                            id=(word_id,),
+                            text=ch,
+                            words=[pw],
+                            start_char=punct_start,
+                            end_char=punct_start + 1,
+                        )
+                        sentence.tokens.append(pt)
+                        sentence.words.append(pw)
+                        word_id += 1
+                        punct_start += 1
+                else:
+                    word = Word(
+                        id=word_id,
+                        text=raw_token,
+                        start_char=token_start,
+                        end_char=token_start + len(raw_token),
+                    )
+                    token = Token(
+                        id=(word_id,),
+                        text=raw_token,
+                        words=[word],
+                        start_char=token_start,
+                        end_char=token_start + len(raw_token),
+                    )
+                    sentence.tokens.append(token)
+                    sentence.words.append(word)
+                    word_id += 1
+
+            doc.sentences.append(sentence)
+            char_offset += len(sent_text) + 1
+
+        doc._processor_log.append("tokenize:regex")
+        return doc
 
 
 class NeuralTokenizer(Processor):
