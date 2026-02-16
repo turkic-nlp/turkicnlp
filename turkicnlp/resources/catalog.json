@@ -1,0 +1,569 @@
+{
+  "tur": {
+    "name": "Turkish",
+    "scripts": {
+      "available": [
+        "Latn"
+      ],
+      "primary": "Latn"
+    },
+    "processors": {
+      "Latn": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/tur.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-tur",
+              "script": "Latn",
+              "quality": "production",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "153efa3548de8a2116465807bd8d07232979428043f2e648662184a9ddd295d1"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "kaz": {
+    "name": "Kazakh",
+    "scripts": {
+      "available": [
+        "Cyrl",
+        "Latn"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/kaz.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-kaz",
+              "script": "Cyrl",
+              "quality": "production",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "c5f8cacbf25a4393c1fb3f677aab3856f2ebe30ed34c9512be575e88e64f1c5a"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "tat": {
+    "name": "Tatar",
+    "scripts": {
+      "available": [
+        "Cyrl",
+        "Latn"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/tat.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-tat",
+              "script": "Cyrl",
+              "quality": "production",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "618ddda4d26e84b6f9a4667cb1fbd071e4f7a19c98bef108d41718d821133247"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "aze": {
+    "name": "Azerbaijani",
+    "scripts": {
+      "available": [
+        "Latn",
+        "Cyrl"
+      ],
+      "primary": "Latn"
+    },
+    "processors": {
+      "Latn": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/aze.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-aze",
+              "script": "Latn",
+              "quality": "stable",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "138737491a444e0cb82eb92b2b8a8844bc1a04a27bd38265537bff851ba0f3f7"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "kir": {
+    "name": "Kyrgyz",
+    "scripts": {
+      "available": [
+        "Cyrl"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/kir.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-kir",
+              "script": "Cyrl",
+              "quality": "stable",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "538e440fe99c41c2979c60df15b230858552cd094410ca46a8cb6fcfd050bb40"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "uzb": {
+    "name": "Uzbek",
+    "scripts": {
+      "available": [
+        "Latn",
+        "Cyrl"
+      ],
+      "primary": "Latn"
+    },
+    "processors": {
+      "Latn": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/uzb.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-uzb",
+              "script": "Latn",
+              "quality": "stable",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "28714d88d5f3aba6d1477f41b332fcc58065815322ee0f1ea605bdeddb8dce04"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "tuk": {
+    "name": "Turkmen",
+    "scripts": {
+      "available": [
+        "Latn"
+      ],
+      "primary": "Latn"
+    },
+    "processors": {
+      "Latn": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/tuk.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-tuk",
+              "script": "Latn",
+              "quality": "beta",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "2a77bffdca377b113b85cd3c20d8496eb5344e3d1815ade5eeb68c230989aff3"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "bak": {
+    "name": "Bashkir",
+    "scripts": {
+      "available": [
+        "Cyrl"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/bak.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-bak",
+              "script": "Cyrl",
+              "quality": "beta",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "ec20fff87e0a455a0115a92e7360781036d517a08c5c0c6af7731d23bec1928a"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "uig": {
+    "name": "Uyghur",
+    "scripts": {
+      "available": [
+        "Arab",
+        "Latn"
+      ],
+      "primary": "Arab"
+    },
+    "processors": {
+      "Arab": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/uig.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-uig",
+              "script": "Arab",
+              "quality": "beta",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "88e14dacbba5f17114c386cebdaed88888fd653ccd5faa0f9e20819eaec79758"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "crh": {
+    "name": "Crimean Tatar",
+    "scripts": {
+      "available": [
+        "Latn",
+        "Cyrl"
+      ],
+      "primary": "Latn"
+    },
+    "processors": {
+      "Latn": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/crh.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-crh",
+              "script": "Latn",
+              "quality": "beta",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "ddca48622d5c6461ec48d2230cf1e425b82173000ecf09eb0f4769d7fbf6a027"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "chv": {
+    "name": "Chuvash",
+    "scripts": {
+      "available": [
+        "Cyrl"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/chv.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-chv",
+              "script": "Cyrl",
+              "quality": "beta",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "8352e923c3dae963598af66715cf39b05b793599ec8c4e45269d0b4ecdbb0b76"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "gag": {
+    "name": "Gagauz",
+    "scripts": {
+      "available": [
+        "Latn"
+      ],
+      "primary": "Latn"
+    },
+    "processors": {
+      "Latn": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/gag.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-gag",
+              "script": "Latn",
+              "quality": "prototype",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "a7c594d236e7320010aa20d31bb0b4231d78866761a4700adfc493908146de62"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "sah": {
+    "name": "Sakha (Yakut)",
+    "scripts": {
+      "available": [
+        "Cyrl"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/sah.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-sah",
+              "script": "Cyrl",
+              "quality": "prototype",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "808c4951b7e625916770f02c4fbf79f07abbf1f56ce5468028f3caf6f09fbb1a"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "kaa": {
+    "name": "Karakalpak",
+    "scripts": {
+      "available": [
+        "Latn",
+        "Cyrl"
+      ],
+      "primary": "Latn"
+    },
+    "processors": {
+      "Latn": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/kaa.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-kaa",
+              "script": "Latn",
+              "quality": "prototype",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "5afd02bba2128c833bfbb3e3f334af87d1911ba2c4881ca67a8ab1410edf2b9b"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "nog": {
+    "name": "Nogai",
+    "scripts": {
+      "available": [
+        "Cyrl"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/nog.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-nog",
+              "script": "Cyrl",
+              "quality": "prototype",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "c424e08590483fe928a68b3f3e96f5ecc9f752f17e7f25d9ad34f9368dd2c844"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "kum": {
+    "name": "Kumyk",
+    "scripts": {
+      "available": [
+        "Cyrl"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/kum.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-kum",
+              "script": "Cyrl",
+              "quality": "prototype",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "6718abaef7a0e8eda6deb5ecc704de1bb7ddf59906a56072443c2d4866d97e39"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "krc": {
+    "name": "Karachay-Balkar",
+    "scripts": {
+      "available": [
+        "Cyrl"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/krc.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-krc",
+              "script": "Cyrl",
+              "quality": "prototype",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "cabc0c0e94365325e1b3eafa1469f5e2040a1d6b18531c270751177da66e2ee4"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "alt": {
+    "name": "Altai",
+    "scripts": {
+      "available": [
+        "Cyrl"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/alt.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-alt",
+              "script": "Cyrl",
+              "quality": "prototype",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "74d237a4faa884aac39dc27c73dca79f13938347f25cfcaac2d07c8faf95097a"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "tyv": {
+    "name": "Tuvan",
+    "scripts": {
+      "available": [
+        "Cyrl"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/tyv.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-tyv",
+              "script": "Cyrl",
+              "quality": "prototype",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "8412e80fcf48b00f5bc9a4aae2c350cd004696be519d7ce89800948d010108fb"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  },
+  "kjh": {
+    "name": "Khakas",
+    "scripts": {
+      "available": [
+        "Cyrl"
+      ],
+      "primary": "Cyrl"
+    },
+    "processors": {
+      "Cyrl": {
+        "morph": {
+          "backends": {
+            "apertium": {
+              "type": "apertium_fst",
+              "url": "https://github.com/turkic-nlp/apertium-data/releases/download/v1.0.0/kjh.apertium.fst.zip",
+              "license": "GPL-3.0-or-later",
+              "source": "https://github.com/apertium/apertium-kjh",
+              "script": "Cyrl",
+              "quality": "prototype",
+              "notes": "FST binaries must be provided via catalog URLs.",
+              "sha256": "ade70e8d3f273a0dfffd5faef84b5285c78032acec703823c57db75caac4e9ed"
+            }
+          },
+          "default": "apertium"
+        }
+      }
+    }
+  }
+}
