@@ -1,0 +1,2439 @@
+{
+  "rules": [
+    {
+      "surface": "alm\u0131\u015ft\u0131r",
+      "split": [
+        "alm\u0131\u015f",
+        "t\u0131r"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "alm\u0131\u015f\u0131d\u0131",
+      "split": [
+        "alm\u0131\u015f",
+        "\u0131d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "andadur",
+      "split": [
+        "anda",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "andaki",
+      "split": [
+        "anda",
+        "ki"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "anu\u00f1dur",
+      "split": [
+        "anu\u00f1",
+        "dur"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "anu\u00f1i\u00e7\u00fcn",
+      "split": [
+        "anu\u00f1",
+        "i\u00e7\u00fcn"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "anu\u00f1\u00e7\u00fcn",
+      "split": [
+        "anu\u00f1",
+        "\u00e7\u00fcn"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "aras\u0131ndad\u0131r",
+      "split": [
+        "aras\u0131nda",
+        "d\u0131r"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "a\u02bfl\u00e2dur",
+      "split": [
+        "a\u02bfl\u00e2",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "a\u1e25medd\u00fcr",
+      "split": [
+        "a\u1e25med",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ba\u1e25s\u0331dir",
+      "split": [
+        "ba\u1e25s\u0331",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ba\u1e33\u0131yyet\u00fc\u2019s-s\u00fcy\u00fbf",
+      "split": [
+        "ba\u1e33\u0131yyet",
+        "\u00fc\u2019s-s\u00fcy\u00fbf"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "bed\u00eed\u00e2rdur",
+      "split": [
+        "bed\u00eed\u00e2r",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "bed\u00ee\u02bf\u00e2dur",
+      "split": [
+        "bed\u00ee\u02bf\u00e2",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ben\u00fcm\u00e7\u00fcn",
+      "split": [
+        "ben\u00fcm",
+        "\u00e7\u00fcn"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "berkidi",
+      "split": [
+        "berk",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "beyne\u2019l-en\u00e2m",
+      "split": [
+        "beyn",
+        "e\u2019l-en\u00e2m"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "beyne\u2019l-\u00fcmer\u00e2",
+      "split": [
+        "beyn",
+        "e\u2019l-\u00fcmer\u00e2"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "beyt\u00fc\u2019l-\u02bfizze",
+      "split": [
+        "beyt",
+        "\u00fc\u2019l-\u02bfizze"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "be\u1e33\u00e2dur",
+      "split": [
+        "be\u1e33\u00e2",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "bilmezidi",
+      "split": [
+        "bilmez",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "binerleridi",
+      "split": [
+        "binerler",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "budur",
+      "split": [
+        "bu",
+        "dur"
+      ],
+      "count": 9
+    },
+    {
+      "surface": "bug\u00fcnlerdi",
+      "split": [
+        "bug\u00fcnler",
+        "di"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "bunlaru\u00f1dur",
+      "split": [
+        "bunlaru\u00f1",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "bunlaru\u00f1\u0131la",
+      "split": [
+        "bunlaru\u00f1",
+        "\u0131la"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "b\u00e2\u02bfis\u0331dend\u00fcr",
+      "split": [
+        "b\u00e2\u02bfis\u0331den",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "b\u00ee-mis\u0331\u00e2ld\u00fcr",
+      "split": [
+        "b\u00ee-mis\u0331\u00e2l",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "b\u00ee-mu\u02bf\u00e2dild\u00fcr",
+      "split": [
+        "b\u00ee-mu\u02bf\u00e2dil",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "b\u00ee-\u00e7\u00e2re",
+      "split": [
+        "b\u00ee",
+        "\u00e7\u00e2re"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "b\u00fcy\u00fckidi",
+      "split": [
+        "b\u00fcy\u00fck",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "camidir",
+      "split": [
+        "cami",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "cebeldend\u00fcr",
+      "split": [
+        "cebelden",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "cennet-mis\u0331\u00e2l",
+      "split": [
+        "cennet",
+        "-mis\u0331\u00e2l"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "cev\u00e2nibdeki",
+      "split": [
+        "cev\u00e2nibde",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "cez\u00eered\u00fcr",
+      "split": [
+        "cez\u00eere",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "c\u00e2nibdeki",
+      "split": [
+        "c\u00e2nibde",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "c\u00e2n\u0131d\u0131",
+      "split": [
+        "c\u00e2n",
+        "\u0131d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "c\u00fcv\u00e2nlardur",
+      "split": [
+        "c\u00fcv\u00e2nlar",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "def\u00eendir",
+      "split": [
+        "def\u00een",
+        "dir"
+      ],
+      "count": 3
+    },
+    {
+      "surface": "degildir",
+      "split": [
+        "degil",
+        "dir"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "degild\u00fcr",
+      "split": [
+        "degil",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "del\u00e2yild\u00fcr",
+      "split": [
+        "del\u00e2yil",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "demi\u015fdi",
+      "split": [
+        "demi\u015f",
+        "di"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "devletd\u00fcr",
+      "split": [
+        "devlet",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "dev\u00e2dur",
+      "split": [
+        "dev\u00e2",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "de\u011fillerdir",
+      "split": [
+        "de\u011filler",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "dil-d\u00e2deydi",
+      "split": [
+        "dil-d\u00e2de",
+        "ydi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "dilerse\u00f1",
+      "split": [
+        "diler",
+        "se\u00f1"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "dil\u00e2",
+      "split": [
+        "dil",
+        "\u00e2"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "dinilmi\u015fd\u00fcr",
+      "split": [
+        "dinilmi\u015f",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "dirleridi",
+      "split": [
+        "dirler",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "dostlard\u0131",
+      "split": [
+        "dostlar",
+        "d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "d\u00e2m\u00e2d\u0131d\u0131r",
+      "split": [
+        "d\u00e2m\u00e2d\u0131",
+        "d\u0131r"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "d\u00e2ru\u2019l-\u1e33urr\u00e2",
+      "split": [
+        "d\u00e2r",
+        "u\u2019l-\u1e33urr\u00e2"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "d\u00e2r\u00fc\u2019l-vi\u1e63\u00e2l",
+      "split": [
+        "d\u00e2r",
+        "\u00fc\u2019l-vi\u1e63\u00e2l"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "d\u00e2r\u00fc\u2019l-\u1e2bil\u00e2feti\u2019l-\u02bfaliyyede",
+      "split": [
+        "d\u00e2r",
+        "\u00fc\u2019l-\u1e2bil\u00e2fet",
+        "i\u2019l-\u02bfaliyyede"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "d\u00fc\u015fmend\u00fcr",
+      "split": [
+        "d\u00fc\u015fmen",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ederlerdi",
+      "split": [
+        "ederler",
+        "di"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "efendid\u00fcr",
+      "split": [
+        "efendi",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "efk\u00e2r\u0131d\u0131r",
+      "split": [
+        "efk\u00e2r\u0131",
+        "d\u0131r"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "egrid\u00fcr",
+      "split": [
+        "egri",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "elindeki",
+      "split": [
+        "elinde",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "enderdi",
+      "split": [
+        "ender",
+        "di"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "er\u1e6du\u0121r\u0131ldur",
+      "split": [
+        "er\u1e6du\u0121r\u0131l",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "evindeki",
+      "split": [
+        "evinde",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "evl\u00e2d\u0131ndandur",
+      "split": [
+        "evl\u00e2d\u0131ndan",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "e\u015f\u02bf\u00e2r\u0131ndandur",
+      "split": [
+        "e\u015f\u02bf\u00e2r\u0131ndan",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "fed\u00e2dur",
+      "split": [
+        "fed\u00e2",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "fen\u00e2dur",
+      "split": [
+        "fen\u00e2dur",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "fersa\u1e2bdur",
+      "split": [
+        "fersa\u1e2bdur",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "fur\u1e63atdur",
+      "split": [
+        "fur\u1e63at",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "f\u00e2\u017c\u0131llar\u0131ndandur",
+      "split": [
+        "f\u00e2\u017c\u0131llar\u0131ndan",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "f\u00ee-\u1e95i\u2019l-\u1e33a\u02bfde",
+      "split": [
+        "f\u00ee-",
+        "\u1e95i\u2019l-\u1e33a\u02bfde"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "f\u0131r\u1e33as\u0131ndandur",
+      "split": [
+        "f\u0131r\u1e33as\u0131ndan",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "gecesidir",
+      "split": [
+        "gecesi",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "gel\u00fcrse",
+      "split": [
+        "gel\u00fcr",
+        "se"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "gerekd\u00fcr",
+      "split": [
+        "gerek",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "gevherd\u00fcr",
+      "split": [
+        "gevher",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "giderdi",
+      "split": [
+        "gider",
+        "di"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "giderken",
+      "split": [
+        "gider",
+        "ken"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "girmekd\u00fcr",
+      "split": [
+        "girmek",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "gir\u00e7ekd\u00fcr",
+      "split": [
+        "gir\u00e7ek",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "gitmi\u015fidi",
+      "split": [
+        "gitmi\u015f",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "g\u00f6rinmi\u015fd\u00fcr",
+      "split": [
+        "g\u00f6rinmi\u015f",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "g\u00f6t\u00fcrmektir",
+      "split": [
+        "g\u00f6t\u00fcrmek",
+        "tir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "g\u00f6zleriyle",
+      "split": [
+        "g\u00f6zleri",
+        "yle"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ibd\u00e2\u02bf\u0131ndandur",
+      "split": [
+        "ibd\u00e2\u02bf\u0131ndan",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "iderken",
+      "split": [
+        "ider",
+        "ken"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "iderleridi",
+      "split": [
+        "iderler",
+        "idi"
+      ],
+      "count": 4
+    },
+    {
+      "surface": "iderse",
+      "split": [
+        "ider",
+        "se"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "idr\u00e2kd\u00fcr",
+      "split": [
+        "idr\u00e2k",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "iled\u00fcr",
+      "split": [
+        "ile",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "incidir",
+      "split": [
+        "inci",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "incitmezdi",
+      "split": [
+        "incitmez",
+        "di"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "inerleridi",
+      "split": [
+        "inerler",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "inmi\u015fd\u00fcr",
+      "split": [
+        "inmi\u015f",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "itmegi\u00e7\u00fcn",
+      "split": [
+        "itmeg",
+        "i\u00e7\u00fcn"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "itmi\u015fd\u00fcr",
+      "split": [
+        "itmi\u015f",
+        "d\u00fcr"
+      ],
+      "count": 3
+    },
+    {
+      "surface": "i\u00e7d\u00fcmidi",
+      "split": [
+        "i\u00e7d\u00fcm",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "i\u00e7erideki",
+      "split": [
+        "i\u00e7eride",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "i\u00e7eyid\u00fcm",
+      "split": [
+        "i\u00e7e",
+        "yid\u00fcm"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "i\u00e7indeki",
+      "split": [
+        "i\u00e7inde",
+        "ki"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "i\u015fitmezleridi",
+      "split": [
+        "i\u015fitmezler",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "i\u015fitmezse\u00f1\u00fcz",
+      "split": [
+        "i\u015fitmez",
+        "se\u00f1\u00fcz"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "kazas\u0131yla",
+      "split": [
+        "kazas\u0131",
+        "yla"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "kem\u00e2l\u00e2t-n\u00fcm\u00fbddu",
+      "split": [
+        "kem\u00e2l\u00e2t",
+        "n\u00fcm\u00fbd",
+        "di"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ken\u00e2r\u0131ndaki",
+      "split": [
+        "ken\u00e2r\u0131ndaki",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "kimd\u00fcr",
+      "split": [
+        "kim",
+        "d\u00fcr"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "kimesned\u00fcr",
+      "split": [
+        "kimesne",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ki\u015fid\u00fcr",
+      "split": [
+        "ki\u015fi",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ki\u015fiydi",
+      "split": [
+        "ki\u015fi",
+        "ydi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ki\u015fiyidi",
+      "split": [
+        "ki\u015fi",
+        "yidi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "konb\u00e2nyadandur",
+      "split": [
+        "konb\u00e2nyadan",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "k\u00ee\u1e33y\u00e2n\u00fbsdur",
+      "split": [
+        "k\u00ee\u1e33y\u00e2n\u00fbs",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "k\u00fbfet\u00fc\u2019s-\u1e63u\u0121r\u00e2",
+      "split": [
+        "k\u00fbfet",
+        "\u00fc\u2019s-\u1e63u\u0121r\u00e2"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "k\u00fbhs\u00e2rdur",
+      "split": [
+        "k\u00fbhs\u00e2r",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "k\u00fcmeslerimizdeki",
+      "split": [
+        "k\u00fcmeslerimizde",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "k\u00fcnh\u00fc\u2019l-a\u1e2bb\u00e2run",
+      "split": [
+        "k\u00fcnh",
+        "\u00fc\u2019l-a\u1e2bb\u00e2ru\u00f1"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "k\u0131vran\u0131rken",
+      "split": [
+        "k\u0131vran\u0131r",
+        "ken"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "lis\u00e2nd\u0131r",
+      "split": [
+        "lis\u00e2n",
+        "d\u0131r"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "man\u1e63\u00fbrdaki",
+      "split": [
+        "man\u1e63\u00fbrda",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ma\u0121ribded\u00fcr",
+      "split": [
+        "ma\u0121ribde",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ma\u02bfn\u00e2s\u0131nadur",
+      "split": [
+        "ma\u02bfn\u00e2s\u0131na",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ma\u02bfr\u00fbfdur",
+      "split": [
+        "ma\u02bfr\u00fbf",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ma\u1e2b\u1e63\u00fb\u1e63dur",
+      "split": [
+        "ma\u1e2b\u1e63\u00fb\u1e63",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ma\u1e33disdeki",
+      "split": [
+        "ma\u1e33disde",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ma\u1e33\u00fblesiydi",
+      "split": [
+        "ma\u1e33\u00fblesi",
+        "ydi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "medf\u00fbndur",
+      "split": [
+        "medf\u00fbn",
+        "dur"
+      ],
+      "count": 3
+    },
+    {
+      "surface": "memleketindend\u00fcr",
+      "split": [
+        "memleketinden",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "memleketlerindeki",
+      "split": [
+        "memleketlerinde",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "men\u1e33\u00fbld\u00fcr",
+      "split": [
+        "men\u1e33\u00fbl",
+        "d\u00fcr"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "merb\u00fb\u1e6ddur",
+      "split": [
+        "merb\u00fb\u1e6d",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "merk\u00fbzdur",
+      "split": [
+        "merk\u00fbz",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "merv\u00eed\u00fcr",
+      "split": [
+        "merv\u00ee",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "mesm\u00fb\u02bfdur",
+      "split": [
+        "mesm\u00fb\u02bf",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "metr\u00fbkdur",
+      "split": [
+        "metr\u00fbk",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "mihterid\u00fcr",
+      "split": [
+        "mihteri",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "munta\u1e93\u0131rlard\u0131",
+      "split": [
+        "munta\u1e93\u0131rlar",
+        "d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "mu\u02bfta\u1e33d\u0131r",
+      "split": [
+        "mu\u02bfta\u1e33",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "mu\u1e25errerdir",
+      "split": [
+        "mu\u1e25errer",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "mu\u1e25\u00e2\u1e63aras\u0131ndaki",
+      "split": [
+        "mu\u1e25\u00e2\u1e63aras\u0131nda",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "mu\u1e33addem\u00e2t\u0131dur",
+      "split": [
+        "mu\u1e33addem\u00e2t\u0131",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "mu\u1e33arrerd\u00fcr",
+      "split": [
+        "mu\u1e33arrer",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "mu\u1e33ted\u00e2s\u0131dur",
+      "split": [
+        "mu\u1e33ted\u00e2s\u0131",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "m\u00fcb\u00e2reked\u00fcr",
+      "split": [
+        "m\u00fcb\u00e2reke",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "m\u00fcb\u00e2\u015feretlerid\u00fcr",
+      "split": [
+        "m\u00fcb\u00e2\u015feretleri",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "m\u00fcslim\u00eendend\u00fcr",
+      "split": [
+        "m\u00fcslim\u00eenden",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "m\u00fctek\u00e2s\u0331ird\u00fcr",
+      "split": [
+        "m\u00fctek\u00e2s\u0331ir",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "m\u00fctev\u00e2r\u00eedir",
+      "split": [
+        "m\u00fctev\u00e2r\u00ee",
+        "dir"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "m\u00fcttefi\u1e33d\u00fcr",
+      "split": [
+        "m\u00fcttefi\u1e33",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "neferdir",
+      "split": [
+        "nefer",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "nefsd\u00fcr",
+      "split": [
+        "nefs",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "nefsi-y-i\u00e7\u00fcn",
+      "split": [
+        "nefsi",
+        "-y-i\u00e7\u00fcn"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "neslindend\u00fcr",
+      "split": [
+        "neslinden",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "nev\u02bfindendir",
+      "split": [
+        "nev\u02bfinden",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "neyki",
+      "split": [
+        "ney",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "n\u00e2dird\u00fcr",
+      "split": [
+        "n\u00e2dir",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "n\u00e2m\u0131ndaki",
+      "split": [
+        "n\u00e2m\u0131nda",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "n\u00e2\u02beil\u00fc\u2019l-me\u02bem\u00fbl",
+      "split": [
+        "n\u00e2\u02beil",
+        "\u00fc\u2019l-me\u02bem\u00fbl"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "n\u0131\u1e63f\u00fc\u2019l-leylden",
+      "split": [
+        "n\u0131\u1e63f",
+        "\u00fc\u2019l-leylden"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "odur",
+      "split": [
+        "odur",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "olaca\u1e33dur",
+      "split": [
+        "olaca\u1e33",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "olaca\u1e33t\u0131r",
+      "split": [
+        "olaca\u1e33",
+        "t\u0131r"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "oldur",
+      "split": [
+        "ol",
+        "dur"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "oldu\u0121\u0131y\u00e7\u00fcn",
+      "split": [
+        "oldu\u0121\u0131",
+        "y\u00e7\u00fcn"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "olmazd\u0131",
+      "split": [
+        "olmaz",
+        "d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "olmaz\u0131d\u0131",
+      "split": [
+        "olmaz",
+        "\u0131d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "olmu\u015fidi",
+      "split": [
+        "olmu\u015f",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "olm\u0131\u015flar\u0131d\u0131",
+      "split": [
+        "olm\u0131\u015flar",
+        "\u0131d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "olm\u0131\u015f\u0131d\u0131",
+      "split": [
+        "olm\u0131\u015f",
+        "\u0131d\u0131"
+      ],
+      "count": 4
+    },
+    {
+      "surface": "olm\u0131\u015f\u0131ken",
+      "split": [
+        "olm\u0131\u015f",
+        "\u0131ken"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "olurd\u0131",
+      "split": [
+        "olur",
+        "d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "olursa",
+      "split": [
+        "olur",
+        "sa"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "olursa\u00f1",
+      "split": [
+        "olur",
+        "sa\u00f1"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ondur",
+      "split": [
+        "on",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "otururken",
+      "split": [
+        "oturur",
+        "ken"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "o\u0121l\u0131yam",
+      "split": [
+        "o\u0121l\u0131",
+        "yam"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "o\u1e33\u0131nm\u0131\u015fken",
+      "split": [
+        "o\u1e33\u0131nm\u0131\u015f",
+        "ken"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "p\u00ee\u1e6derdendir",
+      "split": [
+        "p\u00ee\u1e6derden",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "rav\u017cat\u00fc\u2019l-a\u1e25b\u00e2bda",
+      "split": [
+        "rav\u017ca",
+        "t\u00fc\u2019l-a\u1e25b\u00e2bda"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ra\u1e25m\u00e2n\u00eed\u00fcr",
+      "split": [
+        "ra\u1e25m\u00e2n\u00ee",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "r\u00fbmiyyedend\u00fcr",
+      "split": [
+        "r\u00fbmiyyeden",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "r\u00fb\u1e25\u0131y\u00e7\u00fcn",
+      "split": [
+        "r\u00fb\u1e25\u0131y",
+        "\u00e7\u00fcn"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "saatiydi",
+      "split": [
+        "saati",
+        "ydi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "saatlerdi",
+      "split": [
+        "saatler",
+        "di"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "sebebdend\u00fcr",
+      "split": [
+        "sebebden",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "seb\u00eeli\u2019l-isti\u02bfc\u00e2l",
+      "split": [
+        "seb\u00eel",
+        "i\u2019l-isti\u02bfc\u00e2l"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "senedeki",
+      "split": [
+        "senede",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "seng\u00e2d\u00eebd\u00fcr",
+      "split": [
+        "seng\u00e2d\u00eeb",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "sen\u00fc\u00f1i\u00e7\u00fcn",
+      "split": [
+        "sen\u00fc\u00f1",
+        "i\u00e7in"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ser-defterid\u00fcr",
+      "split": [
+        "ser-defteri",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "sevmezidi",
+      "split": [
+        "sevmez",
+        "idi"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "s\u00e2b\u0131\u1e33u\u02be\u1e95-\u1e95ikr",
+      "split": [
+        "s\u00e2b\u0131\u1e33",
+        "u\u02be\u1e95-\u1e95ikr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "s\u00e2kindi",
+      "split": [
+        "s\u00e2kin",
+        "di"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "s\u00f6zd\u00fcr",
+      "split": [
+        "s\u00f6z",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "tanesiyle",
+      "split": [
+        "tanesi",
+        "ve"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "tasv\u00eeridir",
+      "split": [
+        "tasv\u00eeri",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "tutarsa\u00f1",
+      "split": [
+        "tutar",
+        "sa\u00f1"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ula\u015fma\u1e33dur",
+      "split": [
+        "ula\u015fma\u1e33",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "uydurm\u0131\u015fdur",
+      "split": [
+        "uydurm\u0131\u015f",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "uy\u0131riken",
+      "split": [
+        "uy\u0131riken",
+        "ken"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "u\u00e7ururlar\u0131d\u0131",
+      "split": [
+        "u\u00e7ururlar",
+        "\u0131d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "vardur",
+      "split": [
+        "var",
+        "dur"
+      ],
+      "count": 26
+    },
+    {
+      "surface": "vard\u0131",
+      "split": [
+        "var",
+        "d\u0131"
+      ],
+      "count": 6
+    },
+    {
+      "surface": "vard\u0131r",
+      "split": [
+        "var",
+        "d\u0131r"
+      ],
+      "count": 6
+    },
+    {
+      "surface": "var\u0131d\u0131",
+      "split": [
+        "var",
+        "\u0131d\u0131"
+      ],
+      "count": 13
+    },
+    {
+      "surface": "var\u0131sa",
+      "split": [
+        "var",
+        "sa"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "vechd\u00fcr",
+      "split": [
+        "vech",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "vend\u00fcr",
+      "split": [
+        "ven",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "v\u00e2cibd\u00fcr",
+      "split": [
+        "v\u00e2cib",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "v\u00e2cib\u00fc\u2019l-ed\u00e2",
+      "split": [
+        "v\u00e2cib",
+        "\u00fc\u2019l-ed\u00e2"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "v\u00e2\u1e33i\u02bfd\u00fcr",
+      "split": [
+        "v\u00e2\u1e33i\u02bf",
+        "d\u00fcr"
+      ],
+      "count": 3
+    },
+    {
+      "surface": "yan\u0131nda\u0121\u0131",
+      "split": [
+        "yan\u0131nda",
+        "\u0121\u0131"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "yan\u0131nda\u1e33\u0131",
+      "split": [
+        "yan\u0131nda",
+        "\u1e33\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "yatarken",
+      "split": [
+        "yatar",
+        "ken"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "yegd\u00fcr",
+      "split": [
+        "yeg",
+        "d\u00fcr"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "yetmezse",
+      "split": [
+        "yetmez",
+        "se"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "yilmi\u015f",
+      "split": [
+        "yilmi\u015f",
+        "mi\u015f"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "yird\u00fcr",
+      "split": [
+        "yir",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "yirlerd\u00fcr",
+      "split": [
+        "yirler",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "yiyeyid\u00fcm",
+      "split": [
+        "yiye",
+        "yid\u00fcm"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "yo\u0121ud\u0131",
+      "split": [
+        "yo\u0121",
+        "ud\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "yo\u0121unud\u0131",
+      "split": [
+        "yo\u0121un",
+        "ud\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "yo\u0121\u0131d\u0131",
+      "split": [
+        "yo\u0121",
+        "\u0131d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "yo\u1e33dur",
+      "split": [
+        "yo\u1e33",
+        "dur"
+      ],
+      "count": 10
+    },
+    {
+      "surface": "yo\u1e33tur",
+      "split": [
+        "yo\u1e33",
+        "tur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "y\u00fcksekd\u00fcr",
+      "split": [
+        "y\u00fcksek",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "y\u00fcriyi\u015fd\u00fcr",
+      "split": [
+        "y\u00fcriyi\u015f",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "zam\u00e2n\u0131ndaki",
+      "split": [
+        "zam\u00e2n\u0131nda",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ziy\u00e2deced\u00fcr",
+      "split": [
+        "ziy\u00e2dece",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "ziy\u00e2ded\u00fcr",
+      "split": [
+        "ziy\u00e2de",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "z\u00fcmresindend\u00fcr",
+      "split": [
+        "z\u00fcmresinden",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u00e2br\u00e2h\u00eemd\u00fcr",
+      "split": [
+        "\u00e2br\u00e2h\u00eem",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u00e2limd\u00fcr",
+      "split": [
+        "\u00e2lim",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u00e2v\u00e2zdur",
+      "split": [
+        "\u00e2v\u00e2z",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u00e7i\u00e7eklerdi",
+      "split": [
+        "\u00e7i\u00e7ekler",
+        "di"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u00fczred\u00fcr",
+      "split": [
+        "\u00fczre",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u00fczrey\u00fcz",
+      "split": [
+        "\u00fczre",
+        "y\u00fcz"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u0121urresinded\u00fcr",
+      "split": [
+        "\u0121urresinde",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015fed\u00eed\u00fc\u2019l-\u1e25arr",
+      "split": [
+        "\u015fed\u00eed",
+        "\u00fc\u2019l-\u1e25arr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015fehd\u00fcr",
+      "split": [
+        "\u015feh",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015fehrdend\u00fcr",
+      "split": [
+        "\u015fehrden",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015fehrd\u00fcr",
+      "split": [
+        "\u015fehr",
+        "d\u00fcr"
+      ],
+      "count": 4
+    },
+    {
+      "surface": "\u015fehrid\u00fcr",
+      "split": [
+        "\u015fehri",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015fehrlerindend\u00fcr",
+      "split": [
+        "\u015fehrlerinden",
+        "d\u00fcr"
+      ],
+      "count": 3
+    },
+    {
+      "surface": "\u015fehv\u00e2rdur",
+      "split": [
+        "\u015fehv\u00e2r",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015feyh\u00fc\u2019l-beled",
+      "split": [
+        "\u015feyh",
+        "\u00fc\u2019l-beled"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015fiirle",
+      "split": [
+        "\u015fiir",
+        "le"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015fu\u02bfar\u00e2s\u0131ndandur",
+      "split": [
+        "\u015fu\u02bfar\u00e2s\u0131ndan",
+        "dur"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "\u015f\u00e2ribu\u2019d-dim\u00e2\u02bedur",
+      "split": [
+        "\u015f\u00e2rib",
+        "u\u2019d-dim\u00e2\u02be",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015f\u00e2y\u00e2nd\u0131r",
+      "split": [
+        "\u015f\u00e2y\u00e2n",
+        "d\u0131r"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015f\u00e2\u02bfird\u00fcr",
+      "split": [
+        "\u015f\u00e2\u02bfir",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u015f\u00eerv\u00e2ndaki",
+      "split": [
+        "\u015f\u00eerv\u00e2nda",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u017ca\u02bf\u00eef\u00fcm",
+      "split": [
+        "\u017ca\u02bf\u00eef",
+        "\u00fcm"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u02bfaleyhi\u2019s-sel\u00e2m",
+      "split": [
+        "\u02bfaleyh",
+        "i\u2019s-sel\u00e2m"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u02bfavretiyin",
+      "split": [
+        "\u02bfavreti",
+        "yin"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u02bfib\u00e2d\u0131yken",
+      "split": [
+        "\u02bfib\u00e2d\u0131",
+        "yken"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u02bfilmdir",
+      "split": [
+        "\u02bfilm",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u02bf\u00f6mr\u00fcmd\u00fcr",
+      "split": [
+        "\u02bf\u00f6mr\u00fcm",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e25ar\u00eefd\u00fcr",
+      "split": [
+        "\u1e25ar\u00eef",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e25av\u00e2l\u00eedeki",
+      "split": [
+        "\u1e25av\u00e2l\u00eede",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e25av\u00e2l\u00eesindeki",
+      "split": [
+        "\u1e25av\u00e2l\u00eesinde",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e25ayv\u00e2n\u00e2tdur",
+      "split": [
+        "\u1e25ayv\u00e2n\u00e2t",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e25a\u1e33\u00ee\u1e33attir",
+      "split": [
+        "\u1e25a\u1e33\u00ee\u1e33at",
+        "tir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e25a\u1e33\u0131-y-i\u00e7\u00fcn",
+      "split": [
+        "\u1e25a\u1e33\u0131",
+        "-y-i\u00e7\u00fcn"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e25is\u00e2b\u0131ndadur",
+      "split": [
+        "\u1e25is\u00e2b\u0131nda",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e25\u0131f\u1e93\u0131y\u00e7\u00fcn",
+      "split": [
+        "\u1e25\u0131f\u1e93\u0131y",
+        "\u00e7\u00fcn"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e2bal\u1e33\u0131dur",
+      "split": [
+        "\u1e2bal\u1e33\u0131",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e2bay\u0131rludur",
+      "split": [
+        "\u1e2bay\u0131rlu",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e2bo\u015fdur",
+      "split": [
+        "\u1e2bo\u015f",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e2bud\u00e2nu\u00f1dur",
+      "split": [
+        "\u1e2bud\u00e2nu\u00f1",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e2b\u00e2n\u0131dur",
+      "split": [
+        "\u1e2b\u00e2n\u0131",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33adardur",
+      "split": [
+        "\u1e33adar",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33ad\u00eem\u00fc\u2019l-eyy\u00e2mdan",
+      "split": [
+        "\u1e33ad\u00eem",
+        "\u00fc\u2019l-eyy\u00e2mdan"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33af\u00e2s\u0131ndaki",
+      "split": [
+        "\u1e33af\u00e2s\u0131nda",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33andasun",
+      "split": [
+        "\u1e33anda",
+        "sun"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33arnumdaki",
+      "split": [
+        "\u1e33arnumda",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33arnu\u00f1daki",
+      "split": [
+        "\u1e33arnu\u00f1da",
+        "ki"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33ar\u0131nda\u0121\u0131",
+      "split": [
+        "\u1e33ar\u0131nda",
+        "\u0121\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33ar\u0131nda\u015fumdur",
+      "split": [
+        "\u1e33ar\u0131nda\u015fum",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33a\u1e63abadandur",
+      "split": [
+        "\u1e33a\u1e63abadan",
+        "dur"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "\u1e33a\u1e63abadur",
+      "split": [
+        "\u1e33a\u1e63aba",
+        "dur"
+      ],
+      "count": 5
+    },
+    {
+      "surface": "\u1e33a\u1e63ab\u00e2t\u0131ndandur",
+      "split": [
+        "\u1e33a\u1e63ab\u00e2t\u0131ndan",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33ocailindend\u00fcr",
+      "split": [
+        "\u1e33ocailinden",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33or\u1e33ar\u0131d\u0131",
+      "split": [
+        "\u1e33or\u1e33ar",
+        "\u0131d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33udretid\u00fcr",
+      "split": [
+        "\u1e33udreti",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33\u00e2yillerd\u00fcr",
+      "split": [
+        "\u1e33\u00e2yiller",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e33\u0131z\u0131dur",
+      "split": [
+        "\u1e33\u0131z\u0131",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e63anemleri\u00e7\u00fcn",
+      "split": [
+        "\u1e63anemleri",
+        "\u00e7\u00fcn"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e63\u00e2d\u0131\u1e33d\u0131r",
+      "split": [
+        "\u1e63\u00e2d\u0131\u1e33",
+        "d\u0131r"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e63\u00e2\u1e25ibid\u00fcr",
+      "split": [
+        "\u1e63\u00e2\u1e25ibi",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e63\u00fbretinded\u00fcr",
+      "split": [
+        "\u1e63\u00fbretinde",
+        "d\u00fcr"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e6dan\u0131\u015fma\u1e33dur",
+      "split": [
+        "\u1e6dan\u0131\u015fma\u1e33",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e6dayy\u0131dur",
+      "split": [
+        "\u1e6dayy\u0131",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e6day\u0131s\u0131dur",
+      "split": [
+        "\u1e6day\u0131s\u0131",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e6do\u0121mas\u0131dur",
+      "split": [
+        "\u1e6do\u0121mas\u0131",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e6do\u0121m\u0131\u015f\u0131d\u0131",
+      "split": [
+        "\u1e6do\u0121m\u0131\u015f",
+        "\u0131d\u0131"
+      ],
+      "count": 2
+    },
+    {
+      "surface": "\u1e6do\u0121ursa",
+      "split": [
+        "\u1e6do\u0121ur",
+        "sa"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e6dururlar\u0131d\u0131",
+      "split": [
+        "\u1e6dururlar",
+        "\u0131d\u0131"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e6dutsa\u1e33dur",
+      "split": [
+        "\u1e6dutsa\u1e33",
+        "dur"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e6d\u00e2libdir",
+      "split": [
+        "\u1e6d\u00e2lib",
+        "dir"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e6d\u0131flken",
+      "split": [
+        "\u1e6d\u0131fl",
+        "ken"
+      ],
+      "count": 1
+    },
+    {
+      "surface": "\u1e95erred\u00fcr",
+      "split": [
+        "\u1e95erre",
+        "d\u00fcr"
+      ],
+      "count": 1
+    }
+  ]
+}
