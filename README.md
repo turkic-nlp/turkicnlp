@@ -24,7 +24,7 @@
 - **24 Turkic languages** from Turkish to Sakha, Kazakh to Uyghur
 - **Script-aware from the ground up** — Latin, Cyrillic, Perso-Arabic, Old Turkic Runic
 - **Automatic script detection** and bidirectional transliteration
-- **Apertium FST morphology** for ~20 languages via Python-native `hfst` bindings (no system install)
+- **[Apertium FST morphology](https://wiki.apertium.org/wiki/Turkic_languages)** for ~20 Turkic languages via Python-native `hfst` bindings (no system install)
 - **Stanza/UD integration** — pretrained tokenization, POS tagging, lemmatization, dependency parsing, and NER via [Stanza](https://stanfordnlp.github.io/stanza/) models trained on [Universal Dependencies](https://universaldependencies.org/) treebanks
 - **Multiple backends** — choose between rule-based, Apertium FST, or Stanza neural backends per processor
 - **License isolation** — library is Apache-2.0; Apertium GPL-3.0 data downloaded separately
@@ -152,7 +152,11 @@ The table below shows all supported languages with their available scripts and p
 - **Apertium** — Finite-state transducers via [Apertium](https://apertium.org/) + `hfst` ([GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html), downloaded separately)
 - **Stanza/UD** — Neural models from [Stanza](https://stanfordnlp.github.io/stanza/) trained on [Universal Dependencies](https://universaldependencies.org/) treebanks ([Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0))
 
-**Status legend:** ✅ = Available | 🔧 = Planned | — = Not applicable
+**Status legend:** 
+
+- ✅  Available | 
+- 🔧 Planned 
+- — Not available (yet)
 
 ### Oghuz Branch
 
@@ -199,6 +203,12 @@ The table below shows all supported languages with their available scripts and p
 | Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
 |---|---|---|---|---|---|---|---|---|
 | [Chuvash](https://en.wikipedia.org/wiki/Chuvash_language) | `chv` | Cyrl | ✅ rule | ✅ Apertium (beta) | — | — | — | — |
+
+### Arghu Branch
+
+| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
+|---|---|---|---|---|---|---|---|---|
+| [Khalaj](https://en.wikipedia.org/wiki/Khalaj_language) | `klj` | Arab | - | - | — | — | — | — |
 
 ### Historical Languages
 
@@ -247,6 +257,10 @@ TurkicNLP uses a model catalog to define download sources per language/script/pr
 - Remote override: `ModelRegistry.CATALOG_URL` (or `TURKICNLP_CATALOG_URL`)
 
 For each language, the catalog stores the Apertium source repo and the expected FST script. When `turkicnlp.download()` is called, it reads the catalog and downloads precompiled `.hfst` binaries from the `url` fields. If a language has no URL configured, download will fail with a clear error until the catalog is populated with hosted binaries (for example, a `turkic-nlp/apertium-data` releases repository).
+
+#### Download folder
+All models and resources are downloaded into this folder: `~/.turkicnlp`.
+
 
 ## Architecture
 
