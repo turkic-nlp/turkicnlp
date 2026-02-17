@@ -23,6 +23,42 @@
             }
           },
           "default": "apertium"
+        },
+        "tokenize": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "pos": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "lemma": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "depparse": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
         }
       }
     }
@@ -52,6 +88,42 @@
             }
           },
           "default": "apertium"
+        },
+        "tokenize": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "pos": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "lemma": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "depparse": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
         }
       }
     }
@@ -138,6 +210,42 @@
             }
           },
           "default": "apertium"
+        },
+        "tokenize": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "pos": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "lemma": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "depparse": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
         }
       }
     }
@@ -252,6 +360,42 @@
             }
           },
           "default": "apertium"
+        },
+        "tokenize": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "pos": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "lemma": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "depparse": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
         }
       }
     }

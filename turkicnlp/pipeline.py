@@ -66,6 +66,9 @@ class Pipeline:
         self.use_gpu = use_gpu
         self._processors: list[Processor] = []
         self._script_config = get_script_config(lang)
+        self._requested_processors = processors
+        self._processor_configs = processor_configs
+        self._autoload = processors is not None
 
         if script is None or script == "auto":
             self._script: Optional[Script] = None
@@ -93,6 +96,90 @@ class Pipeline:
                 self._model_script = source_script
         else:
             self._model_script = self._script or self._script_config.primary
+
+        if self._autoload:
+            self._build_processors()
+
+    def _build_processors(self) -> None:
+        """Resolve, download, and load processors."""
+        if self._processors:
+            return
+
+        from turkicnlp.resources.registry import ProcessorRegistry, ModelRegistry
+        from turkicnlp.resources.downloader import download
+
+        requested = self._requested_processors or PROCESSOR_ORDER
+        resolved = self._resolve_dependencies(requested)
+
+        catalog = ModelRegistry.load_catalog()
+        lang_info = catalog.get(self.lang, {})
+        processors_section = lang_info.get("processors", {})
+        script_key = str(self._model_script)
+        if script_key in processors_section:
+            proc_catalog = processors_section[script_key]
+        elif processors_section:
+            primary = lang_info.get("scripts", {}).get("primary")
+            proc_catalog = processors_section.get(primary, next(iter(processors_section.values())))
+        else:
+            proc_catalog = {}
+
+        for proc_name in resolved:
+            if proc_name in ("script_detect", "transliterate", "transliterate_back"):
+                continue
+
+            backend_key = f"{proc_name}_backend"
+            backend = (
+                self._processor_configs.get(backend_key)
+                if backend_key in self._processor_configs
+                else None
+            )
+
+            proc_info = proc_catalog.get(proc_name, {})
+            if backend is None and isinstance(proc_info, dict):
+                backend = proc_info.get("default")
+                if backend is None and "backends" in proc_info:
+                    backend = next(iter(proc_info["backends"].keys()), None)
+
+            if backend is None:
+                if proc_name == "tokenize":
+                    if self._model_script == Script.PERSO_ARABIC:
+                        backend = "rule_arabic"
+                    else:
+                        backend = "rule"
+                else:
+                    backend = next(iter(ProcessorRegistry._registry.get(proc_name, {})), None)
+
+            if backend is None:
+                raise ValueError(f"No backend available for processor '{proc_name}'.")
+
+            config: dict[str, object] = {"use_gpu": self.use_gpu}
+            prefix = f"{proc_name}_"
+            for key, value in self._processor_configs.items():
+                if key.startswith(prefix) and key != backend_key:
+                    config[key[len(prefix):]] = value
+
+            proc_class = ProcessorRegistry.get(proc_name, str(backend))
+            proc = proc_class(lang=self.lang, script=self._model_script, config=config)
+
+            backend_info = {}
+            if isinstance(proc_info, dict):
+                backend_info = proc_info.get("backends", {}).get(str(backend), {}) or {}
+
+            model_path = None
+            backend_type = backend_info.get("type")
+            if backend_type in ("apertium_fst", "neural_model"):
+                try:
+                    model_path = ModelRegistry.get_model_path(
+                        self.lang, proc_name, str(backend), script=str(self._model_script)
+                    )
+                except FileNotFoundError:
+                    download(self.lang, processors=[proc_name], script=str(self._model_script))
+                    model_path = ModelRegistry.get_model_path(
+                        self.lang, proc_name, str(backend), script=str(self._model_script)
+                    )
+
+            proc.load(model_path if model_path is not None else "")
+            self._processors.append(proc)
 
     def _resolve_dependencies(self, requested: list[str]) -> list[str]:
         """Ensure all processor dependencies are satisfied.
@@ -124,6 +211,9 @@ class Pipeline:
         Returns:
             Annotated :class:`Document`.
         """
+        if not self._processors:
+            self._build_processors()
+
         doc = Document(text=text, lang=self.lang)
 
         if self._explicit_script:

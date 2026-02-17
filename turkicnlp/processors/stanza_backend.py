@@ -16,6 +16,7 @@ from typing import Any, ClassVar, Optional
 
 from turkicnlp.models.document import Document, Sentence, Token, Word
 from turkicnlp.processors.base import Processor
+from turkicnlp.resources.registry import ModelRegistry
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +74,11 @@ def download_stanza_model(lang: str) -> None:
     """
     stanza = _require_stanza()
     stanza_lang = _get_stanza_lang(lang)
-    stanza.download(stanza_lang)
+    stanza_dir = ModelRegistry.default_dir() / "stanza"
+    try:
+        stanza.download(stanza_lang, model_dir=str(stanza_dir))
+    except TypeError:
+        stanza.download(stanza_lang, dir=str(stanza_dir))
 
 
 # ---------------------------------------------------------------------------
@@ -116,13 +121,28 @@ class _StanzaManager:
         if key not in cls._full_pipelines:
             stanza = _require_stanza()
             stanza_lang = _get_stanza_lang(lang)
-            stanza.download(stanza_lang, logging_level="WARNING")
+            stanza_dir = ModelRegistry.default_dir() / "stanza"
+            try:
+                stanza.download(
+                    stanza_lang, model_dir=str(stanza_dir), logging_level="WARNING"
+                )
+            except TypeError:
+                stanza.download(stanza_lang, dir=str(stanza_dir), logging_level="WARNING")
             logger.info("Creating Stanza pipeline for '%s'", stanza_lang)
-            cls._full_pipelines[key] = stanza.Pipeline(
-                stanza_lang,
-                use_gpu=use_gpu,
-                logging_level="WARNING",
-            )
+            try:
+                cls._full_pipelines[key] = stanza.Pipeline(
+                    stanza_lang,
+                    model_dir=str(stanza_dir),
+                    use_gpu=use_gpu,
+                    logging_level="WARNING",
+                )
+            except TypeError:
+                cls._full_pipelines[key] = stanza.Pipeline(
+                    stanza_lang,
+                    dir=str(stanza_dir),
+                    use_gpu=use_gpu,
+                    logging_level="WARNING",
+                )
         return cls._full_pipelines[key]
 
     @classmethod
@@ -136,17 +156,34 @@ class _StanzaManager:
         if key not in cls._pretok_pipelines:
             stanza = _require_stanza()
             stanza_lang = _get_stanza_lang(lang)
-            stanza.download(stanza_lang, logging_level="WARNING")
+            stanza_dir = ModelRegistry.default_dir() / "stanza"
+            try:
+                stanza.download(
+                    stanza_lang, model_dir=str(stanza_dir), logging_level="WARNING"
+                )
+            except TypeError:
+                stanza.download(stanza_lang, dir=str(stanza_dir), logging_level="WARNING")
             logger.info(
                 "Creating pretokenized Stanza pipeline for '%s'", stanza_lang
             )
-            cls._pretok_pipelines[key] = stanza.Pipeline(
-                stanza_lang,
-                processors="tokenize,pos,lemma,depparse",
-                tokenize_pretokenized=True,
-                use_gpu=use_gpu,
-                logging_level="WARNING",
-            )
+            try:
+                cls._pretok_pipelines[key] = stanza.Pipeline(
+                    stanza_lang,
+                    processors="tokenize,pos,lemma,depparse",
+                    tokenize_pretokenized=True,
+                    model_dir=str(stanza_dir),
+                    use_gpu=use_gpu,
+                    logging_level="WARNING",
+                )
+            except TypeError:
+                cls._pretok_pipelines[key] = stanza.Pipeline(
+                    stanza_lang,
+                    processors="tokenize,pos,lemma,depparse",
+                    tokenize_pretokenized=True,
+                    dir=str(stanza_dir),
+                    use_gpu=use_gpu,
+                    logging_level="WARNING",
+                )
         return cls._pretok_pipelines[key]
 
     @classmethod

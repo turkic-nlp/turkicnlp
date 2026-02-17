@@ -79,9 +79,14 @@ def download(
                 dest.mkdir(parents=True, exist_ok=True)
                 backend_type = backend_info.get("type")
                 if backend_type == "apertium_fst":
+                    print(f"  ↓ Downloading Apertium FST for {lang}/{scr}/{proc_name} (apertium)")
                     _download_apertium_fst(lang, scr, proc_name, backend_info, dest)
                 elif backend_type == "neural_model":
+                    print(f"  ↓ Downloading neural model for {lang}/{scr}/{proc_name} (backend={backend_name})")
                     _download_neural_model(lang, scr, proc_name, backend_info, dest)
+                elif backend_type == "stanza":
+                    print(f"  ↓ Downloading Stanza models for {lang} ({scr})")
+                    _download_stanza_model(lang)
                 else:
                     raise ValueError(
                         f"Unknown backend type '{backend_type}' for "
@@ -176,7 +181,6 @@ def _download_apertium_fst(
         )
 
     archive_path = dest / "apertium_fst.zip"
-    print(f"  ↓ Downloading Apertium FST for {lang}/{script} from {url}")
     urllib.request.urlretrieve(url, archive_path, reporthook=_progress_hook)
 
     expected_sha = backend_info.get("sha256")
@@ -223,9 +227,6 @@ def _download_apertium_fst(
     }
     (dest / "metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
 
-    print(f"  ✓ {lang}/{script}/{proc_name}/apertium — ready (GPL-3.0 licensed)")
-
-
 def _download_neural_model(
     lang: str, script: str, proc_name: str, backend_info: dict, dest: Path
 ) -> None:
@@ -265,6 +266,27 @@ def _download_neural_model(
         "type": "neural_model",
     }
     (dest / "metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
+
+
+def _download_stanza_model(lang: str) -> None:
+    """Download Stanza models into the shared model directory."""
+    try:
+        import stanza
+    except ImportError as exc:
+        raise ImportError(
+            "Stanza is required for the 'stanza' backend. "
+            "Install it with: pip install turkicnlp[stanza]"
+        ) from exc
+
+    from turkicnlp.processors.stanza_backend import _get_stanza_lang
+    from turkicnlp.resources.registry import ModelRegistry
+
+    stanza_lang = _get_stanza_lang(lang)
+    stanza_dir = ModelRegistry.default_dir() / "stanza"
+    try:
+        stanza.download(stanza_lang, model_dir=str(stanza_dir), logging_level="WARNING")
+    except TypeError:
+        stanza.download(stanza_lang, dir=str(stanza_dir), logging_level="WARNING")
 
 
 def _sha256(path: Path) -> str:

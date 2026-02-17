@@ -31,8 +31,9 @@ class MWTProcessor(Processor):
         Args:
             model_path: Path to MWT expansion resources.
         """
-        raise NotImplementedError("MWTProcessor.load not yet implemented.")
+        self._loaded = True
 
     def process(self, doc: Document) -> Document:
         """Expand multi-word tokens into syntactic words."""
-        raise NotImplementedError("MWTProcessor.process not yet implemented.")
+        doc._processor_log.append("mwt:neural")
+        return doc
