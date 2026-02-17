@@ -40,6 +40,9 @@ dependencies = [
 hfst = [
     "hfst>=3.16",
 ]
+stanza = [
+    "stanza>=1.8",
+]
 torch = [
     "torch>=2.0",
 ]
@@ -54,7 +57,7 @@ training = [
     "conllu>=4.5",
 ]
 all = [
-    "turkicnlp[hfst,torch,transformers,training]",
+    "turkicnlp[hfst,stanza,torch,transformers,training]",
 ]
 dev = [
     "pytest>=7.0",

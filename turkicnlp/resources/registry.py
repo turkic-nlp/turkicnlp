@@ -203,20 +203,32 @@ def _register_builtins() -> None:
     from turkicnlp.processors.pos_tagger import NeuralPOSTagger
     from turkicnlp.processors.lemmatizer import DictionaryLemmatizer, NeuralLemmatizer
     from turkicnlp.processors.dep_parser import BiaffineDepParser
+    from turkicnlp.processors.mwt import MWTProcessor
     from turkicnlp.processors.ner import NERProcessor
     from turkicnlp.processors.sentiment import SentimentProcessor
-    from turkicnlp.processors.mwt import MWTProcessor
+    from turkicnlp.processors.stanza_backend import (
+        StanzaTokenizer,
+        StanzaMWTExpander,
+        StanzaPOSTagger,
+        StanzaLemmatizer,
+        StanzaDepParser,
+    )
 
     ProcessorRegistry.register("tokenize", "rule", RegexTokenizer)
     ProcessorRegistry.register("tokenize", "rule_arabic", ArabicScriptTokenizer)
     ProcessorRegistry.register("tokenize", "neural", NeuralTokenizer)
+    ProcessorRegistry.register("tokenize", "stanza", StanzaTokenizer)
     ProcessorRegistry.register("mwt", "neural", MWTProcessor)
+    ProcessorRegistry.register("mwt", "stanza", StanzaMWTExpander)
     ProcessorRegistry.register("morph", "apertium", ApertiumMorphProcessor)
     ProcessorRegistry.register("morph", "neural", NeuralMorphProcessor)
     ProcessorRegistry.register("pos", "neural", NeuralPOSTagger)
+    ProcessorRegistry.register("pos", "stanza", StanzaPOSTagger)
     ProcessorRegistry.register("lemma", "dictionary", DictionaryLemmatizer)
     ProcessorRegistry.register("lemma", "neural", NeuralLemmatizer)
+    ProcessorRegistry.register("lemma", "stanza", StanzaLemmatizer)
     ProcessorRegistry.register("depparse", "neural", BiaffineDepParser)
+    ProcessorRegistry.register("depparse", "stanza", StanzaDepParser)
     ProcessorRegistry.register("ner", "neural", NERProcessor)
     ProcessorRegistry.register("sentiment", "neural", SentimentProcessor)
 
