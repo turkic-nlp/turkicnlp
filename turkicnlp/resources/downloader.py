@@ -60,6 +60,7 @@ def download(
 
     base_dir = Path(model_dir) if model_dir else ModelRegistry.default_dir()
     base_dir.mkdir(parents=True, exist_ok=True)
+    stanza_checked: set[str] = set()
 
     for scr in scripts_to_download:
         proc_data = processors_section.get(scr, {})
@@ -80,21 +81,37 @@ def download(
                     continue
 
                 dest = base_dir / lang / scr / proc_name / backend_name
-                if (dest / "metadata.json").exists() and not force:
-                    continue
-                dest.mkdir(parents=True, exist_ok=True)
                 if backend_type == "apertium_fst":
+                    if (dest / "metadata.json").exists() and not force:
+                        continue
+                    dest.mkdir(parents=True, exist_ok=True)
                     print(f"  ↓ Downloading Apertium FST for {lang}/{scr}/{proc_name} (apertium)")
                     _download_apertium_fst(lang, scr, proc_name, backend_info, dest)
                 elif backend_type == "neural_model":
+                    if (dest / "metadata.json").exists() and not force:
+                        continue
+                    dest.mkdir(parents=True, exist_ok=True)
                     print(
                         f"  ↓ Downloading neural model for {lang}/{scr}/{proc_name} "
                         f"(backend={backend_name})"
                     )
                     _download_neural_model(lang, scr, proc_name, backend_info, dest)
                 elif backend_type == "stanza":
-                    print(f"  ↓ Downloading Stanza models for {lang} ({scr})")
+                    # Keep Stanza assets only in ~/.turkicnlp/models/stanza/.
+                    # Clean up legacy empty per-processor stanza dirs.
+                    if dest.exists():
+                        try:
+                            if dest.is_dir() and not any(dest.iterdir()):
+                                dest.rmdir()
+                        except OSError:
+                            pass
+                    if lang in stanza_checked:
+                        continue
                     _download_stanza_model(lang)
+                    stanza_checked.add(lang)
+                elif backend_type in ("rule", "builtin", "regex"):
+                    # Built-in processors (e.g. rule tokenizers) have no external assets.
+                    continue
                 else:
                     raise ValueError(
                         f"Unknown backend type '{backend_type}' for "
@@ -329,6 +346,11 @@ def _download_stanza_model(lang: str) -> None:
 
     stanza_lang = _get_stanza_lang(lang)
     stanza_dir = ModelRegistry.default_dir() / "stanza"
+    lang_dir = stanza_dir / stanza_lang
+    if lang_dir.exists():
+        print(f"  → Loading Stanza models for {lang} ({stanza_lang}) from {lang_dir}")
+    else:
+        print(f"  ↓ Downloading Stanza models for {lang} ({stanza_lang})")
     try:
         stanza.download(stanza_lang, model_dir=str(stanza_dir), logging_level="WARNING")
     except TypeError:
