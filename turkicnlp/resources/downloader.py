@@ -9,19 +9,18 @@ from __future__ import annotations
 
 import hashlib
 import json
-import zipfile
 import urllib.request
+import zipfile
 from pathlib import Path
-from typing import Optional
 
 from turkicnlp.resources.registry import ModelRegistry
 
 
 def download(
     lang: str,
-    processors: Optional[list[str]] = None,
-    script: Optional[str] = None,
-    model_dir: Optional[str] = None,
+    processors: list[str] | None = None,
+    script: str | None = None,
+    model_dir: str | None = None,
     force: bool = False,
 ) -> None:
     """Download models and FST data for a language.
@@ -73,16 +72,25 @@ def download(
             for backend_name, backend_info in backends.items():
                 if not isinstance(backend_info, dict):
                     continue
+                backend_type = backend_info.get("type")
+                if backend_type == "huggingface_seq2seq":
+                    _download_huggingface_seq2seq(
+                        lang, scr, proc_name, backend_info, base_dir, force
+                    )
+                    continue
+
                 dest = base_dir / lang / scr / proc_name / backend_name
-                if dest.exists() and not force:
+                if (dest / "metadata.json").exists() and not force:
                     continue
                 dest.mkdir(parents=True, exist_ok=True)
-                backend_type = backend_info.get("type")
                 if backend_type == "apertium_fst":
                     print(f"  ↓ Downloading Apertium FST for {lang}/{scr}/{proc_name} (apertium)")
                     _download_apertium_fst(lang, scr, proc_name, backend_info, dest)
                 elif backend_type == "neural_model":
-                    print(f"  ↓ Downloading neural model for {lang}/{scr}/{proc_name} (backend={backend_name})")
+                    print(
+                        f"  ↓ Downloading neural model for {lang}/{scr}/{proc_name} "
+                        f"(backend={backend_name})"
+                    )
                     _download_neural_model(lang, scr, proc_name, backend_info, dest)
                 elif backend_type == "stanza":
                     print(f"  ↓ Downloading Stanza models for {lang} ({scr})")
@@ -266,6 +274,44 @@ def _download_neural_model(
         "type": "neural_model",
     }
     (dest / "metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
+
+
+def _download_huggingface_seq2seq(
+    lang: str,
+    script: str,
+    proc_name: str,
+    backend_info: dict,
+    base_dir: Path,
+    force: bool,
+) -> None:
+    """Download and persist a Hugging Face seq2seq model for embeddings."""
+    try:
+        from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+    except ImportError as exc:
+        raise ImportError(
+            "Downloading NLLB embeddings requires `transformers`. "
+            "Install with: pip install turkicnlp[transformers]"
+        ) from exc
+
+    model_name = backend_info.get("model_name")
+    src_lang = backend_info.get("src_lang")
+    if not model_name or not src_lang:
+        raise ValueError(
+            "Missing model_name/src_lang for "
+            f"{lang}/{script}/{proc_name}/{backend_info.get('type')}"
+        )
+
+    shared_dir = base_dir / "huggingface" / model_name.replace("/", "--")
+    if (shared_dir / "config.json").exists() and not force:
+        print(f"  → Loading {model_name} Hugging Face model from {shared_dir}")
+        return
+
+    print(f"  ↓ Downloading {model_name} Hugging Face model")
+    shared_dir.mkdir(parents=True, exist_ok=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, src_lang=src_lang)
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+    tokenizer.save_pretrained(shared_dir)
+    model.save_pretrained(shared_dir)
 
 
 def _download_stanza_model(lang: str) -> None:

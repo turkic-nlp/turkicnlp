@@ -27,6 +27,7 @@ PROCESSOR_ORDER: list[str] = [
     "lemma",
     "depparse",
     "ner",
+    "embeddings",
     "sentiment",
     "transliterate_back",
 ]

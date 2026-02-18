@@ -206,6 +206,7 @@ def _register_builtins() -> None:
     from turkicnlp.processors.mwt import MWTProcessor
     from turkicnlp.processors.ner import NERProcessor
     from turkicnlp.processors.sentiment import SentimentProcessor
+    from turkicnlp.processors.embeddings import NLLBEmbeddingsProcessor
     from turkicnlp.processors.stanza_backend import (
         StanzaTokenizer,
         StanzaMWTExpander,
@@ -231,6 +232,7 @@ def _register_builtins() -> None:
     ProcessorRegistry.register("depparse", "stanza", StanzaDepParser)
     ProcessorRegistry.register("ner", "neural", NERProcessor)
     ProcessorRegistry.register("sentiment", "neural", SentimentProcessor)
+    ProcessorRegistry.register("embeddings", "nllb", NLLBEmbeddingsProcessor)
 
 
 _register_builtins()

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from turkicnlp.pipeline import Pipeline, PROCESSOR_ORDER
+from turkicnlp.pipeline import PROCESSOR_ORDER, Pipeline
 
 
 class TestProcessorOrder:
@@ -17,6 +17,10 @@ class TestProcessorOrder:
         assert "script_detect" in PROCESSOR_ORDER
         assert "transliterate" in PROCESSOR_ORDER
         assert "transliterate_back" in PROCESSOR_ORDER
+
+    def test_embeddings_in_order(self) -> None:
+        assert "embeddings" in PROCESSOR_ORDER
+        assert PROCESSOR_ORDER.index("embeddings") < PROCESSOR_ORDER.index("sentiment")
 
 
 class TestPipelineInit:

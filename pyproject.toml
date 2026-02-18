@@ -50,6 +50,11 @@ transformers = [
     "transformers>=4.30",
     "tokenizers>=0.13",
 ]
+embeddings = [
+    "torch>=2.0",
+    "transformers>=4.30",
+    "tokenizers>=0.13",
+]
 training = [
     "turkicnlp[torch,transformers]",
     "datasets>=2.14",

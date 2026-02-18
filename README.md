@@ -26,6 +26,7 @@
 - **Automatic script detection** and bidirectional transliteration
 - **[Apertium FST morphology](https://wiki.apertium.org/wiki/Turkic_languages)** for ~20 Turkic languages via Python-native `hfst` bindings (no system install)
 - **Stanza/UD integration** — pretrained tokenization, POS tagging, lemmatization, dependency parsing, and NER via [Stanza](https://stanfordnlp.github.io/stanza/) models trained on [Universal Dependencies](https://universaldependencies.org/) treebanks
+- **NLLB embeddings backend** — sentence/document vectors via [NLLB-200](https://huggingface.co/facebook/nllb-200-distilled-600M) encoder pooling
 - **Multiple backends** — choose between rule-based, Apertium FST, or Stanza neural backends per processor
 - **License isolation** — library is Apache-2.0; Apertium GPL-3.0 data downloaded separately
 - **Stanza-compatible API** — `Pipeline`, `Document`, `Sentence`, `Word`
@@ -41,6 +42,7 @@ With optional dependencies:
 ```bash
 pip install turkicnlp[hfst]          # Apertium FST support
 pip install turkicnlp[stanza]        # Stanza/UD neural models
+pip install turkicnlp[embeddings]    # NLLB embeddings backend
 pip install turkicnlp[torch]         # PyTorch neural model support
 pip install turkicnlp[all]           # Everything
 pip install turkicnlp[dev]           # Development tools
@@ -67,6 +69,29 @@ for sentence in doc.sentences:
 
 # Export to CoNLL-U
 print(doc.to_conllu())
+```
+
+### Embeddings (NLLB)
+
+```python
+import math
+import turkicnlp
+
+turkicnlp.download("tur", processors=["embeddings"])
+nlp = turkicnlp.Pipeline("tur", processors=["embeddings"])
+
+doc1 = nlp("Bugün hava çok güzel ve parkta yürüyüş yaptım.")
+doc2 = nlp("Parkta yürüyüş yapmak bugün çok keyifliydi çünkü hava güzeldi.")
+
+def cosine_similarity(a, b):
+    dot = sum(x * y for x, y in zip(a, b))
+    norm_a = math.sqrt(sum(x * x for x in a))
+    norm_b = math.sqrt(sum(y * y for y in b))
+    return dot / (norm_a * norm_b)
+
+print(len(doc1.embedding), len(doc2.embedding))
+print(f"cosine = {cosine_similarity(doc1.embedding, doc2.embedding):.4f}")
+print(doc1._processor_log)  # ['embeddings:nllb']
 ```
 
 ### Using the Stanza Backend
@@ -210,71 +235,72 @@ The table below shows all supported languages with their available scripts and p
 - **rule** — Rule-based (regex tokenizer, abbreviation lists)
 - **Apertium** — Finite-state transducers via [Apertium](https://apertium.org/) + `hfst` ([GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html), downloaded separately)
 - **Stanza/UD** — Neural models from [Stanza](https://stanfordnlp.github.io/stanza/) trained on [Universal Dependencies](https://universaldependencies.org/) treebanks ([Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0))
+- **NLLB** — Shared [NLLB-200-distilled-600M](https://huggingface.co/facebook/nllb-200-distilled-600M) encoder-based sentence/document embeddings
 
 **Status legend:** 
 
-- ✅  Available | 
+- ✅  Available
 - 🔧 Planned 
 - — Not available (yet)
 
 ### Oghuz Branch
 
-| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
-|---|---|---|---|---|---|---|---|---|
-| [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ✅ rule, ✅ Stanza/UD | ✅ Apertium | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza |
-| [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — |
-| [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | 🔧 rule_arabic | — | — | — | — | — |
-| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ✅ rule | ✅ Apertium (beta) | 🔧 | 🔧 | 🔧 | — |
-| [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER | Embeddings |
+|---|---|---|---|---|---|---|---|---|---|
+| [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ✅ rule, ✅ Stanza/UD | ✅ Apertium | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza | ✅ NLLB |
+| [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — | ✅ NLLB |
+| [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | 🔧 rule_arabic | — | — | — | — | — | — |
+| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ✅ rule | ✅ Apertium (beta) | 🔧 | 🔧 | 🔧 | — | ✅ NLLB |
+| [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ✅ rule | ✅ Apertium (proto) | — | — | — | — | — |
 
 ### Kipchak Branch
 
-| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
-|---|---|---|---|---|---|---|---|---|
-| [Kazakh](https://en.wikipedia.org/wiki/Kazakh_language) | `kaz` | Cyrl, Latn | ✅ rule, ✅ Stanza/UD | ✅ Apertium | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza |
-| [Kyrgyz](https://en.wikipedia.org/wiki/Kyrgyz_language) | `kir` | Cyrl | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — |
-| [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — |
-| [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ✅ rule | ✅ Apertium (beta) | — | — | — | — |
-| [Crimean Tatar](https://en.wikipedia.org/wiki/Crimean_Tatar_language) | `crh` | Latn, Cyrl | ✅ rule | ✅ Apertium (beta) | — | — | — | — |
-| [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
-| [Nogai](https://en.wikipedia.org/wiki/Nogai_language) | `nog` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
-| [Kumyk](https://en.wikipedia.org/wiki/Kumyk_language) | `kum` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
-| [Karachay-Balkar](https://en.wikipedia.org/wiki/Karachay-Balkar_language) | `krc` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER | Embeddings |
+|---|---|---|---|---|---|---|---|---|---|
+| [Kazakh](https://en.wikipedia.org/wiki/Kazakh_language) | `kaz` | Cyrl, Latn | ✅ rule, ✅ Stanza/UD | ✅ Apertium | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza | ✅ NLLB |
+| [Kyrgyz](https://en.wikipedia.org/wiki/Kyrgyz_language) | `kir` | Cyrl | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — | ✅ NLLB |
+| [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — | ✅ NLLB |
+| [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ✅ rule | ✅ Apertium (beta) | — | — | — | — | ✅ NLLB |
+| [Crimean Tatar](https://en.wikipedia.org/wiki/Crimean_Tatar_language) | `crh` | Latn, Cyrl | ✅ rule | ✅ Apertium (beta) | — | — | — | — | ✅ NLLB |
+| [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — | — |
+| [Nogai](https://en.wikipedia.org/wiki/Nogai_language) | `nog` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — | — |
+| [Kumyk](https://en.wikipedia.org/wiki/Kumyk_language) | `kum` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — | — |
+| [Karachay-Balkar](https://en.wikipedia.org/wiki/Karachay-Balkar_language) | `krc` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — | — |
 
 ### Karluk Branch
 
-| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
-|---|---|---|---|---|---|---|---|---|
-| [Uzbek](https://en.wikipedia.org/wiki/Uzbek_language) | `uzb` | Latn, Cyrl | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — |
-| [Uyghur](https://en.wikipedia.org/wiki/Uyghur_language) | `uig` | Arab, Latn | 🔧 rule_arabic, ✅ Stanza/UD | ✅ Apertium (beta) | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | — |
+| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER | Embeddings |
+|---|---|---|---|---|---|---|---|---|---|
+| [Uzbek](https://en.wikipedia.org/wiki/Uzbek_language) | `uzb` | Latn, Cyrl | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — | ✅ NLLB |
+| [Uyghur](https://en.wikipedia.org/wiki/Uyghur_language) | `uig` | Arab, Latn | 🔧 rule_arabic, ✅ Stanza/UD | ✅ Apertium (beta) | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | — | ✅ NLLB |
 
 ### Siberian Branch
 
-| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
-|---|---|---|---|---|---|---|---|---|
-| [Sakha (Yakut)](https://en.wikipedia.org/wiki/Sakha_language) | `sah` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
-| [Altai](https://en.wikipedia.org/wiki/Altai_language) | `alt` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
-| [Tuvan](https://en.wikipedia.org/wiki/Tuvan_language) | `tyv` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
-| [Khakas](https://en.wikipedia.org/wiki/Khakas_language) | `kjh` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER | Embeddings |
+|---|---|---|---|---|---|---|---|---|---|
+| [Sakha (Yakut)](https://en.wikipedia.org/wiki/Sakha_language) | `sah` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — | — |
+| [Altai](https://en.wikipedia.org/wiki/Altai_language) | `alt` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — | — |
+| [Tuvan](https://en.wikipedia.org/wiki/Tuvan_language) | `tyv` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — | — |
+| [Khakas](https://en.wikipedia.org/wiki/Khakas_language) | `kjh` | Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — | — |
 
 ### Oghur Branch
 
-| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
-|---|---|---|---|---|---|---|---|---|
-| [Chuvash](https://en.wikipedia.org/wiki/Chuvash_language) | `chv` | Cyrl | ✅ rule | ✅ Apertium (beta) | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER | Embeddings |
+|---|---|---|---|---|---|---|---|---|---|
+| [Chuvash](https://en.wikipedia.org/wiki/Chuvash_language) | `chv` | Cyrl | ✅ rule | ✅ Apertium (beta) | — | — | — | — | — |
 
 ### Arghu Branch
 
-| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
-|---|---|---|---|---|---|---|---|---|
-| [Khalaj](https://en.wikipedia.org/wiki/Khalaj_language) | `klj` | Arab | - | - | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER | Embeddings |
+|---|---|---|---|---|---|---|---|---|---|
+| [Khalaj](https://en.wikipedia.org/wiki/Khalaj_language) | `klj` | Arab | - | - | — | — | — | — | — |
 
 ### Historical Languages
 
-| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
-|---|---|---|---|---|---|---|---|---|
-| [Ottoman Turkish](https://en.wikipedia.org/wiki/Ottoman_Turkish_language) | `ota` | Arab, Latn | - | — | - | - | - | — |
-| [Old Turkish](https://en.wikipedia.org/wiki/Old_Turkic_language) | `otk` | Orkh, Latn | 🔧 rule | — | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER | Embeddings |
+|---|---|---|---|---|---|---|---|---|---|
+| [Ottoman Turkish](https://en.wikipedia.org/wiki/Ottoman_Turkish_language) | `ota` | Arab, Latn | - | — | - | - | - | — | — |
+| [Old Turkish](https://en.wikipedia.org/wiki/Old_Turkic_language) | `otk` | Orkh, Latn | 🔧 rule | — | — | — | — | — | — |
 
 ### Stanza/UD Model Details
 
@@ -390,10 +416,21 @@ Pipeline("kaz", processors=["tokenize", "morph", "pos", "depparse"])
 ├── tur/
 │   └── Latn/
 │       └── ...
+├── huggingface/
+│   └── facebook--nllb-200-distilled-600M/
+│       ├── config.json
+│       ├── model.safetensors (or pytorch_model.bin)
+│       ├── tokenizer.json
+│       └── ...
 └── catalog.json
 
 # Stanza models are managed by Stanza at ~/stanza_resources/
 ```
+
+Notes:
+- NLLB embeddings use a shared Hugging Face model under `~/.turkicnlp/models/huggingface/`.
+- The NLLB model is downloaded once and reused across supported Turkic languages.
+- Unlike Apertium/Stanza components, embeddings are not duplicated per language/script directory.
 
 ## License
 
@@ -475,6 +512,16 @@ The Stanza models are trained on [Universal Dependencies](https://universaldepen
 
 **Kazakh NER (KazNERD)**
 > Rustem Yeshpanov, Yerbolat Khassanov, and Huseyin Atakan Varol (ISSAI, Nazarbayev University). *KazNERD: Kazakh Named Entity Recognition Dataset*. LREC 2022. [[paper]](https://aclanthology.org/2022.lrec-1.44)
+
+### NLLB Embeddings
+
+TurkicNLP embeddings backend uses encoder pooling on:
+
+> [facebook/nllb-200-distilled-600M](https://huggingface.co/facebook/nllb-200-distilled-600M)
+
+Reference:
+
+> NLLB Team, Marta R. Costa-jussà, et al. 2022. *No Language Left Behind: Scaling Human-Centered Machine Translation*. [[paper]](https://arxiv.org/abs/2207.04672)
 
 ### Other
 
