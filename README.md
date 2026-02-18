@@ -137,6 +137,65 @@ nlp_ug = turkicnlp.Pipeline("uig", script="Arab")
 doc = nlp_ug("مەن مەكتەپكە باردىم")
 ```
 
+### Transliteration
+
+The `Transliterator` class converts text between scripts for any supported language pair:
+
+```python
+from turkicnlp.scripts import Script
+from turkicnlp.scripts.transliterator import Transliterator
+
+# Kazakh Cyrillic → Latin (2021 official alphabet)
+t = Transliterator("kaz", Script.CYRILLIC, Script.LATIN)
+print(t.transliterate("Қазақстан Республикасы"))
+# → Qazaqstan Respublıkasy
+
+# Uzbek Latin → Cyrillic
+t = Transliterator("uzb", Script.LATIN, Script.CYRILLIC)
+print(t.transliterate("O'zbekiston Respublikasi"))
+# → Ўзбекистон Республикаси
+
+# Uyghur Perso-Arabic → Latin (ULY)
+t = Transliterator("uig", Script.PERSO_ARABIC, Script.LATIN)
+print(t.transliterate("مەكتەپ"))
+# → mektep
+
+# Azerbaijani Latin → Cyrillic
+t = Transliterator("aze", Script.LATIN, Script.CYRILLIC)
+print(t.transliterate("Azərbaycan"))
+# → Азәрбайҹан
+
+# Turkmen Latin → Cyrillic
+t = Transliterator("tuk", Script.LATIN, Script.CYRILLIC)
+print(t.transliterate("Türkmenistan"))
+# → Түркменистан
+
+# Tatar Cyrillic → Latin (Zamanälif)
+t = Transliterator("tat", Script.CYRILLIC, Script.LATIN)
+print(t.transliterate("Татарстан Республикасы"))
+# → Tatarstan Respublikası
+```
+
+#### Old Turkic Runic Script
+
+TurkicNLP supports transliteration of [Old Turkic runic inscriptions](https://en.wikipedia.org/wiki/Old_Turkic_script) (Orkhon-Yenisei script, Unicode block U+10C00–U+10C4F) to Latin:
+
+```python
+from turkicnlp.scripts import Script
+from turkicnlp.scripts.transliterator import Transliterator
+
+t = Transliterator("otk", Script.OLD_TURKIC_RUNIC, Script.LATIN)
+
+# Individual runic characters
+print(t.transliterate("\U00010C34\U00010C07\U00010C2F\U00010C19"))
+# → törk  (Türk)
+
+# The transliterator maps each runic character to its standard
+# Turkological Latin equivalent, handling both Orkhon and Yenisei
+# variant forms (e.g., separate glyphs for consonants with
+# back vs. front vowel contexts).
+```
+
 ## Supported Languages and Components
 
 <p align="center">
@@ -165,7 +224,7 @@ The table below shows all supported languages with their available scripts and p
 | [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ✅ rule, ✅ Stanza/UD | ✅ Apertium | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza |
 | [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — |
 | [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | 🔧 rule_arabic | — | — | — | — | — |
-| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn | ✅ rule | ✅ Apertium (beta) | 🔧 | 🔧 | — | — |
+| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ✅ rule | ✅ Apertium (beta) | 🔧 | 🔧 | — | — |
 | [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
 
 ### Kipchak Branch
@@ -214,7 +273,7 @@ The table below shows all supported languages with their available scripts and p
 
 | Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
 |---|---|---|---|---|---|---|---|---|
-| [Ottoman Turkish](https://en.wikipedia.org/wiki/Ottoman_Turkish_language) | `ota` | Arab, Latn | ✅ Stanza/UD | — | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | — |
+| [Ottoman Turkish](https://en.wikipedia.org/wiki/Ottoman_Turkish_language) | `ota` | Arab, Latn | - | — | - | - | - | — |
 | [Old Turkish](https://en.wikipedia.org/wiki/Old_Turkic_language) | `otk` | Orkh, Latn | 🔧 rule | — | — | — | — | — |
 
 ### Stanza/UD Model Details
@@ -231,14 +290,20 @@ The Stanza backend provides neural models trained on [Universal Dependencies](ht
 
 ### Transliteration Support
 
-| Language Pair | Direction | Status |
-|---|---|---|
-| Kazakh Cyrillic ↔ Latin | Bidirectional | ✅ |
-| Uzbek Cyrillic → Latin | One-way | ✅ |
-| Uyghur Arabic → Latin (ULY) | One-way | ✅ |
-| Crimean Tatar Cyrillic → Latin | One-way | ✅ |
-| Azerbaijani Cyrillic ↔ Latin | Bidirectional | 🔧 |
-| Tatar Cyrillic ↔ Latin | Bidirectional | 🔧 |
+Bidirectional script conversion is available for all multi-script languages. The transliterator uses a greedy longest-match algorithm with per-language mapping tables.
+
+| Language | Direction | Scripts | Standard |
+|---|---|---|---|
+| Kazakh | ↔ Bidirectional | Cyrillic ↔ Latin | 2021 official Latin alphabet |
+| Uzbek | ↔ Bidirectional | Cyrillic ↔ Latin | 1995 official Latin alphabet |
+| Azerbaijani | ↔ Bidirectional | Cyrillic ↔ Latin | 1991 official Latin alphabet |
+| Tatar | ↔ Bidirectional | Cyrillic ↔ Latin | Zamanälif |
+| Turkmen | ↔ Bidirectional | Cyrillic ↔ Latin | 1993 official Latin alphabet |
+| Karakalpak | ↔ Bidirectional | Cyrillic ↔ Latin | 2016 Latin alphabet |
+| Crimean Tatar | ↔ Bidirectional | Cyrillic ↔ Latin | Standard Crimean Tatar Latin |
+| Uyghur | ↔ Bidirectional | Perso-Arabic ↔ Latin | Uyghur Latin Yéziqi (ULY) |
+| Ottoman Turkish | → One-way | Latin → Perso-Arabic | Academic transcription |
+| Old Turkic | → One-way | Runic → Latin | Turkological convention |
 
 ### Apertium FST Quality Levels
 

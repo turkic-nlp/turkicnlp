@@ -102,8 +102,10 @@ LANGUAGE_SCRIPTS: dict[str, ScriptConfig] = {
         primary=Script.CYRILLIC,
     ),
     "tuk": ScriptConfig(
-        available=[Script.LATIN],
+        available=[Script.LATIN, Script.CYRILLIC],
         primary=Script.LATIN,
+        can_transliterate={Script.CYRILLIC: Script.LATIN, Script.LATIN: Script.CYRILLIC},
+        apertium_script=Script.LATIN,
     ),
     "tat": ScriptConfig(
         available=[Script.CYRILLIC, Script.LATIN],

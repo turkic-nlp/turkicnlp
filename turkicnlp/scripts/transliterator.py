@@ -144,12 +144,59 @@ TRANSLITERATION_TABLES: dict[str, dict[str, str]] = {
 
     # Uyghur Perso-Arabic → Latin (ULY)
     "uig_Arab_to_Latn": {
+        "ئا": "a", "ئە": "e", "ئو": "o", "ئۇ": "u", "ئۆ": "ö", "ئۈ": "ü",
+        "ئې": "é", "ئى": "i",
         "ا": "a", "ە": "e", "ب": "b", "پ": "p", "ت": "t", "ج": "j",
         "چ": "ch", "خ": "x", "د": "d", "ر": "r", "ز": "z", "ژ": "zh",
         "س": "s", "ش": "sh", "غ": "gh", "ف": "f", "ق": "q", "ك": "k",
         "گ": "g", "ڭ": "ng", "ل": "l", "م": "m", "ن": "n", "ھ": "h",
         "و": "o", "ۇ": "u", "ۆ": "ö", "ۈ": "ü", "ۋ": "w", "ې": "é",
-        "ى": "i", "ي": "y",
+        "ى": "i", "ي": "y", "ئ": "",
+    },
+
+    # Turkmen Cyrillic → Latin (1993 official Latin alphabet)
+    "tuk_Cyrl_to_Latn": {
+        # Digraphs for loanwords
+        "щ": "şç", "Щ": "Şç",
+        # Turkmen-specific Cyrillic letters
+        "ә": "ä", "Ә": "Ä", "җ": "j", "Җ": "J", "ң": "ň", "Ң": "Ň",
+        "ө": "ö", "Ө": "Ö", "ү": "ü", "Ү": "Ü",
+        # Standard Cyrillic
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "w", "В": "W",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "ё": "ýo", "Ё": "Ýo", "ж": "ž", "Ж": "Ž", "з": "z", "З": "Z",
+        "и": "i", "И": "I", "й": "ý", "Й": "Ý", "к": "k", "К": "K",
+        "л": "l", "Л": "L", "м": "m", "М": "M", "н": "n", "Н": "N",
+        "о": "o", "О": "O", "п": "p", "П": "P", "р": "r", "Р": "R",
+        "с": "s", "С": "S", "т": "t", "Т": "T", "у": "u", "У": "U",
+        "ф": "f", "Ф": "F", "х": "h", "Х": "H", "ц": "ts", "Ц": "Ts",
+        "ч": "ç", "Ч": "Ç", "ш": "ş", "Ш": "Ş", "ы": "y", "Ы": "Y",
+        "э": "e", "Э": "E", "ю": "ýu", "Ю": "Ýu", "я": "ýa", "Я": "Ýa",
+        "ъ": "", "ь": "",
+    },
+
+    # Turkmen Latin → Cyrillic
+    "tuk_Latn_to_Cyrl": {
+        # Multi-char sequences first (greedy match)
+        "şç": "щ", "Şç": "Щ",
+        "ýo": "ё", "Ýo": "Ё", "ÝO": "Ё",
+        "ýu": "ю", "Ýu": "Ю", "ÝU": "Ю",
+        "ýa": "я", "Ýa": "Я", "ÝA": "Я",
+        "ts": "ц", "Ts": "Ц", "TS": "Ц",
+        # Turkmen-specific Latin letters
+        "ä": "ә", "Ä": "Ә", "ň": "ң", "Ň": "Ң",
+        "ö": "ө", "Ö": "Ө", "ü": "ү", "Ü": "Ү",
+        "ç": "ч", "Ç": "Ч", "ş": "ш", "Ş": "Ш",
+        "ž": "ж", "Ž": "Ж", "ý": "й", "Ý": "Й",
+        # Standard Latin → Cyrillic (note: j → җ, w → в)
+        "a": "а", "A": "А", "b": "б", "B": "Б", "d": "д", "D": "Д",
+        "e": "е", "E": "Е", "f": "ф", "F": "Ф", "g": "г", "G": "Г",
+        "h": "х", "H": "Х", "i": "и", "I": "И", "j": "җ", "J": "Җ",
+        "k": "к", "K": "К", "l": "л", "L": "Л", "m": "м", "M": "М",
+        "n": "н", "N": "Н", "o": "о", "O": "О", "p": "п", "P": "П",
+        "r": "р", "R": "Р", "s": "с", "S": "С", "t": "т", "T": "Т",
+        "u": "у", "U": "У", "w": "в", "W": "В", "y": "ы", "Y": "Ы",
+        "z": "з", "Z": "З",
     },
 
     # Crimean Tatar Cyrillic → Latin
@@ -165,5 +212,301 @@ TRANSLITERATION_TABLES: dict[str, dict[str, str]] = {
         "т": "t", "Т": "T", "у": "u", "У": "U", "ф": "f", "Ф": "F",
         "х": "h", "Х": "H", "ц": "ts", "Ц": "Ts", "ч": "ç", "Ч": "Ç",
         "ш": "ş", "Ш": "Ş", "э": "e", "Э": "E", "ъ": "", "ь": "",
+    },
+
+    # Crimean Tatar Latin → Cyrillic
+    "crh_Latn_to_Cyrl": {
+        # Digraphs first (greedy match)
+        "ts": "ц", "Ts": "Ц", "TS": "Ц",
+        # Special Latin letters → Cyrillic digraphs
+        "ğ": "гъ", "Ğ": "Гъ", "q": "къ", "Q": "Къ", "ñ": "нъ", "Ñ": "Нъ",
+        "c": "дж", "C": "Дж",
+        # Single characters
+        "ç": "ч", "Ç": "Ч", "ş": "ш", "Ş": "Ш", "İ": "И", "i": "и",
+        "a": "а", "A": "А", "b": "б", "B": "Б", "d": "д", "D": "Д",
+        "e": "е", "E": "Е", "f": "ф", "F": "Ф", "g": "г", "G": "Г",
+        "h": "х", "H": "Х", "j": "ж", "J": "Ж", "k": "к", "K": "К",
+        "l": "л", "L": "Л", "m": "м", "M": "М", "n": "н", "N": "Н",
+        "o": "о", "O": "О", "p": "п", "P": "П", "r": "р", "R": "Р",
+        "s": "с", "S": "С", "t": "т", "T": "Т", "u": "у", "U": "У",
+        "v": "в", "V": "В", "y": "й", "Y": "Й", "z": "з", "Z": "З",
+    },
+
+    # Uzbek Latin → Cyrillic (reverse of 1995 official alphabet)
+    "uzb_Latn_to_Cyrl": {
+        # Digraphs/trigraphs first (greedy match)
+        "sh": "ш", "Sh": "Ш", "SH": "Ш",
+        "ch": "ч", "Ch": "Ч", "CH": "Ч",
+        "ng": "нг", "Ng": "Нг", "NG": "НГ",
+        "g'": "ғ", "G'": "Ғ", "o'": "ў", "O'": "Ў",
+        "yo": "ё", "Yo": "Ё", "YO": "Ё",
+        "yu": "ю", "Yu": "Ю", "YU": "Ю",
+        "ya": "я", "Ya": "Я", "YA": "Я",
+        "ts": "ц", "Ts": "Ц", "TS": "Ц",
+        # Single characters
+        "'": "ъ",
+        "a": "а", "A": "А", "b": "б", "B": "Б", "d": "д", "D": "Д",
+        "e": "е", "E": "Е", "f": "ф", "F": "Ф", "g": "г", "G": "Г",
+        "h": "ҳ", "H": "Ҳ", "i": "и", "I": "И", "j": "ж", "J": "Ж",
+        "k": "к", "K": "К", "l": "л", "L": "Л", "m": "м", "M": "М",
+        "n": "н", "N": "Н", "o": "о", "O": "О", "p": "п", "P": "П",
+        "q": "қ", "Q": "Қ", "r": "р", "R": "Р", "s": "с", "S": "С",
+        "t": "т", "T": "Т", "u": "у", "U": "У", "v": "в", "V": "В",
+        "x": "х", "X": "Х", "y": "й", "Y": "Й", "z": "з", "Z": "З",
+    },
+
+    # Uyghur Latin (ULY) → Perso-Arabic
+    "uig_Latn_to_Arab": {
+        # Digraphs first (greedy match)
+        "ch": "چ", "Ch": "چ", "CH": "چ",
+        "sh": "ش", "Sh": "ش", "SH": "ش",
+        "zh": "ژ", "Zh": "ژ", "ZH": "ژ",
+        "gh": "غ", "Gh": "غ", "GH": "غ",
+        "ng": "ڭ", "Ng": "ڭ", "NG": "ڭ",
+        # Single characters
+        "a": "ا", "e": "ە", "b": "ب", "p": "پ", "t": "ت", "j": "ج",
+        "x": "خ", "d": "د", "r": "ر", "z": "ز", "s": "س", "f": "ف",
+        "q": "ق", "k": "ك", "g": "گ", "l": "ل", "m": "م", "n": "ن",
+        "h": "ھ", "o": "و", "u": "ۇ", "ö": "ۆ", "ü": "ۈ", "w": "ۋ",
+        "é": "ې", "i": "ى", "y": "ي",
+        # Capitals map to same Arabic letters (Arabic has no case)
+        "A": "ا", "E": "ە", "B": "ب", "P": "پ", "T": "ت", "J": "ج",
+        "X": "خ", "D": "د", "R": "ر", "Z": "ز", "S": "س", "F": "ف",
+        "Q": "ق", "K": "ك", "G": "گ", "L": "ل", "M": "م", "N": "ن",
+        "H": "ھ", "O": "و", "U": "ۇ", "Ö": "ۆ", "Ü": "ۈ", "W": "ۋ",
+        "É": "ې", "I": "ى", "Y": "ي",
+    },
+
+    # Azerbaijani Cyrillic → Latin (1991 official Latin alphabet)
+    "aze_Cyrl_to_Latn": {
+        # Digraphs for Russian loanwords
+        "щ": "şç", "Щ": "Şç",
+        # Azerbaijani-specific Cyrillic letters
+        "ә": "ə", "Ә": "Ə", "ғ": "ğ", "Ғ": "Ğ", "ө": "ö", "Ө": "Ö",
+        "ү": "ü", "Ү": "Ü", "ҹ": "c", "Ҹ": "C", "ҝ": "g", "Ҝ": "G",
+        "һ": "h", "Һ": "H",
+        # Standard Cyrillic
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "q", "Г": "Q", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "ё": "yo", "Ё": "Yo", "ж": "j", "Ж": "J", "з": "z", "З": "Z",
+        "и": "i", "И": "İ", "й": "y", "Й": "Y", "к": "k", "К": "K",
+        "л": "l", "Л": "L", "м": "m", "М": "M", "н": "n", "Н": "N",
+        "о": "o", "О": "O", "п": "p", "П": "P", "р": "r", "Р": "R",
+        "с": "s", "С": "S", "т": "t", "Т": "T", "у": "u", "У": "U",
+        "ф": "f", "Ф": "F", "х": "x", "Х": "X", "ц": "ts", "Ц": "Ts",
+        "ч": "ç", "Ч": "Ç", "ш": "ş", "Ш": "Ş", "ы": "ı", "Ы": "I",
+        "э": "e", "Э": "E", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ъ": "", "ь": "",
+    },
+
+    # Azerbaijani Latin → Cyrillic
+    "aze_Latn_to_Cyrl": {
+        # Digraphs first (greedy match)
+        "şç": "щ", "Şç": "Щ",
+        "yo": "ё", "Yo": "Ё", "YO": "Ё",
+        "yu": "ю", "Yu": "Ю", "YU": "Ю",
+        "ya": "я", "Ya": "Я", "YA": "Я",
+        "ts": "ц", "Ts": "Ц", "TS": "Ц",
+        # Azerbaijani-specific Latin letters
+        "ə": "ә", "Ə": "Ә", "ğ": "ғ", "Ğ": "Ғ", "ö": "ө", "Ö": "Ө",
+        "ü": "ү", "Ü": "Ү", "ç": "ч", "Ç": "Ч", "ş": "ш", "Ş": "Ш",
+        "İ": "И", "ı": "ы",
+        # Standard Latin → Cyrillic (note: g → ҝ, q → г, c → ҹ)
+        "a": "а", "A": "А", "b": "б", "B": "Б", "c": "ҹ", "C": "Ҹ",
+        "d": "д", "D": "Д", "e": "е", "E": "Е", "f": "ф", "F": "Ф",
+        "g": "ҝ", "G": "Ҝ", "h": "һ", "H": "Һ", "i": "и", "I": "Ы",
+        "j": "ж", "J": "Ж", "k": "к", "K": "К", "l": "л", "L": "Л",
+        "m": "м", "M": "М", "n": "н", "N": "Н", "o": "о", "O": "О",
+        "p": "п", "P": "П", "q": "г", "Q": "Г", "r": "р", "R": "Р",
+        "s": "с", "S": "С", "t": "т", "T": "Т", "u": "у", "U": "У",
+        "v": "в", "V": "В", "x": "х", "X": "Х", "y": "й", "Y": "Й",
+        "z": "з", "Z": "З",
+    },
+
+    # Tatar Cyrillic → Latin (Zamanälif)
+    "tat_Cyrl_to_Latn": {
+        # Digraphs for loanwords
+        "щ": "şç", "Щ": "Şç",
+        # Tatar-specific Cyrillic letters
+        "ә": "ä", "Ә": "Ä", "ө": "ö", "Ө": "Ö", "ү": "ü", "Ү": "Ü",
+        "җ": "c", "Җ": "C", "ң": "ñ", "Ң": "Ñ", "һ": "h", "Һ": "H",
+        # Standard Cyrillic
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "w", "В": "W",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "ё": "yo", "Ё": "Yo", "ж": "j", "Ж": "J", "з": "z", "З": "Z",
+        "и": "i", "И": "İ", "й": "y", "Й": "Y", "к": "k", "К": "K",
+        "л": "l", "Л": "L", "м": "m", "М": "M", "н": "n", "Н": "N",
+        "о": "o", "О": "O", "п": "p", "П": "P", "р": "r", "Р": "R",
+        "с": "s", "С": "S", "т": "t", "Т": "T", "у": "u", "У": "U",
+        "ф": "f", "Ф": "F", "х": "x", "Х": "X", "ц": "ts", "Ц": "Ts",
+        "ч": "ç", "Ч": "Ç", "ш": "ş", "Ш": "Ş", "ы": "ı", "Ы": "I",
+        "э": "e", "Э": "E", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ъ": "", "ь": "",
+    },
+
+    # Tatar Latin (Zamanälif) → Cyrillic
+    "tat_Latn_to_Cyrl": {
+        # Digraphs first (greedy match)
+        "şç": "щ", "Şç": "Щ",
+        "yo": "ё", "Yo": "Ё", "YO": "Ё",
+        "yu": "ю", "Yu": "Ю", "YU": "Ю",
+        "ya": "я", "Ya": "Я", "YA": "Я",
+        "ts": "ц", "Ts": "Ц", "TS": "Ц",
+        # Tatar-specific Latin letters
+        "ä": "ә", "Ä": "Ә", "ö": "ө", "Ö": "Ө", "ü": "ү", "Ü": "Ү",
+        "ñ": "ң", "Ñ": "Ң", "ç": "ч", "Ç": "Ч", "ş": "ш", "Ş": "Ш",
+        "İ": "И", "ı": "ы",
+        # Standard Latin → Cyrillic (note: c → җ, w → в)
+        "a": "а", "A": "А", "b": "б", "B": "Б", "c": "җ", "C": "Җ",
+        "d": "д", "D": "Д", "e": "е", "E": "Е", "f": "ф", "F": "Ф",
+        "g": "г", "G": "Г", "h": "һ", "H": "Һ", "i": "и", "I": "Ы",
+        "j": "ж", "J": "Ж", "k": "к", "K": "К", "l": "л", "L": "Л",
+        "m": "м", "M": "М", "n": "н", "N": "Н", "o": "о", "O": "О",
+        "p": "п", "P": "П", "r": "р", "R": "Р", "s": "с", "S": "С",
+        "t": "т", "T": "Т", "u": "у", "U": "У", "w": "в", "W": "В",
+        "x": "х", "X": "Х", "y": "й", "Y": "Й", "z": "з", "Z": "З",
+    },
+
+    # Karakalpak Cyrillic → Latin (2016 Latin alphabet)
+    "kaa_Cyrl_to_Latn": {
+        # Digraphs for loanwords
+        "щ": "shch", "Щ": "Shch",
+        # Karakalpak-specific Cyrillic letters
+        "ә": "á", "Ә": "Á", "ғ": "ǵ", "Ғ": "Ǵ", "қ": "q", "Қ": "Q",
+        "ң": "ń", "Ң": "Ń", "ө": "ó", "Ө": "Ó", "ү": "ú", "Ү": "Ú",
+        "ў": "w", "Ў": "W", "ҳ": "h", "Ҳ": "H",
+        # Standard Cyrillic
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "ё": "yo", "Ё": "Yo", "ж": "j", "Ж": "J", "з": "z", "З": "Z",
+        "и": "i", "И": "I", "й": "y", "Й": "Y", "к": "k", "К": "K",
+        "л": "l", "Л": "L", "м": "m", "М": "M", "н": "n", "Н": "N",
+        "о": "o", "О": "O", "п": "p", "П": "P", "р": "r", "Р": "R",
+        "с": "s", "С": "S", "т": "t", "Т": "T", "у": "u", "У": "U",
+        "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "ц": "ts", "Ц": "Ts", "ч": "ch", "Ч": "Ch",
+        "ш": "sh", "Ш": "Sh", "ы": "í", "Ы": "Í",
+        "э": "e", "Э": "E", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ъ": "", "ь": "",
+    },
+
+    # Karakalpak Latin → Cyrillic
+    "kaa_Latn_to_Cyrl": {
+        # Multi-char sequences first (greedy match)
+        "shch": "щ", "Shch": "Щ",
+        "sh": "ш", "Sh": "Ш", "SH": "Ш",
+        "ch": "ч", "Ch": "Ч", "CH": "Ч",
+        "yo": "ё", "Yo": "Ё", "YO": "Ё",
+        "yu": "ю", "Yu": "Ю", "YU": "Ю",
+        "ya": "я", "Ya": "Я", "YA": "Я",
+        "ts": "ц", "Ts": "Ц", "TS": "Ц",
+        # Karakalpak-specific Latin letters
+        "á": "ә", "Á": "Ә", "ǵ": "ғ", "Ǵ": "Ғ", "ń": "ң", "Ń": "Ң",
+        "ó": "ө", "Ó": "Ө", "ú": "ү", "Ú": "Ү", "í": "ы", "Í": "Ы",
+        # Standard Latin → Cyrillic
+        "a": "а", "A": "А", "b": "б", "B": "Б", "d": "д", "D": "Д",
+        "e": "е", "E": "Е", "f": "ф", "F": "Ф", "g": "г", "G": "Г",
+        "h": "ҳ", "H": "Ҳ", "i": "и", "I": "И", "j": "ж", "J": "Ж",
+        "k": "к", "K": "К", "l": "л", "L": "Л", "m": "м", "M": "М",
+        "n": "н", "N": "Н", "o": "о", "O": "О", "p": "п", "P": "П",
+        "q": "қ", "Q": "Қ", "r": "р", "R": "Р", "s": "с", "S": "С",
+        "t": "т", "T": "Т", "u": "у", "U": "У", "v": "в", "V": "В",
+        "w": "ў", "W": "Ў", "x": "х", "X": "Х", "y": "й", "Y": "Й",
+        "z": "з", "Z": "З",
+    },
+
+    # Ottoman Turkish Latin (academic transcription) → Perso-Arabic
+    # Note: This is a simplified mapping. Ottoman script has many
+    # Arabic/Persian letters that share Latin equivalents; this uses
+    # the most common correspondence for each letter.
+    "ota_Latn_to_Arab": {
+        # Digraphs
+        "ch": "چ", "Ch": "چ", "CH": "چ",
+        "sh": "ش", "Sh": "ش", "SH": "ش",
+        # Single characters
+        "a": "ا", "A": "ا", "b": "ب", "B": "ب", "c": "ج", "C": "ج",
+        "ç": "چ", "Ç": "چ", "d": "د", "D": "د", "e": "ه", "E": "ه",
+        "f": "ف", "F": "ف", "g": "گ", "G": "گ", "ğ": "غ", "Ğ": "غ",
+        "h": "ح", "H": "ح", "ı": "ی", "i": "ی", "I": "ی", "İ": "ی",
+        "j": "ژ", "J": "ژ", "k": "ك", "K": "ك", "l": "ل", "L": "ل",
+        "m": "م", "M": "م", "n": "ن", "N": "ن", "o": "و", "O": "و",
+        "ö": "و", "Ö": "و", "p": "پ", "P": "پ", "r": "ر", "R": "ر",
+        "s": "س", "S": "س", "ş": "ش", "Ş": "ش", "t": "ت", "T": "ت",
+        "u": "و", "U": "و", "ü": "و", "Ü": "و", "v": "و", "V": "و",
+        "y": "ی", "Y": "ی", "z": "ز", "Z": "ز",
+    },
+
+    # Old Turkic Runic (Orkhon) → Latin transliteration
+    # Based on standard Turkological conventions for Orkhon inscriptions.
+    # Unicode block U+10C00–U+10C4F.
+    "otk_Orkh_to_Latn": {
+        # Vowels
+        "\U00010C00": "a",   # ORKHON A
+        "\U00010C01": "a",   # YENISEI A
+        "\U00010C02": "ä",   # YENISEI AE
+        "\U00010C03": "ı",   # ORKHON I
+        "\U00010C04": "ı",   # YENISEI I
+        "\U00010C05": "e",   # YENISEI E
+        "\U00010C06": "o",   # ORKHON O (also u)
+        "\U00010C07": "ö",   # ORKHON OE (also ü)
+        "\U00010C08": "ö",   # YENISEI OE
+        # Consonants with back/front vowel variants
+        "\U00010C09": "b",   # ORKHON AB (b with back vowels)
+        "\U00010C0A": "b",   # YENISEI AB
+        "\U00010C0B": "b",   # ORKHON AEB (b with front vowels)
+        "\U00010C0C": "b",   # YENISEI AEB
+        "\U00010C0D": "g",   # ORKHON AG (g with back vowels)
+        "\U00010C0E": "g",   # YENISEI AG
+        "\U00010C0F": "g",   # ORKHON AEG (g with front vowels)
+        "\U00010C10": "g",   # YENISEI AEG
+        "\U00010C11": "d",   # ORKHON AD (d with back vowels)
+        "\U00010C12": "d",   # YENISEI AD
+        "\U00010C13": "d",   # ORKHON AED (d with front vowels)
+        "\U00010C14": "z",   # ORKHON AEZ
+        "\U00010C15": "y",   # ORKHON AY (y with back vowels)
+        "\U00010C16": "y",   # YENISEI AY
+        "\U00010C17": "y",   # ORKHON AEY (y with front vowels)
+        "\U00010C18": "y",   # YENISEI AEY
+        "\U00010C19": "k",   # ORKHON AEK
+        "\U00010C1A": "k",   # YENISEI AEK
+        "\U00010C1B": "q",   # ORKHON AQ
+        "\U00010C1C": "q",   # YENISEI AQ
+        "\U00010C1D": "q",   # ORKHON IQ
+        "\U00010C1E": "q",   # YENISEI IQ
+        "\U00010C1F": "q",   # ORKHON OQ
+        "\U00010C20": "q",   # YENISEI OQ
+        "\U00010C21": "l",   # ORKHON AL
+        "\U00010C22": "l",   # YENISEI AL
+        "\U00010C23": "l",   # ORKHON AEL
+        "\U00010C24": "l",   # YENISEI AEL
+        "\U00010C25": "m",   # ORKHON EM
+        "\U00010C26": "n",   # ORKHON AN
+        "\U00010C27": "n",   # ORKHON AEN
+        "\U00010C28": "n",   # YENISEI AEN
+        "\U00010C29": "ŋ",   # ORKHON ENG (also ñ)
+        "\U00010C2A": "ŋ",   # YENISEI AENG
+        "\U00010C2B": "p",   # ORKHON EP
+        "\U00010C2C": "p",   # YENISEI EP
+        "\U00010C2D": "r",   # ORKHON AR
+        "\U00010C2E": "r",   # YENISEI AR
+        "\U00010C2F": "r",   # ORKHON AER
+        "\U00010C30": "s",   # ORKHON AS
+        "\U00010C31": "s",   # ORKHON AES
+        "\U00010C32": "t",   # ORKHON AT (t with back vowels)
+        "\U00010C33": "t",   # YENISEI AT
+        "\U00010C34": "t",   # ORKHON AET (t with front vowels)
+        "\U00010C35": "t",   # YENISEI AET
+        "\U00010C36": "lt",  # ORKHON ALT/AEL
+        "\U00010C37": "lt",  # YENISEI ALT
+        "\U00010C38": "sh",  # ORKHON ASH
+        "\U00010C39": "z",   # ORKHON AZ
+        "\U00010C3A": "z",   # YENISEI AZ
+        "\U00010C3B": "nt",  # ORKHON ANT
+        "\U00010C3C": "nch", # ORKHON ANCH
+        "\U00010C3D": "ch",  # ORKHON ICH
+        "\U00010C3E": "ch",  # YENISEI ICH
+        "\U00010C3F": "ch",  # ORKHON ECH
+        "\U00010C40": "bash", # ORKHON BASH (head mark / punctuation)
+        "\U00010C48": ":",   # OLD TURKIC WORD SEPARATOR
     },
 }
