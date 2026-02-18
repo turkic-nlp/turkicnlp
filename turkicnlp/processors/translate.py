@@ -57,7 +57,7 @@ class NLLBTranslateProcessor(Processor):
         """Load NLLB tokenizer + seq2seq model for generation."""
         try:
             import torch
-            from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+            from transformers import AutoModelForSeq2SeqLM, NllbTokenizer
         except ImportError as exc:
             raise ImportError(
                 "NLLB translation requires `transformers` and `torch`. "
@@ -77,7 +77,7 @@ class NLLBTranslateProcessor(Processor):
         local_model_dir = self._resolve_local_model_dir(model_name, Path(model_path))
         load_from = str(local_model_dir) if local_model_dir else model_name
 
-        self._tokenizer = AutoTokenizer.from_pretrained(load_from, src_lang=src_lang)
+        self._tokenizer = NllbTokenizer.from_pretrained(load_from, src_lang=src_lang)
         self._model = AutoModelForSeq2SeqLM.from_pretrained(load_from)
         self._forced_bos_token_id = self._tokenizer.convert_tokens_to_ids(str(tgt_lang))
         if self._forced_bos_token_id is None or self._forced_bos_token_id < 0:

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/cover.png" alt="TurkicNLP — Language Family Tree" width="300">
+  <img src="https://sherzod-hakimov.github.io/images/cover.png" alt="TurkicNLP — Six Branches of Turkic Language Family" width="200">
 </p>
 
 <h1 align="center">TurkicNLP</h1>
@@ -53,16 +53,16 @@ pip install turkicnlp
 
 To install all required dependencies at once:
 ```bash
-pip install turkicnlp[all]
+pip install "turkicnlp[all]"
 ```
 
 With optional dependencies:
 
 ```bash
-pip install turkicnlp[stanza]        # Stanza/UD neural models
-pip install turkicnlp[nllb]          # NLLB embeddings and translation backend (transformers, tokenizer libraries)
-pip install turkicnlp[all]           # Everything: stanza, NLLB embeddings & translations
-pip install turkicnlp[dev]           # Development tools
+pip install "turkicnlp[stanza]"        # Stanza/UD neural models
+pip install "turkicnlp[nllb]"          # NLLB embeddings and translation backend (transformers, tokenizer libraries)
+pip install "turkicnlp[all]"           # Everything: stanza, NLLB embeddings & translations
+pip install "turkicnlp[dev]"           # Development tools
 ```
 
 ## Quick Start
@@ -262,7 +262,7 @@ print(t.transliterate("\U00010C34\U00010C07\U00010C2F\U00010C19"))
 ## Supported Languages and Components
 
 <p align="center">
-  <img src="images/Turkic_Languages_distribution_map.png" alt="Distribution map of Turkic languages" width="700">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Turkic_Languages_distribution_map.png" alt="Distribution map of Turkic languages" width="700">
   <br>
   <em>Geographic distribution of Turkic languages (source: <a href="https://commons.wikimedia.org/wiki/File:Turkic_Languages_distribution_map.png">Wikimedia Commons</a>)</em>
 </p>
@@ -494,6 +494,8 @@ Contributions are welcome, especially:
 - **Neural model training** — POS taggers, parsers, NER models
 - **Apertium FST improvements** — better coverage for prototype-level languages
 - **Other** -  any other aspect that you want
+
+Create issues, Pull Requests etc.
 
 
 
