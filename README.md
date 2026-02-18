@@ -19,6 +19,20 @@
   <img src="https://img.shields.io/badge/languages-24_Turkic-green.svg" alt="24 Turkic Languages">
 </p>
 
+## Citation
+
+If you use TurkicNLP in your research, please cite:
+
+```bibtex
+@software{turkicnlp,
+  title = {TurkicNLP: NLP Toolkit for Turkic Languages},
+  author = {Sherzod Hakimov},
+  year = {2026},
+  url = {https://github.com/turkic-nlp/turkicnlp},
+  license = {Apache-2.0},
+}
+```
+
 ## Features
 
 - **24 Turkic languages** from Turkish to Sakha, Kazakh to Uyghur
@@ -397,18 +411,17 @@ Pipeline("tur", processors=["tokenize", "morph", "pos", "depparse"])
   Document ─── annotated with all layers
 ```
 
-
 ```
-Pipeline("kaz", processors=["tokenize", "morph", "pos", "depparse"])
+Pipeline("azb", processors=["embeddings", "translate"], translate_tgt_lang="eng")
     │
     ▼
-  Document ─── text: "Мен мектепке бардым"
+  Document ─── text: "من کتاب اوخویورام"
     │
-    ├── script_detect    → script = "Cyrl"
-    ├── tokenize         → sentences, tokens, words
-    ├── morph (Apertium) → lemma, pos, feats (via HFST)
-    ├── pos (neural)     → refined UPOS, XPOS, feats
-    └── depparse         → head, deprel
+    ├── script_detect          → script = "Arab"
+    ├── embeddings (NLLB)      → sentence/document vectors
+    └── translate (NLLB)       → sentence/document translation
+           (src resolved from FLORES map: azb -> azb_Arab,
+            tgt resolved from ISO-3: eng -> eng_Latn)
     │
     ▼
   Document ─── annotated with all layers
@@ -419,8 +432,9 @@ Pipeline("kaz", processors=["tokenize", "morph", "pos", "depparse"])
 - **Document** → Sentence → Token → Word hierarchy (maps to CoNLL-U)
 - **Processor** ABC with `PROVIDES`, `REQUIRES`, `NAME` class attributes
 - **Pipeline** orchestrator with dependency resolution and script-aware model loading
-- **ProcessorRegistry** for pluggable backends (Apertium, Stanza, neural, rule-based)
+- **ProcessorRegistry** for pluggable backends (rule, Apertium, Stanza, NLLB)
 - **ModelRegistry** with remote catalog and local caching at `~/.turkicnlp/models/`
+- **NLLB FLORES language map** for ISO-3 to NLLB code resolution in translation (e.g. `tuk` -> `tuk_Latn`)
 
 ### Model Storage Layout
 
@@ -481,19 +495,7 @@ Contributions are welcome, especially:
 - **Apertium FST improvements** — better coverage for prototype-level languages
 - **Other** -  any other aspect that you want
 
-## Citation
 
-If you use TurkicNLP in your research, please cite:
-
-```bibtex
-@software{turkicnlp,
-  title = {TurkicNLP: NLP Toolkit for Turkic Languages},
-  author = {Sherzod Hakimov},
-  year = {2026},
-  url = {https://github.com/turkic-nlp/turkicnlp},
-  license = {Apache-2.0},
-}
-```
 
 ## Acknowledgements
 
