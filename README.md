@@ -224,7 +224,7 @@ The table below shows all supported languages with their available scripts and p
 | [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ✅ rule, ✅ Stanza/UD | ✅ Apertium | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza |
 | [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — |
 | [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | 🔧 rule_arabic | — | — | — | — | — |
-| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ✅ rule | ✅ Apertium (beta) | 🔧 | 🔧 | — | — |
+| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ✅ rule | ✅ Apertium (beta) | 🔧 | 🔧 | 🔧 | — |
 | [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
 
 ### Kipchak Branch
@@ -232,8 +232,8 @@ The table below shows all supported languages with their available scripts and p
 | Language | Code | Script(s) | Tokenize | Morph (FST) | POS | Lemma | DepParse | NER |
 |---|---|---|---|---|---|---|---|---|
 | [Kazakh](https://en.wikipedia.org/wiki/Kazakh_language) | `kaz` | Cyrl, Latn | ✅ rule, ✅ Stanza/UD | ✅ Apertium | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza |
-| [Kyrgyz](https://en.wikipedia.org/wiki/Kyrgyz_language) | `kir` | Cyrl | ✅ rule, ✅ Stanza/UD | ✅ Apertium | ✅ Stanza/UD | ✅ Stanza/UD | ✅ Stanza/UD | — |
-| [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ✅ rule | ✅ Apertium | 🔧 | 🔧 | — | — |
+| [Kyrgyz](https://en.wikipedia.org/wiki/Kyrgyz_language) | `kir` | Cyrl | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — |
+| [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ✅ rule | ✅ Apertium | 🔧 | 🔧 | 🔧 | — |
 | [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ✅ rule | ✅ Apertium (beta) | — | — | — | — |
 | [Crimean Tatar](https://en.wikipedia.org/wiki/Crimean_Tatar_language) | `crh` | Latn, Cyrl | ✅ rule | ✅ Apertium (beta) | — | — | — | — |
 | [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ✅ rule | ✅ Apertium (proto) | — | — | — | — |
