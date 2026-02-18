@@ -12,6 +12,7 @@ from turkicnlp.processors.base import Processor
 
 _NLLB_LANG_MAP: dict[str, str] = {
     "aze": "azj_Latn",
+    "azb": "azb_Arab",
     "bak": "bak_Cyrl",
     "crh": "crh_Latn",
     "kaz": "kaz_Cyrl",

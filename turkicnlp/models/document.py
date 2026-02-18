@@ -132,6 +132,7 @@ class Sentence:
         entities: Named entity spans.
         sentiment: Sentence-level sentiment label.
         embedding: Sentence-level dense vector representation.
+        translation: Sentence-level machine translation output.
     """
 
     text: str
@@ -140,6 +141,7 @@ class Sentence:
     entities: list[Span] = field(default_factory=list)
     sentiment: Optional[str] = None
     embedding: Optional[list[float]] = None
+    translation: Optional[str] = None
 
     @property
     def dependencies(self) -> list[tuple[Optional[Word], str, Word]]:
@@ -175,6 +177,7 @@ class Document:
         script_segments: For mixed-script docs: ``[(start, end, script), ...]``.
         lang: ISO 639-3 language code, set by :class:`Pipeline`.
         embedding: Document-level dense vector representation.
+        translation: Document-level machine translation output.
     """
 
     text: str
@@ -184,6 +187,7 @@ class Document:
     script_segments: Optional[list[tuple[int, int, str]]] = None
     lang: Optional[str] = None
     embedding: Optional[list[float]] = None
+    translation: Optional[str] = None
     _original_text: Optional[str] = field(default=None, repr=False)
 
     @property

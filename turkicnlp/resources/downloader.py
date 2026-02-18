@@ -284,12 +284,12 @@ def _download_huggingface_seq2seq(
     base_dir: Path,
     force: bool,
 ) -> None:
-    """Download and persist a Hugging Face seq2seq model for embeddings."""
+    """Download and persist a shared Hugging Face seq2seq model."""
     try:
         from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
     except ImportError as exc:
         raise ImportError(
-            "Downloading NLLB embeddings requires `transformers`. "
+            "Downloading NLLB models requires `transformers`. "
             "Install with: pip install turkicnlp[transformers]"
         ) from exc
 

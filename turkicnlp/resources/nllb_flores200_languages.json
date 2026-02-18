@@ -1,0 +1,1407 @@
+{
+  "source": "https://github.com/facebookresearch/flores/tree/main/flores200#languages-in-flores-200",
+  "codes": [
+    "ace_Arab",
+    "bam_Latn",
+    "dzo_Tibt",
+    "hin_Deva",
+    "khm_Khmr",
+    "mag_Deva",
+    "pap_Latn",
+    "sot_Latn",
+    "tur_Latn",
+    "ace_Latn",
+    "ban_Latn",
+    "ell_Grek",
+    "hne_Deva",
+    "kik_Latn",
+    "mai_Deva",
+    "pbt_Arab",
+    "spa_Latn",
+    "twi_Latn",
+    "acm_Arab",
+    "bel_Cyrl",
+    "eng_Latn",
+    "hrv_Latn",
+    "kin_Latn",
+    "mal_Mlym",
+    "pes_Arab",
+    "srd_Latn",
+    "tzm_Tfng",
+    "acq_Arab",
+    "bem_Latn",
+    "epo_Latn",
+    "hun_Latn",
+    "kir_Cyrl",
+    "mar_Deva",
+    "plt_Latn",
+    "srp_Cyrl",
+    "uig_Arab",
+    "aeb_Arab",
+    "ben_Beng",
+    "est_Latn",
+    "hye_Armn",
+    "kmb_Latn",
+    "min_Arab",
+    "pol_Latn",
+    "ssw_Latn",
+    "ukr_Cyrl",
+    "afr_Latn",
+    "bho_Deva",
+    "eus_Latn",
+    "ibo_Latn",
+    "kmr_Latn",
+    "min_Latn",
+    "por_Latn",
+    "sun_Latn",
+    "umb_Latn",
+    "ajp_Arab",
+    "bjn_Arab",
+    "ewe_Latn",
+    "ilo_Latn",
+    "knc_Arab",
+    "mkd_Cyrl",
+    "prs_Arab",
+    "swe_Latn",
+    "urd_Arab",
+    "aka_Latn",
+    "bjn_Latn",
+    "fao_Latn",
+    "ind_Latn",
+    "knc_Latn",
+    "mlt_Latn",
+    "quy_Latn",
+    "swh_Latn",
+    "uzn_Latn",
+    "als_Latn",
+    "bod_Tibt",
+    "fij_Latn",
+    "isl_Latn",
+    "kon_Latn",
+    "mni_Beng",
+    "ron_Latn",
+    "szl_Latn",
+    "vec_Latn",
+    "amh_Ethi",
+    "bos_Latn",
+    "fin_Latn",
+    "ita_Latn",
+    "kor_Hang",
+    "mos_Latn",
+    "run_Latn",
+    "tam_Taml",
+    "vie_Latn",
+    "apc_Arab",
+    "bug_Latn",
+    "fon_Latn",
+    "jav_Latn",
+    "lao_Laoo",
+    "mri_Latn",
+    "rus_Cyrl",
+    "taq_Latn",
+    "war_Latn",
+    "arb_Arab",
+    "bul_Cyrl",
+    "fra_Latn",
+    "jpn_Jpan",
+    "lij_Latn",
+    "mya_Mymr",
+    "sag_Latn",
+    "taq_Tfng",
+    "wol_Latn",
+    "arb_Latn",
+    "cat_Latn",
+    "fur_Latn",
+    "kab_Latn",
+    "lim_Latn",
+    "nld_Latn",
+    "san_Deva",
+    "tat_Cyrl",
+    "xho_Latn",
+    "ars_Arab",
+    "ceb_Latn",
+    "fuv_Latn",
+    "kac_Latn",
+    "lin_Latn",
+    "nno_Latn",
+    "sat_Olck",
+    "tel_Telu",
+    "ydd_Hebr",
+    "ary_Arab",
+    "ces_Latn",
+    "gaz_Latn",
+    "kam_Latn",
+    "lit_Latn",
+    "nob_Latn",
+    "scn_Latn",
+    "tgk_Cyrl",
+    "yor_Latn",
+    "arz_Arab",
+    "cjk_Latn",
+    "gla_Latn",
+    "kan_Knda",
+    "lmo_Latn",
+    "npi_Deva",
+    "shn_Mymr",
+    "tgl_Latn",
+    "yue_Hant",
+    "asm_Beng",
+    "ckb_Arab",
+    "gle_Latn",
+    "kas_Arab",
+    "ltg_Latn",
+    "nso_Latn",
+    "sin_Sinh",
+    "tha_Thai",
+    "zho_Hans",
+    "ast_Latn",
+    "crh_Latn",
+    "glg_Latn",
+    "kas_Deva",
+    "ltz_Latn",
+    "nus_Latn",
+    "slk_Latn",
+    "tir_Ethi",
+    "zho_Hant",
+    "awa_Deva",
+    "cym_Latn",
+    "grn_Latn",
+    "kat_Geor",
+    "lua_Latn",
+    "nya_Latn",
+    "slv_Latn",
+    "tpi_Latn",
+    "zsm_Latn",
+    "ayr_Latn",
+    "dan_Latn",
+    "guj_Gujr",
+    "kaz_Cyrl",
+    "lug_Latn",
+    "oci_Latn",
+    "smo_Latn",
+    "tsn_Latn",
+    "zul_Latn",
+    "azb_Arab",
+    "deu_Latn",
+    "hat_Latn",
+    "kbp_Latn",
+    "luo_Latn",
+    "ory_Orya",
+    "sna_Latn",
+    "tso_Latn",
+    "azj_Latn",
+    "dik_Latn",
+    "hau_Latn",
+    "kea_Latn",
+    "lus_Latn",
+    "pag_Latn",
+    "snd_Arab",
+    "tuk_Latn",
+    "bak_Cyrl",
+    "dyu_Latn",
+    "heb_Hebr",
+    "khk_Cyrl",
+    "lvs_Latn",
+    "pan_Guru",
+    "som_Latn",
+    "tum_Latn"
+  ],
+  "by_iso3": {
+    "ace": {
+      "default": "ace_Latn",
+      "codes": [
+        "ace_Latn",
+        "ace_Arab"
+      ]
+    },
+    "acm": {
+      "default": "acm_Arab",
+      "codes": [
+        "acm_Arab"
+      ]
+    },
+    "acq": {
+      "default": "acq_Arab",
+      "codes": [
+        "acq_Arab"
+      ]
+    },
+    "aeb": {
+      "default": "aeb_Arab",
+      "codes": [
+        "aeb_Arab"
+      ]
+    },
+    "afr": {
+      "default": "afr_Latn",
+      "codes": [
+        "afr_Latn"
+      ]
+    },
+    "ajp": {
+      "default": "ajp_Arab",
+      "codes": [
+        "ajp_Arab"
+      ]
+    },
+    "aka": {
+      "default": "aka_Latn",
+      "codes": [
+        "aka_Latn"
+      ]
+    },
+    "als": {
+      "default": "als_Latn",
+      "codes": [
+        "als_Latn"
+      ]
+    },
+    "amh": {
+      "default": "amh_Ethi",
+      "codes": [
+        "amh_Ethi"
+      ]
+    },
+    "apc": {
+      "default": "apc_Arab",
+      "codes": [
+        "apc_Arab"
+      ]
+    },
+    "arb": {
+      "default": "arb_Latn",
+      "codes": [
+        "arb_Latn",
+        "arb_Arab"
+      ]
+    },
+    "ars": {
+      "default": "ars_Arab",
+      "codes": [
+        "ars_Arab"
+      ]
+    },
+    "ary": {
+      "default": "ary_Arab",
+      "codes": [
+        "ary_Arab"
+      ]
+    },
+    "arz": {
+      "default": "arz_Arab",
+      "codes": [
+        "arz_Arab"
+      ]
+    },
+    "asm": {
+      "default": "asm_Beng",
+      "codes": [
+        "asm_Beng"
+      ]
+    },
+    "ast": {
+      "default": "ast_Latn",
+      "codes": [
+        "ast_Latn"
+      ]
+    },
+    "awa": {
+      "default": "awa_Deva",
+      "codes": [
+        "awa_Deva"
+      ]
+    },
+    "ayr": {
+      "default": "ayr_Latn",
+      "codes": [
+        "ayr_Latn"
+      ]
+    },
+    "azb": {
+      "default": "azb_Arab",
+      "codes": [
+        "azb_Arab"
+      ]
+    },
+    "azj": {
+      "default": "azj_Latn",
+      "codes": [
+        "azj_Latn"
+      ]
+    },
+    "aze": {
+      "default": "azj_Latn",
+      "codes": [
+        "azj_Latn"
+      ]
+    },
+    "bak": {
+      "default": "bak_Cyrl",
+      "codes": [
+        "bak_Cyrl"
+      ]
+    },
+    "bam": {
+      "default": "bam_Latn",
+      "codes": [
+        "bam_Latn"
+      ]
+    },
+    "ban": {
+      "default": "ban_Latn",
+      "codes": [
+        "ban_Latn"
+      ]
+    },
+    "bel": {
+      "default": "bel_Cyrl",
+      "codes": [
+        "bel_Cyrl"
+      ]
+    },
+    "bem": {
+      "default": "bem_Latn",
+      "codes": [
+        "bem_Latn"
+      ]
+    },
+    "ben": {
+      "default": "ben_Beng",
+      "codes": [
+        "ben_Beng"
+      ]
+    },
+    "bho": {
+      "default": "bho_Deva",
+      "codes": [
+        "bho_Deva"
+      ]
+    },
+    "bjn": {
+      "default": "bjn_Latn",
+      "codes": [
+        "bjn_Latn",
+        "bjn_Arab"
+      ]
+    },
+    "bod": {
+      "default": "bod_Tibt",
+      "codes": [
+        "bod_Tibt"
+      ]
+    },
+    "bos": {
+      "default": "bos_Latn",
+      "codes": [
+        "bos_Latn"
+      ]
+    },
+    "bug": {
+      "default": "bug_Latn",
+      "codes": [
+        "bug_Latn"
+      ]
+    },
+    "bul": {
+      "default": "bul_Cyrl",
+      "codes": [
+        "bul_Cyrl"
+      ]
+    },
+    "cat": {
+      "default": "cat_Latn",
+      "codes": [
+        "cat_Latn"
+      ]
+    },
+    "ceb": {
+      "default": "ceb_Latn",
+      "codes": [
+        "ceb_Latn"
+      ]
+    },
+    "ces": {
+      "default": "ces_Latn",
+      "codes": [
+        "ces_Latn"
+      ]
+    },
+    "cjk": {
+      "default": "cjk_Latn",
+      "codes": [
+        "cjk_Latn"
+      ]
+    },
+    "ckb": {
+      "default": "ckb_Arab",
+      "codes": [
+        "ckb_Arab"
+      ]
+    },
+    "crh": {
+      "default": "crh_Latn",
+      "codes": [
+        "crh_Latn"
+      ]
+    },
+    "cym": {
+      "default": "cym_Latn",
+      "codes": [
+        "cym_Latn"
+      ]
+    },
+    "dan": {
+      "default": "dan_Latn",
+      "codes": [
+        "dan_Latn"
+      ]
+    },
+    "deu": {
+      "default": "deu_Latn",
+      "codes": [
+        "deu_Latn"
+      ]
+    },
+    "dik": {
+      "default": "dik_Latn",
+      "codes": [
+        "dik_Latn"
+      ]
+    },
+    "dyu": {
+      "default": "dyu_Latn",
+      "codes": [
+        "dyu_Latn"
+      ]
+    },
+    "dzo": {
+      "default": "dzo_Tibt",
+      "codes": [
+        "dzo_Tibt"
+      ]
+    },
+    "ell": {
+      "default": "ell_Grek",
+      "codes": [
+        "ell_Grek"
+      ]
+    },
+    "eng": {
+      "default": "eng_Latn",
+      "codes": [
+        "eng_Latn"
+      ]
+    },
+    "epo": {
+      "default": "epo_Latn",
+      "codes": [
+        "epo_Latn"
+      ]
+    },
+    "est": {
+      "default": "est_Latn",
+      "codes": [
+        "est_Latn"
+      ]
+    },
+    "eus": {
+      "default": "eus_Latn",
+      "codes": [
+        "eus_Latn"
+      ]
+    },
+    "ewe": {
+      "default": "ewe_Latn",
+      "codes": [
+        "ewe_Latn"
+      ]
+    },
+    "fao": {
+      "default": "fao_Latn",
+      "codes": [
+        "fao_Latn"
+      ]
+    },
+    "fij": {
+      "default": "fij_Latn",
+      "codes": [
+        "fij_Latn"
+      ]
+    },
+    "fin": {
+      "default": "fin_Latn",
+      "codes": [
+        "fin_Latn"
+      ]
+    },
+    "fon": {
+      "default": "fon_Latn",
+      "codes": [
+        "fon_Latn"
+      ]
+    },
+    "fra": {
+      "default": "fra_Latn",
+      "codes": [
+        "fra_Latn"
+      ]
+    },
+    "fur": {
+      "default": "fur_Latn",
+      "codes": [
+        "fur_Latn"
+      ]
+    },
+    "fuv": {
+      "default": "fuv_Latn",
+      "codes": [
+        "fuv_Latn"
+      ]
+    },
+    "gaz": {
+      "default": "gaz_Latn",
+      "codes": [
+        "gaz_Latn"
+      ]
+    },
+    "gla": {
+      "default": "gla_Latn",
+      "codes": [
+        "gla_Latn"
+      ]
+    },
+    "gle": {
+      "default": "gle_Latn",
+      "codes": [
+        "gle_Latn"
+      ]
+    },
+    "glg": {
+      "default": "glg_Latn",
+      "codes": [
+        "glg_Latn"
+      ]
+    },
+    "grn": {
+      "default": "grn_Latn",
+      "codes": [
+        "grn_Latn"
+      ]
+    },
+    "guj": {
+      "default": "guj_Gujr",
+      "codes": [
+        "guj_Gujr"
+      ]
+    },
+    "hat": {
+      "default": "hat_Latn",
+      "codes": [
+        "hat_Latn"
+      ]
+    },
+    "hau": {
+      "default": "hau_Latn",
+      "codes": [
+        "hau_Latn"
+      ]
+    },
+    "heb": {
+      "default": "heb_Hebr",
+      "codes": [
+        "heb_Hebr"
+      ]
+    },
+    "hin": {
+      "default": "hin_Deva",
+      "codes": [
+        "hin_Deva"
+      ]
+    },
+    "hne": {
+      "default": "hne_Deva",
+      "codes": [
+        "hne_Deva"
+      ]
+    },
+    "hrv": {
+      "default": "hrv_Latn",
+      "codes": [
+        "hrv_Latn"
+      ]
+    },
+    "hun": {
+      "default": "hun_Latn",
+      "codes": [
+        "hun_Latn"
+      ]
+    },
+    "hye": {
+      "default": "hye_Armn",
+      "codes": [
+        "hye_Armn"
+      ]
+    },
+    "ibo": {
+      "default": "ibo_Latn",
+      "codes": [
+        "ibo_Latn"
+      ]
+    },
+    "ilo": {
+      "default": "ilo_Latn",
+      "codes": [
+        "ilo_Latn"
+      ]
+    },
+    "ind": {
+      "default": "ind_Latn",
+      "codes": [
+        "ind_Latn"
+      ]
+    },
+    "isl": {
+      "default": "isl_Latn",
+      "codes": [
+        "isl_Latn"
+      ]
+    },
+    "ita": {
+      "default": "ita_Latn",
+      "codes": [
+        "ita_Latn"
+      ]
+    },
+    "jav": {
+      "default": "jav_Latn",
+      "codes": [
+        "jav_Latn"
+      ]
+    },
+    "jpn": {
+      "default": "jpn_Jpan",
+      "codes": [
+        "jpn_Jpan"
+      ]
+    },
+    "kab": {
+      "default": "kab_Latn",
+      "codes": [
+        "kab_Latn"
+      ]
+    },
+    "kac": {
+      "default": "kac_Latn",
+      "codes": [
+        "kac_Latn"
+      ]
+    },
+    "kam": {
+      "default": "kam_Latn",
+      "codes": [
+        "kam_Latn"
+      ]
+    },
+    "kan": {
+      "default": "kan_Knda",
+      "codes": [
+        "kan_Knda"
+      ]
+    },
+    "kas": {
+      "default": "kas_Arab",
+      "codes": [
+        "kas_Arab",
+        "kas_Deva"
+      ]
+    },
+    "kat": {
+      "default": "kat_Geor",
+      "codes": [
+        "kat_Geor"
+      ]
+    },
+    "kaz": {
+      "default": "kaz_Cyrl",
+      "codes": [
+        "kaz_Cyrl"
+      ]
+    },
+    "kbp": {
+      "default": "kbp_Latn",
+      "codes": [
+        "kbp_Latn"
+      ]
+    },
+    "kea": {
+      "default": "kea_Latn",
+      "codes": [
+        "kea_Latn"
+      ]
+    },
+    "khk": {
+      "default": "khk_Cyrl",
+      "codes": [
+        "khk_Cyrl"
+      ]
+    },
+    "khm": {
+      "default": "khm_Khmr",
+      "codes": [
+        "khm_Khmr"
+      ]
+    },
+    "kik": {
+      "default": "kik_Latn",
+      "codes": [
+        "kik_Latn"
+      ]
+    },
+    "kin": {
+      "default": "kin_Latn",
+      "codes": [
+        "kin_Latn"
+      ]
+    },
+    "kir": {
+      "default": "kir_Cyrl",
+      "codes": [
+        "kir_Cyrl"
+      ]
+    },
+    "kmb": {
+      "default": "kmb_Latn",
+      "codes": [
+        "kmb_Latn"
+      ]
+    },
+    "kmr": {
+      "default": "kmr_Latn",
+      "codes": [
+        "kmr_Latn"
+      ]
+    },
+    "knc": {
+      "default": "knc_Latn",
+      "codes": [
+        "knc_Latn",
+        "knc_Arab"
+      ]
+    },
+    "kon": {
+      "default": "kon_Latn",
+      "codes": [
+        "kon_Latn"
+      ]
+    },
+    "kor": {
+      "default": "kor_Hang",
+      "codes": [
+        "kor_Hang"
+      ]
+    },
+    "lao": {
+      "default": "lao_Laoo",
+      "codes": [
+        "lao_Laoo"
+      ]
+    },
+    "lij": {
+      "default": "lij_Latn",
+      "codes": [
+        "lij_Latn"
+      ]
+    },
+    "lim": {
+      "default": "lim_Latn",
+      "codes": [
+        "lim_Latn"
+      ]
+    },
+    "lin": {
+      "default": "lin_Latn",
+      "codes": [
+        "lin_Latn"
+      ]
+    },
+    "lit": {
+      "default": "lit_Latn",
+      "codes": [
+        "lit_Latn"
+      ]
+    },
+    "lmo": {
+      "default": "lmo_Latn",
+      "codes": [
+        "lmo_Latn"
+      ]
+    },
+    "ltg": {
+      "default": "ltg_Latn",
+      "codes": [
+        "ltg_Latn"
+      ]
+    },
+    "ltz": {
+      "default": "ltz_Latn",
+      "codes": [
+        "ltz_Latn"
+      ]
+    },
+    "lua": {
+      "default": "lua_Latn",
+      "codes": [
+        "lua_Latn"
+      ]
+    },
+    "lug": {
+      "default": "lug_Latn",
+      "codes": [
+        "lug_Latn"
+      ]
+    },
+    "luo": {
+      "default": "luo_Latn",
+      "codes": [
+        "luo_Latn"
+      ]
+    },
+    "lus": {
+      "default": "lus_Latn",
+      "codes": [
+        "lus_Latn"
+      ]
+    },
+    "lvs": {
+      "default": "lvs_Latn",
+      "codes": [
+        "lvs_Latn"
+      ]
+    },
+    "mag": {
+      "default": "mag_Deva",
+      "codes": [
+        "mag_Deva"
+      ]
+    },
+    "mai": {
+      "default": "mai_Deva",
+      "codes": [
+        "mai_Deva"
+      ]
+    },
+    "mal": {
+      "default": "mal_Mlym",
+      "codes": [
+        "mal_Mlym"
+      ]
+    },
+    "mar": {
+      "default": "mar_Deva",
+      "codes": [
+        "mar_Deva"
+      ]
+    },
+    "min": {
+      "default": "min_Latn",
+      "codes": [
+        "min_Latn",
+        "min_Arab"
+      ]
+    },
+    "mkd": {
+      "default": "mkd_Cyrl",
+      "codes": [
+        "mkd_Cyrl"
+      ]
+    },
+    "mlt": {
+      "default": "mlt_Latn",
+      "codes": [
+        "mlt_Latn"
+      ]
+    },
+    "mni": {
+      "default": "mni_Beng",
+      "codes": [
+        "mni_Beng"
+      ]
+    },
+    "mos": {
+      "default": "mos_Latn",
+      "codes": [
+        "mos_Latn"
+      ]
+    },
+    "mri": {
+      "default": "mri_Latn",
+      "codes": [
+        "mri_Latn"
+      ]
+    },
+    "mya": {
+      "default": "mya_Mymr",
+      "codes": [
+        "mya_Mymr"
+      ]
+    },
+    "nld": {
+      "default": "nld_Latn",
+      "codes": [
+        "nld_Latn"
+      ]
+    },
+    "nno": {
+      "default": "nno_Latn",
+      "codes": [
+        "nno_Latn"
+      ]
+    },
+    "nob": {
+      "default": "nob_Latn",
+      "codes": [
+        "nob_Latn"
+      ]
+    },
+    "npi": {
+      "default": "npi_Deva",
+      "codes": [
+        "npi_Deva"
+      ]
+    },
+    "nso": {
+      "default": "nso_Latn",
+      "codes": [
+        "nso_Latn"
+      ]
+    },
+    "nus": {
+      "default": "nus_Latn",
+      "codes": [
+        "nus_Latn"
+      ]
+    },
+    "nya": {
+      "default": "nya_Latn",
+      "codes": [
+        "nya_Latn"
+      ]
+    },
+    "oci": {
+      "default": "oci_Latn",
+      "codes": [
+        "oci_Latn"
+      ]
+    },
+    "ory": {
+      "default": "ory_Orya",
+      "codes": [
+        "ory_Orya"
+      ]
+    },
+    "pag": {
+      "default": "pag_Latn",
+      "codes": [
+        "pag_Latn"
+      ]
+    },
+    "pan": {
+      "default": "pan_Guru",
+      "codes": [
+        "pan_Guru"
+      ]
+    },
+    "pap": {
+      "default": "pap_Latn",
+      "codes": [
+        "pap_Latn"
+      ]
+    },
+    "pbt": {
+      "default": "pbt_Arab",
+      "codes": [
+        "pbt_Arab"
+      ]
+    },
+    "pes": {
+      "default": "pes_Arab",
+      "codes": [
+        "pes_Arab"
+      ]
+    },
+    "plt": {
+      "default": "plt_Latn",
+      "codes": [
+        "plt_Latn"
+      ]
+    },
+    "pol": {
+      "default": "pol_Latn",
+      "codes": [
+        "pol_Latn"
+      ]
+    },
+    "por": {
+      "default": "por_Latn",
+      "codes": [
+        "por_Latn"
+      ]
+    },
+    "prs": {
+      "default": "prs_Arab",
+      "codes": [
+        "prs_Arab"
+      ]
+    },
+    "quy": {
+      "default": "quy_Latn",
+      "codes": [
+        "quy_Latn"
+      ]
+    },
+    "ron": {
+      "default": "ron_Latn",
+      "codes": [
+        "ron_Latn"
+      ]
+    },
+    "run": {
+      "default": "run_Latn",
+      "codes": [
+        "run_Latn"
+      ]
+    },
+    "rus": {
+      "default": "rus_Cyrl",
+      "codes": [
+        "rus_Cyrl"
+      ]
+    },
+    "sag": {
+      "default": "sag_Latn",
+      "codes": [
+        "sag_Latn"
+      ]
+    },
+    "san": {
+      "default": "san_Deva",
+      "codes": [
+        "san_Deva"
+      ]
+    },
+    "sat": {
+      "default": "sat_Olck",
+      "codes": [
+        "sat_Olck"
+      ]
+    },
+    "scn": {
+      "default": "scn_Latn",
+      "codes": [
+        "scn_Latn"
+      ]
+    },
+    "shn": {
+      "default": "shn_Mymr",
+      "codes": [
+        "shn_Mymr"
+      ]
+    },
+    "sin": {
+      "default": "sin_Sinh",
+      "codes": [
+        "sin_Sinh"
+      ]
+    },
+    "slk": {
+      "default": "slk_Latn",
+      "codes": [
+        "slk_Latn"
+      ]
+    },
+    "slv": {
+      "default": "slv_Latn",
+      "codes": [
+        "slv_Latn"
+      ]
+    },
+    "smo": {
+      "default": "smo_Latn",
+      "codes": [
+        "smo_Latn"
+      ]
+    },
+    "sna": {
+      "default": "sna_Latn",
+      "codes": [
+        "sna_Latn"
+      ]
+    },
+    "snd": {
+      "default": "snd_Arab",
+      "codes": [
+        "snd_Arab"
+      ]
+    },
+    "som": {
+      "default": "som_Latn",
+      "codes": [
+        "som_Latn"
+      ]
+    },
+    "sot": {
+      "default": "sot_Latn",
+      "codes": [
+        "sot_Latn"
+      ]
+    },
+    "spa": {
+      "default": "spa_Latn",
+      "codes": [
+        "spa_Latn"
+      ]
+    },
+    "srd": {
+      "default": "srd_Latn",
+      "codes": [
+        "srd_Latn"
+      ]
+    },
+    "srp": {
+      "default": "srp_Cyrl",
+      "codes": [
+        "srp_Cyrl"
+      ]
+    },
+    "ssw": {
+      "default": "ssw_Latn",
+      "codes": [
+        "ssw_Latn"
+      ]
+    },
+    "sun": {
+      "default": "sun_Latn",
+      "codes": [
+        "sun_Latn"
+      ]
+    },
+    "swe": {
+      "default": "swe_Latn",
+      "codes": [
+        "swe_Latn"
+      ]
+    },
+    "swh": {
+      "default": "swh_Latn",
+      "codes": [
+        "swh_Latn"
+      ]
+    },
+    "szl": {
+      "default": "szl_Latn",
+      "codes": [
+        "szl_Latn"
+      ]
+    },
+    "tam": {
+      "default": "tam_Taml",
+      "codes": [
+        "tam_Taml"
+      ]
+    },
+    "taq": {
+      "default": "taq_Latn",
+      "codes": [
+        "taq_Latn",
+        "taq_Tfng"
+      ]
+    },
+    "tat": {
+      "default": "tat_Cyrl",
+      "codes": [
+        "tat_Cyrl"
+      ]
+    },
+    "tel": {
+      "default": "tel_Telu",
+      "codes": [
+        "tel_Telu"
+      ]
+    },
+    "tgk": {
+      "default": "tgk_Cyrl",
+      "codes": [
+        "tgk_Cyrl"
+      ]
+    },
+    "tgl": {
+      "default": "tgl_Latn",
+      "codes": [
+        "tgl_Latn"
+      ]
+    },
+    "tha": {
+      "default": "tha_Thai",
+      "codes": [
+        "tha_Thai"
+      ]
+    },
+    "tir": {
+      "default": "tir_Ethi",
+      "codes": [
+        "tir_Ethi"
+      ]
+    },
+    "tpi": {
+      "default": "tpi_Latn",
+      "codes": [
+        "tpi_Latn"
+      ]
+    },
+    "tsn": {
+      "default": "tsn_Latn",
+      "codes": [
+        "tsn_Latn"
+      ]
+    },
+    "tso": {
+      "default": "tso_Latn",
+      "codes": [
+        "tso_Latn"
+      ]
+    },
+    "tuk": {
+      "default": "tuk_Latn",
+      "codes": [
+        "tuk_Latn"
+      ]
+    },
+    "tum": {
+      "default": "tum_Latn",
+      "codes": [
+        "tum_Latn"
+      ]
+    },
+    "tur": {
+      "default": "tur_Latn",
+      "codes": [
+        "tur_Latn"
+      ]
+    },
+    "twi": {
+      "default": "twi_Latn",
+      "codes": [
+        "twi_Latn"
+      ]
+    },
+    "tzm": {
+      "default": "tzm_Tfng",
+      "codes": [
+        "tzm_Tfng"
+      ]
+    },
+    "uig": {
+      "default": "uig_Arab",
+      "codes": [
+        "uig_Arab"
+      ]
+    },
+    "ukr": {
+      "default": "ukr_Cyrl",
+      "codes": [
+        "ukr_Cyrl"
+      ]
+    },
+    "umb": {
+      "default": "umb_Latn",
+      "codes": [
+        "umb_Latn"
+      ]
+    },
+    "urd": {
+      "default": "urd_Arab",
+      "codes": [
+        "urd_Arab"
+      ]
+    },
+    "uzn": {
+      "default": "uzn_Latn",
+      "codes": [
+        "uzn_Latn"
+      ]
+    },
+    "uzb": {
+      "default": "uzn_Latn",
+      "codes": [
+        "uzn_Latn"
+      ]
+    },
+    "vec": {
+      "default": "vec_Latn",
+      "codes": [
+        "vec_Latn"
+      ]
+    },
+    "vie": {
+      "default": "vie_Latn",
+      "codes": [
+        "vie_Latn"
+      ]
+    },
+    "war": {
+      "default": "war_Latn",
+      "codes": [
+        "war_Latn"
+      ]
+    },
+    "wol": {
+      "default": "wol_Latn",
+      "codes": [
+        "wol_Latn"
+      ]
+    },
+    "xho": {
+      "default": "xho_Latn",
+      "codes": [
+        "xho_Latn"
+      ]
+    },
+    "ydd": {
+      "default": "ydd_Hebr",
+      "codes": [
+        "ydd_Hebr"
+      ]
+    },
+    "yor": {
+      "default": "yor_Latn",
+      "codes": [
+        "yor_Latn"
+      ]
+    },
+    "yue": {
+      "default": "yue_Hant",
+      "codes": [
+        "yue_Hant"
+      ]
+    },
+    "zho": {
+      "default": "zho_Hans",
+      "codes": [
+        "zho_Hans",
+        "zho_Hant"
+      ]
+    },
+    "zsm": {
+      "default": "zsm_Latn",
+      "codes": [
+        "zsm_Latn"
+      ]
+    },
+    "zul": {
+      "default": "zul_Latn",
+      "codes": [
+        "zul_Latn"
+      ]
+    }
+  }
+}

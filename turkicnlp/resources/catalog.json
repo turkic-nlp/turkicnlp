@@ -72,6 +72,19 @@
             }
           },
           "default": "nllb"
+        },
+        "translate": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "tur_Latn",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
         }
       }
     }
@@ -150,6 +163,19 @@
             }
           },
           "default": "nllb"
+        },
+        "translate": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "kaz_Cyrl",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
         }
       }
     }
@@ -181,6 +207,19 @@
           "default": "apertium"
         },
         "embeddings": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "tat_Cyrl",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
+        },
+        "translate": {
           "backends": {
             "nllb": {
               "type": "huggingface_seq2seq",
@@ -228,6 +267,67 @@
               "type": "huggingface_seq2seq",
               "model_name": "facebook/nllb-200-distilled-600M",
               "src_lang": "azj_Latn",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
+        },
+        "translate": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "azj_Latn",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
+        }
+      }
+    }
+  },
+  "azb": {
+    "name": "Iranian Azerbaijani",
+    "scripts": {
+      "available": [
+        "Arab"
+      ],
+      "primary": "Arab"
+    },
+    "processors": {
+      "Arab": {
+        "tokenize": {
+          "backends": {
+            "rule_arabic": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule_arabic"
+        },
+        "embeddings": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "azb_Arab",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
+        },
+        "translate": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "azb_Arab",
               "backend": "nllb",
               "license": "CC-BY-NC-4.0",
               "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
@@ -311,6 +411,19 @@
             }
           },
           "default": "nllb"
+        },
+        "translate": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "kir_Cyrl",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
         }
       }
     }
@@ -342,6 +455,19 @@
           "default": "apertium"
         },
         "embeddings": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "uzn_Latn",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
+        },
+        "translate": {
           "backends": {
             "nllb": {
               "type": "huggingface_seq2seq",
@@ -394,6 +520,19 @@
             }
           },
           "default": "nllb"
+        },
+        "translate": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "tuk_Latn",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
         }
       }
     }
@@ -424,6 +563,19 @@
           "default": "apertium"
         },
         "embeddings": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "bak_Cyrl",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
+        },
+        "translate": {
           "backends": {
             "nllb": {
               "type": "huggingface_seq2seq",
@@ -513,6 +665,19 @@
             }
           },
           "default": "nllb"
+        },
+        "translate": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "uig_Arab",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
         }
       }
     }
@@ -544,6 +709,19 @@
           "default": "apertium"
         },
         "embeddings": {
+          "backends": {
+            "nllb": {
+              "type": "huggingface_seq2seq",
+              "model_name": "facebook/nllb-200-distilled-600M",
+              "src_lang": "crh_Latn",
+              "backend": "nllb",
+              "license": "CC-BY-NC-4.0",
+              "source": "https://github.com/facebookresearch/fairseq/tree/nllb"
+            }
+          },
+          "default": "nllb"
+        },
+        "translate": {
           "backends": {
             "nllb": {
               "type": "huggingface_seq2seq",

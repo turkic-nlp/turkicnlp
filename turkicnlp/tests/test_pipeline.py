@@ -32,3 +32,8 @@ class TestPipelineInit:
         # Should not raise
         pipe = Pipeline("kaz", script="Cyrl")
         assert pipe.lang == "kaz"
+
+    def test_resolve_noncanonical_processor(self) -> None:
+        pipe = Pipeline("tur", processors=None)
+        resolved = pipe._resolve_dependencies(["translate"])
+        assert "translate" in resolved

@@ -168,16 +168,29 @@ class Pipeline:
 
             model_path = None
             backend_type = backend_info.get("type")
-            if backend_type in ("apertium_fst", "neural_model"):
+            if backend_type == "huggingface_seq2seq":
+                model_name = backend_info.get("model_name")
+                shared_exists = False
+                if model_name:
+                    shared_dir = (
+                        ModelRegistry.default_dir()
+                        / "huggingface"
+                        / str(model_name).replace("/", "--")
+                    )
+                    shared_exists = (shared_dir / "config.json").exists()
+                if not shared_exists:
+                    download(self.lang, processors=[proc_name], script=str(self._model_script))
+            elif backend_type in ("apertium_fst", "neural_model"):
                 try:
                     model_path = ModelRegistry.get_model_path(
                         self.lang, proc_name, str(backend), script=str(self._model_script)
                     )
                 except FileNotFoundError:
                     download(self.lang, processors=[proc_name], script=str(self._model_script))
-                    model_path = ModelRegistry.get_model_path(
-                        self.lang, proc_name, str(backend), script=str(self._model_script)
-                    )
+                    if backend_type in ("apertium_fst", "neural_model"):
+                        model_path = ModelRegistry.get_model_path(
+                            self.lang, proc_name, str(backend), script=str(self._model_script)
+                        )
 
             proc.load(model_path if model_path is not None else "")
             self._processors.append(proc)
@@ -201,6 +214,9 @@ class Pipeline:
             needed.add(proc_name)
 
         resolved = [p for p in PROCESSOR_ORDER if p in needed]
+        for proc_name in requested:
+            if proc_name in needed and proc_name not in resolved:
+                resolved.append(proc_name)
         return resolved
 
     def __call__(self, text: str) -> Document:
