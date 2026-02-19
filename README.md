@@ -74,7 +74,7 @@ import turkicnlp
 turkicnlp.download("kaz")
 
 # Build a pipeline
-nlp = turkicnlp.Pipeline("kaz", processors=["tokenize", "pos", "lemma", "depparse"])
+nlp = turkicnlp.Pipeline("kaz", processors=["tokenize", "pos", "lemma", "ner", "depparse"])
 
 # Process text
 doc = nlp("Мен мектепке бардым")
@@ -136,14 +136,14 @@ print(doc._processor_log)  # ['translate:nllb']
 
 ```python
 from turkicnlp.processors.stanza_backend import (
-    StanzaTokenizer, StanzaPOSTagger, StanzaLemmatizer, StanzaDepParser
+    StanzaTokenizer, StanzaPOSTagger, StanzaLemmatizer, StanzaNERProcessor, StanzaDepParser
 )
 from turkicnlp.models.document import Document
 
 # Models are downloaded automatically on first use
 doc = Document(text="Merhaba dünya.", lang="tur")
 
-for Proc in [StanzaTokenizer, StanzaPOSTagger, StanzaLemmatizer, StanzaDepParser]:
+for Proc in [StanzaTokenizer, StanzaPOSTagger, StanzaLemmatizer, StanzaNERProcessor, StanzaDepParser]:
     proc = Proc(lang="tur")
     proc.load()
     doc = proc.process(doc)
@@ -159,7 +159,7 @@ print(doc.to_conllu())
 
 ```python
 from turkicnlp.processors.tokenizer import RegexTokenizer
-from turkicnlp.processors.stanza_backend import StanzaPOSTagger, StanzaDepParser
+from turkicnlp.processors.stanza_backend import StanzaPOSTagger, StanzaNERProcessor, StanzaDepParser
 from turkicnlp.models.document import Document
 
 doc = Document(text="Мен мектепке бардым.", lang="kaz")
@@ -172,6 +172,10 @@ doc = tokenizer.process(doc)
 pos = StanzaPOSTagger(lang="kaz")
 pos.load()
 doc = pos.process(doc)
+
+ner = StanzaNERProcessor(lang="kaz")
+ner.load()
+doc = ner.process(doc)
 
 parser = StanzaDepParser(lang="kaz")
 parser.load()
@@ -396,7 +400,7 @@ All models and resources are downloaded into this folder: `~/.turkicnlp`.
 TurkicNLP follows Stanza's modular pipeline design:
 
 ```
-Pipeline("tur", processors=["tokenize", "morph", "pos", "depparse"])
+Pipeline("tur", processors=["tokenize", "morph", "pos", "ner", "depparse"])
     │
     ▼
   Document ─── text: "Ben okula vardım"
@@ -405,6 +409,7 @@ Pipeline("tur", processors=["tokenize", "morph", "pos", "depparse"])
     ├── tokenize         → sentences, tokens, words
     ├── morph (Apertium) → lemma, pos, feats (via HFST)
     ├── pos (neural)     → refined UPOS, XPOS, feats
+    ├── ner (neural)     → BIO tags and entity spans
     └── depparse         → head, deprel
     │
     ▼

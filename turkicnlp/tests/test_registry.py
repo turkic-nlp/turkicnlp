@@ -15,6 +15,7 @@ class TestProcessorRegistry:
         assert ProcessorRegistry.get("morph", "apertium") is not None
         assert ProcessorRegistry.get("pos", "neural") is not None
         assert ProcessorRegistry.get("depparse", "neural") is not None
+        assert ProcessorRegistry.get("ner", "stanza") is not None
         assert ProcessorRegistry.get("ner", "neural") is not None
         assert ProcessorRegistry.get("embeddings", "nllb") is not None
         assert ProcessorRegistry.get("translate", "nllb") is not None

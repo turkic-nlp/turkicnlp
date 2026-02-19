@@ -61,6 +61,7 @@ def download(
     base_dir = Path(model_dir) if model_dir else ModelRegistry.default_dir()
     base_dir.mkdir(parents=True, exist_ok=True)
     stanza_checked: set[str] = set()
+    hf_checked: set[str] = set()
 
     for scr in scripts_to_download:
         proc_data = processors_section.get(scr, {})
@@ -75,9 +76,14 @@ def download(
                     continue
                 backend_type = backend_info.get("type")
                 if backend_type == "huggingface_seq2seq":
+                    model_name = str(backend_info.get("model_name", ""))
+                    if model_name and model_name in hf_checked:
+                        continue
                     _download_huggingface_seq2seq(
                         lang, scr, proc_name, backend_info, base_dir, force
                     )
+                    if model_name:
+                        hf_checked.add(model_name)
                     continue
 
                 dest = base_dir / lang / scr / proc_name / backend_name
@@ -301,15 +307,7 @@ def _download_huggingface_seq2seq(
     base_dir: Path,
     force: bool,
 ) -> None:
-    """Download and persist a shared Hugging Face seq2seq model."""
-    try:
-        from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-    except ImportError as exc:
-        raise ImportError(
-            "Downloading NLLB models requires `transformers`. "
-            "Install with: pip install turkicnlp[transformers]"
-        ) from exc
-
+    """Download and persist a shared Hugging Face seq2seq model as files only."""
     model_name = backend_info.get("model_name")
     src_lang = backend_info.get("src_lang")
     if not model_name or not src_lang:
@@ -320,15 +318,25 @@ def _download_huggingface_seq2seq(
 
     shared_dir = base_dir / "huggingface" / model_name.replace("/", "--")
     if (shared_dir / "config.json").exists() and not force:
-        print(f"  → Loading {model_name} Hugging Face model from {shared_dir}")
+        # Cached: nothing to download and nothing to load into memory.
         return
 
-    print(f"  ↓ Downloading {model_name} Hugging Face model")
+    try:
+        from huggingface_hub import snapshot_download
+    except ImportError as exc:
+        raise ImportError(
+            "Downloading NLLB models requires `huggingface_hub` (or `transformers`). "
+            "Install with: pip install turkicnlp[transformers]"
+        ) from exc
+
+    print(f"  ↓ Downloading {model_name} Hugging Face files")
     shared_dir.mkdir(parents=True, exist_ok=True)
-    tokenizer = AutoTokenizer.from_pretrained(model_name, src_lang=src_lang)
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
-    tokenizer.save_pretrained(shared_dir)
-    model.save_pretrained(shared_dir)
+    snapshot_download(
+        repo_id=model_name,
+        local_dir=str(shared_dir),
+        local_dir_use_symlinks=False,
+        force_download=force,
+    )
 
 
 def _download_stanza_model(lang: str) -> None:

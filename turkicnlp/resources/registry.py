@@ -214,6 +214,7 @@ def _register_builtins() -> None:
         StanzaPOSTagger,
         StanzaLemmatizer,
         StanzaDepParser,
+        StanzaNERProcessor,
     )
 
     ProcessorRegistry.register("tokenize", "rule", RegexTokenizer)
@@ -231,6 +232,7 @@ def _register_builtins() -> None:
     ProcessorRegistry.register("lemma", "stanza", StanzaLemmatizer)
     ProcessorRegistry.register("depparse", "neural", BiaffineDepParser)
     ProcessorRegistry.register("depparse", "stanza", StanzaDepParser)
+    ProcessorRegistry.register("ner", "stanza", StanzaNERProcessor)
     ProcessorRegistry.register("ner", "neural", NERProcessor)
     ProcessorRegistry.register("sentiment", "neural", SentimentProcessor)
     ProcessorRegistry.register("embeddings", "nllb", NLLBEmbeddingsProcessor)

@@ -13,6 +13,7 @@ from turkicnlp.processors.stanza_backend import (
     StanzaDepParser,
     StanzaLemmatizer,
     StanzaMWTExpander,
+    StanzaNERProcessor,
     StanzaPOSTagger,
     StanzaTokenizer,
     _StanzaManager,
@@ -251,6 +252,42 @@ class TestStanzaDepParserUnit:
         assert "depparse:stanza" in result._processor_log
 
 
+class TestStanzaNERUnit:
+    def test_class_attributes(self):
+        assert StanzaNERProcessor.NAME == "ner"
+        assert StanzaNERProcessor.PROVIDES == ["ner"]
+        assert StanzaNERProcessor.REQUIRES == ["tokenize"]
+
+    def test_process_maps_bio_and_entities(self):
+        ner = StanzaNERProcessor(lang="tur")
+        ner._use_gpu = False
+        ner._loaded = True
+
+        w1 = Word(id=1, text="Ahmet", start_char=0, end_char=5)
+        w2 = Word(id=2, text="Yılmaz", start_char=6, end_char=12)
+        w3 = Word(id=3, text="geldi", start_char=13, end_char=18)
+        sent = Sentence(text="Ahmet Yılmaz geldi", tokens=[], words=[w1, w2, w3])
+        doc = Document(text=sent.text, lang="tur", sentences=[sent])
+        doc._processor_log.append("tokenize:stanza")
+
+        tok1 = SimpleNamespace(ner="B-PER", words=[SimpleNamespace(text="Ahmet")])
+        tok2 = SimpleNamespace(ner="E-PER", words=[SimpleNamespace(text="Yılmaz")])
+        tok3 = SimpleNamespace(ner="O", words=[SimpleNamespace(text="geldi")])
+        mock_sent = SimpleNamespace(tokens=[tok1, tok2, tok3])
+        mock_stanza_doc = SimpleNamespace(sentences=[mock_sent])
+
+        with patch.object(_StanzaManager, "run_full_ner", return_value=mock_stanza_doc):
+            result = ner.process(doc)
+
+        assert result.sentences[0].words[0].ner == "B-PER"
+        assert result.sentences[0].words[1].ner == "I-PER"
+        assert result.sentences[0].words[2].ner == "O"
+        assert len(result.sentences[0].entities) == 1
+        assert result.sentences[0].entities[0].text == "Ahmet Yılmaz"
+        assert result.sentences[0].entities[0].type == "PER"
+        assert "ner:stanza" in result._processor_log
+
+
 class TestStanzaMWTExpanderUnit:
     def test_process_is_passthrough(self):
         expander = StanzaMWTExpander(lang="tur")
@@ -296,6 +333,7 @@ class TestRegistryIntegration:
         assert ProcessorRegistry.get("pos", "stanza") is StanzaPOSTagger
         assert ProcessorRegistry.get("lemma", "stanza") is StanzaLemmatizer
         assert ProcessorRegistry.get("depparse", "stanza") is StanzaDepParser
+        assert ProcessorRegistry.get("ner", "stanza") is StanzaNERProcessor
 
 
 # ---------------------------------------------------------------------------

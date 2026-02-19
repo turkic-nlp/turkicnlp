@@ -60,6 +60,15 @@
           },
           "default": "stanza"
         },
+        "ner": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
         "embeddings": {
           "backends": {
             "nllb": {
@@ -143,6 +152,15 @@
           "default": "stanza"
         },
         "depparse": {
+          "backends": {
+            "stanza": {
+              "type": "stanza",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "stanza"
+        },
+        "ner": {
           "backends": {
             "stanza": {
               "type": "stanza",

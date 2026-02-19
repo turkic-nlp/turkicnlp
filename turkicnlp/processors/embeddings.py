@@ -38,7 +38,11 @@ class NLLBEmbeddingsProcessor(Processor):
         """Load tokenizer + seq2seq model and keep encoder for embeddings."""
         try:
             import torch
-            from transformers import AutoModelForSeq2SeqLM, NllbTokenizer
+            from transformers import AutoModelForSeq2SeqLM
+            try:
+                from transformers import NllbTokenizer as _NLLBTokenizer
+            except ImportError:
+                from transformers import AutoTokenizer as _NLLBTokenizer
         except ImportError as exc:
             raise ImportError(
                 "NLLB embeddings require `transformers` and `torch`. "
@@ -59,7 +63,10 @@ class NLLBEmbeddingsProcessor(Processor):
         local_model_dir = self._resolve_local_model_dir(model_name, Path(model_path))
         load_from = str(local_model_dir) if local_model_dir else model_name
 
-        self._tokenizer = NllbTokenizer.from_pretrained(load_from, src_lang=src_lang)
+        print(
+            f"  → Loading NLLB model '{model_name}' for embeddings from {load_from}"
+        )
+        self._tokenizer = _NLLBTokenizer.from_pretrained(load_from, src_lang=src_lang)
         self._model = AutoModelForSeq2SeqLM.from_pretrained(load_from)
         self._encoder = self._model.get_encoder()
         self._src_lang = str(src_lang)
