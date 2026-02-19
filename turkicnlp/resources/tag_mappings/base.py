@@ -59,8 +59,24 @@ class TagMapper:
         Returns:
             UD-format feature string (e.g. ``Case=Dat|Number=Sing``).
         """
-        ud_feats: list[str] = []
-        for feat in apertium_feats:
-            if feat in self.FEAT_MAP:
-                ud_feats.append(self.FEAT_MAP[feat])
+        ud_feats, _ = self.map_ud_feats(apertium_feats)
         return "|".join(sorted(ud_feats)) if ud_feats else "_"
+
+    def map_ud_feats(self, apertium_feats: list[str]) -> tuple[list[str], list[str]]:
+        """Map Apertium features to UD and report unknown tags.
+
+        Args:
+            apertium_feats: List of Apertium tags.
+
+        Returns:
+            A tuple ``(mapped_ud_feats, unknown_apertium_feats)``.
+        """
+        ud_feats: list[str] = []
+        unknown: list[str] = []
+        for feat in apertium_feats:
+            mapped = self.FEAT_MAP.get(feat)
+            if mapped is None:
+                unknown.append(feat)
+            else:
+                ud_feats.append(mapped)
+        return ud_feats, unknown

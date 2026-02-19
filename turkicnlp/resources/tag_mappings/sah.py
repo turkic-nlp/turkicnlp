@@ -1,17 +1,16 @@
-"""Tatar Apertium -> UD tag mapping."""
+"""Sakha (Yakut) Apertium -> UD tag mapping."""
 
 from __future__ import annotations
 
 from turkicnlp.resources.tag_mappings.turkic_common import CommonTurkicTagMapper
 
 
-class TatarTagMapper(CommonTurkicTagMapper):
-    """Tag mapper for Tatar (apertium-tat)."""
+class SakhaTagMapper(CommonTurkicTagMapper):
+    """Tag mapper for Sakha (Yakut) (apertium-sah)."""
 
     FEAT_MAP: dict[str, str] = {
         **CommonTurkicTagMapper.FEAT_MAP,
         "evid": "Evident=Nfh",
         "cvb": "VerbForm=Conv",
-        "pers": "PronType=Prs",
-        "dem": "PronType=Dem",
+        "par": "Case=Par",
     }

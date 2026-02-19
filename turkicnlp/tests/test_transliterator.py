@@ -51,6 +51,18 @@ class TestUzbekTransliteration:
         assert t.transliterate("shaxar") == "шахар"
         assert t.transliterate("choy") == "чой"
 
+    def test_cyrl_to_latn_contextual_e(self) -> None:
+        t = Transliterator("uzb", Script.CYRILLIC, Script.LATIN)
+        assert t.transliterate("ел") == "yel"
+        assert t.transliterate("Океан") == "Okean"
+        assert t.transliterate("ае") == "aye"
+
+    def test_latn_to_cyrl_apostrophe_variants(self) -> None:
+        t = Transliterator("uzb", Script.LATIN, Script.CYRILLIC)
+        assert t.transliterate("O‘zbekiston") == "Ўзбекистон"
+        assert t.transliterate("G‘ijduvon") == "Ғиждувон"
+        assert t.transliterate("gʻazal") == "ғазал"
+
 
 class TestUyghurTransliteration:
     def test_arab_to_latn(self) -> None:
@@ -73,9 +85,16 @@ class TestUyghurTransliteration:
 
     def test_latn_to_arab_special_vowels(self) -> None:
         t = Transliterator("uig", Script.LATIN, Script.PERSO_ARABIC)
-        assert t.transliterate("ö") == "ۆ"
-        assert t.transliterate("ü") == "ۈ"
-        assert t.transliterate("é") == "ې"
+        assert t.transliterate("ö") == "ئۆ"
+        assert t.transliterate("ü") == "ئۈ"
+        assert t.transliterate("é") == "ئې"
+        assert t.transliterate("bö") == "بۆ"
+
+    def test_latn_to_arab_initial_hamza_vowels(self) -> None:
+        t = Transliterator("uig", Script.LATIN, Script.PERSO_ARABIC)
+        assert t.transliterate("alma") == "ئالما"
+        assert t.transliterate("öy") == "ئۆي"
+        assert t.transliterate("isim") == "ئىسىم"
 
 
 class TestCrimeanTatarTransliteration:
@@ -194,6 +213,29 @@ class TestTurkmenTransliteration:
     def test_latn_to_cyrl_sentence(self) -> None:
         t = Transliterator("tuk", Script.LATIN, Script.CYRILLIC)
         assert t.transliterate("Türkmenistan") == "Түркменистан"
+
+    def test_cyrl_e_word_initial_to_ye(self) -> None:
+        t = Transliterator("tuk", Script.CYRILLIC, Script.LATIN)
+        assert t.transliterate("ел") == "ýel"
+        assert t.transliterate("елкен") == "ýelken"
+
+    def test_cyrl_e_after_i_oe_ue_ae_to_ye(self) -> None:
+        t = Transliterator("tuk", Script.CYRILLIC, Script.LATIN)
+        assert t.transliterate("дүе") == "düýe"
+        assert t.transliterate("өе") == "öýe"
+        assert t.transliterate("диен") == "diýen"
+
+    def test_cyrl_hard_sign_before_e_and_drop_signs(self) -> None:
+        t = Transliterator("tuk", Script.CYRILLIC, Script.LATIN)
+        assert t.transliterate("гүзъетим") == "güzýetim"
+        assert t.transliterate("весъет") == "wesýet"
+        assert t.transliterate("семья") == "semýa"
+
+    def test_latn_to_cyrl_ye_to_e(self) -> None:
+        t = Transliterator("tuk", Script.LATIN, Script.CYRILLIC)
+        assert t.transliterate("ýel") == "ел"
+        assert t.transliterate("diýen") == "диен"
+        assert t.transliterate("öýe") == "өе"
 
 
 class TestTatarTransliteration:

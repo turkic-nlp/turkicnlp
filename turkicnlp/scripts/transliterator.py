@@ -40,6 +40,37 @@ class Transliterator:
         Returns:
             Text converted to the target script.
         """
+        if (
+            self.lang == "tuk"
+            and self.source == Script.CYRILLIC
+            and self.target == Script.LATIN
+        ):
+            return self._transliterate_tuk_cyrl_to_latn(text)
+        if (
+            self.lang == "uzb"
+            and self.source == Script.CYRILLIC
+            and self.target == Script.LATIN
+        ):
+            return self._transliterate_uzb_cyrl_to_latn(text)
+        if (
+            self.lang == "uzb"
+            and self.source == Script.LATIN
+            and self.target == Script.CYRILLIC
+        ):
+            text = self._normalize_uzb_apostrophes(text)
+        if (
+            self.lang == "tuk"
+            and self.source == Script.LATIN
+            and self.target == Script.CYRILLIC
+        ):
+            return self._transliterate_tuk_latn_to_cyrl(text)
+        if (
+            self.lang == "uig"
+            and self.source == Script.LATIN
+            and self.target == Script.PERSO_ARABIC
+        ):
+            return self._transliterate_uig_latn_to_arab(text)
+
         result: list[str] = []
         i = 0
         while i < len(text):
@@ -59,6 +90,228 @@ class Transliterator:
                             if len(mapped) > 1
                             else mapped.upper()
                         )
+                    result.append(mapped)
+                    i += length
+                    matched = True
+                    break
+            if not matched:
+                result.append(text[i])
+                i += 1
+        return "".join(result)
+
+    def _transliterate_uzb_cyrl_to_latn(self, text: str) -> str:
+        """Uzbek Cyrillic -> Latin with context-sensitive ``е`` rules."""
+        result: list[str] = []
+        i = 0
+        prev_vowelish = set("аАеЕёЁиИйЙоОуУўЎыЫэЭюЮяЯьЬъЪ")
+        while i < len(text):
+            matched = False
+            for length in range(min(4, len(text) - i), 1, -1):
+                chunk = text[i : i + length]
+                if chunk in self._forward_map:
+                    result.append(self._forward_map[chunk])
+                    i += length
+                    matched = True
+                    break
+                if chunk.lower() in self._forward_map:
+                    mapped = self._forward_map[chunk.lower()]
+                    if chunk[0].isupper():
+                        mapped = (
+                            mapped[0].upper() + mapped[1:]
+                            if len(mapped) > 1
+                            else mapped.upper()
+                        )
+                    result.append(mapped)
+                    i += length
+                    matched = True
+                    break
+            if matched:
+                continue
+
+            ch = text[i]
+            if ch in {"е", "Е"}:
+                prev = text[i - 1] if i > 0 else ""
+                word_initial = i == 0 or not text[i - 1].isalpha()
+                if word_initial or prev in prev_vowelish:
+                    result.append("ye" if ch == "е" else "Ye")
+                else:
+                    result.append("e" if ch == "е" else "E")
+                i += 1
+                continue
+
+            if ch in self._forward_map:
+                result.append(self._forward_map[ch])
+            elif ch.lower() in self._forward_map:
+                mapped = self._forward_map[ch.lower()]
+                if ch[0].isupper():
+                    mapped = (
+                        mapped[0].upper() + mapped[1:] if len(mapped) > 1 else mapped.upper()
+                    )
+                result.append(mapped)
+            else:
+                result.append(ch)
+            i += 1
+        return "".join(result)
+
+    def _transliterate_tuk_cyrl_to_latn(self, text: str) -> str:
+        """Turkmen Cyrillic -> Latin with context-sensitive ``е`` rules.
+
+        Rules implemented:
+        1. Word-initial ``е`` -> ``ýe``.
+        2. If ``е`` is preceded by ``и/ө/ү/ә`` (or uppercase variants),
+           map ``е`` as ``ýe``.
+        3. ``ъ`` before ``е`` yields ``ýe`` on ``е``; ``ъ`` and ``ь`` are
+           otherwise dropped.
+        """
+        result: list[str] = []
+        i = 0
+        while i < len(text):
+            # Greedy longest-match for multi-character mappings first.
+            matched = False
+            for length in range(min(4, len(text) - i), 0, -1):
+                chunk = text[i : i + length]
+                if length > 1 and chunk in self._forward_map:
+                    result.append(self._forward_map[chunk])
+                    i += length
+                    matched = True
+                    break
+                if length > 1 and chunk.lower() in self._forward_map:
+                    mapped = self._forward_map[chunk.lower()]
+                    if chunk[0].isupper():
+                        mapped = (
+                            mapped[0].upper() + mapped[1:]
+                            if len(mapped) > 1
+                            else mapped.upper()
+                        )
+                    result.append(mapped)
+                    i += length
+                    matched = True
+                    break
+            if matched:
+                continue
+
+            ch = text[i]
+
+            # Drop hard/soft signs by default.
+            if ch in {"ъ", "Ъ", "ь", "Ь"}:
+                i += 1
+                continue
+
+            # Context-sensitive handling for Cyrillic e.
+            if ch in {"е", "Е"}:
+                prev = text[i - 1] if i > 0 else ""
+                word_initial = i == 0 or not text[i - 1].isalpha()
+                needs_y = (
+                    word_initial
+                    or prev in {"и", "И", "ө", "Ө", "ү", "Ү", "ә", "Ә", "ъ", "Ъ"}
+                )
+                if needs_y:
+                    result.append("ýe" if ch == "е" else "Ýe")
+                else:
+                    result.append("e" if ch == "е" else "E")
+                i += 1
+                continue
+
+            if ch in self._forward_map:
+                result.append(self._forward_map[ch])
+            elif ch.lower() in self._forward_map:
+                mapped = self._forward_map[ch.lower()]
+                if ch[0].isupper():
+                    mapped = (
+                        mapped[0].upper() + mapped[1:] if len(mapped) > 1 else mapped.upper()
+                    )
+                result.append(mapped)
+            else:
+                result.append(ch)
+            i += 1
+
+        return "".join(result)
+
+    def _transliterate_tuk_latn_to_cyrl(self, text: str) -> str:
+        """Turkmen Latin -> Cyrillic with contextual ``ýe`` -> ``е``."""
+        result: list[str] = []
+        i = 0
+        while i < len(text):
+            if i + 1 < len(text) and text[i : i + 2] in {"ýe", "Ýe", "ÝE", "ýE"}:
+                chunk = text[i : i + 2]
+                result.append("е" if chunk in {"ýe", "ýE"} else "Е")
+                i += 2
+                continue
+
+            matched = False
+            for length in range(min(4, len(text) - i), 0, -1):
+                chunk = text[i : i + length]
+                if chunk in self._forward_map:
+                    result.append(self._forward_map[chunk])
+                    i += length
+                    matched = True
+                    break
+                if chunk.lower() in self._forward_map:
+                    mapped = self._forward_map[chunk.lower()]
+                    if chunk[0].isupper():
+                        mapped = (
+                            mapped[0].upper() + mapped[1:] if len(mapped) > 1 else mapped.upper()
+                        )
+                    result.append(mapped)
+                    i += length
+                    matched = True
+                    break
+            if not matched:
+                result.append(text[i])
+                i += 1
+        return "".join(result)
+
+    @staticmethod
+    def _normalize_uzb_apostrophes(text: str) -> str:
+        """Normalize common Uzbek apostrophe variants to ASCII apostrophe."""
+        return (
+            text.replace("\u2018", "'")
+            .replace("\u2019", "'")
+            .replace("\u02bb", "'")
+            .replace("\u02bc", "'")
+            .replace("\u02b9", "'")
+            .replace("`", "'")
+        )
+
+    def _transliterate_uig_latn_to_arab(self, text: str) -> str:
+        """Uyghur Latin -> Arabic with initial-hamza vowel handling."""
+        result: list[str] = []
+        i = 0
+        initial_vowel_map = {
+            "a": "ئا",
+            "e": "ئە",
+            "o": "ئو",
+            "u": "ئۇ",
+            "ö": "ئۆ",
+            "ü": "ئۈ",
+            "é": "ئې",
+            "i": "ئى",
+            "A": "ئا",
+            "E": "ئە",
+            "O": "ئو",
+            "U": "ئۇ",
+            "Ö": "ئۆ",
+            "Ü": "ئۈ",
+            "É": "ئې",
+            "I": "ئى",
+        }
+        while i < len(text):
+            word_initial = i == 0 or not text[i - 1].isalpha()
+            if word_initial and text[i : i + 1] in initial_vowel_map:
+                result.append(initial_vowel_map[text[i : i + 1]])
+                i += 1
+                continue
+
+            matched = False
+            for length in range(min(4, len(text) - i), 0, -1):
+                chunk = text[i : i + length]
+                if chunk in self._forward_map:
+                    result.append(self._forward_map[chunk])
+                    i += length
+                    matched = True
+                    break
+                if chunk.lower() in self._forward_map:
+                    mapped = self._forward_map[chunk.lower()]
                     result.append(mapped)
                     i += length
                     matched = True

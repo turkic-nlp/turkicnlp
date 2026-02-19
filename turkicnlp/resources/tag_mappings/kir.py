@@ -1,16 +1,15 @@
-"""Kazakh Apertium -> UD tag mapping."""
+"""Kyrgyz Apertium -> UD tag mapping."""
 
 from __future__ import annotations
 
 from turkicnlp.resources.tag_mappings.turkic_common import CommonTurkicTagMapper
 
 
-class KazakhTagMapper(CommonTurkicTagMapper):
-    """Tag mapper for Kazakh (apertium-kaz)."""
+class KyrgyzTagMapper(CommonTurkicTagMapper):
+    """Tag mapper for Kyrgyz (apertium-kir)."""
 
     FEAT_MAP: dict[str, str] = {
         **CommonTurkicTagMapper.FEAT_MAP,
-        # Kazakh-specific additions commonly present in Apertium analyses.
         "evid": "Evident=Nfh",
         "cvb": "VerbForm=Conv",
         "pers": "PronType=Prs",

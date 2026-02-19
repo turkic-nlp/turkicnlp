@@ -1,16 +1,15 @@
-"""Turkish Apertium -> UD tag mapping."""
+"""Gagauz Apertium -> UD tag mapping."""
 
 from __future__ import annotations
 
 from turkicnlp.resources.tag_mappings.turkic_common import CommonTurkicTagMapper
 
 
-class TurkishTagMapper(CommonTurkicTagMapper):
-    """Tag mapper for Turkish (apertium-tur)."""
+class GagauzTagMapper(CommonTurkicTagMapper):
+    """Tag mapper for Gagauz (apertium-gag)."""
 
     FEAT_MAP: dict[str, str] = {
         **CommonTurkicTagMapper.FEAT_MAP,
-        # Turkish-specific tags seen in Apertium streams.
         "ifi": "Evident=Nfh",
         "prog": "Aspect=Prog",
         "pers": "PronType=Prs",

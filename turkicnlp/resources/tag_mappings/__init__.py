@@ -31,5 +31,56 @@ def load_tag_map(lang: str) -> TagMapper:
     elif lang == "tur":
         from turkicnlp.resources.tag_mappings.tur import TurkishTagMapper
         return TurkishTagMapper()
+    elif lang == "tuk":
+        from turkicnlp.resources.tag_mappings.tuk import TurkmenTagMapper
+        return TurkmenTagMapper()
+    elif lang == "alt":
+        from turkicnlp.resources.tag_mappings.alt import AltaiTagMapper
+        return AltaiTagMapper()
+    elif lang == "aze":
+        from turkicnlp.resources.tag_mappings.aze import AzerbaijaniTagMapper
+        return AzerbaijaniTagMapper()
+    elif lang == "bak":
+        from turkicnlp.resources.tag_mappings.bak import BashkirTagMapper
+        return BashkirTagMapper()
+    elif lang == "chv":
+        from turkicnlp.resources.tag_mappings.chv import ChuvashTagMapper
+        return ChuvashTagMapper()
+    elif lang == "crh":
+        from turkicnlp.resources.tag_mappings.crh import CrimeanTatarTagMapper
+        return CrimeanTatarTagMapper()
+    elif lang == "gag":
+        from turkicnlp.resources.tag_mappings.gag import GagauzTagMapper
+        return GagauzTagMapper()
+    elif lang == "kaa":
+        from turkicnlp.resources.tag_mappings.kaa import KarakalpakTagMapper
+        return KarakalpakTagMapper()
+    elif lang == "kir":
+        from turkicnlp.resources.tag_mappings.kir import KyrgyzTagMapper
+        return KyrgyzTagMapper()
+    elif lang == "kjh":
+        from turkicnlp.resources.tag_mappings.kjh import KhakasTagMapper
+        return KhakasTagMapper()
+    elif lang == "krc":
+        from turkicnlp.resources.tag_mappings.krc import KarachayBalkarTagMapper
+        return KarachayBalkarTagMapper()
+    elif lang == "kum":
+        from turkicnlp.resources.tag_mappings.kum import KumykTagMapper
+        return KumykTagMapper()
+    elif lang == "nog":
+        from turkicnlp.resources.tag_mappings.nog import NogaiTagMapper
+        return NogaiTagMapper()
+    elif lang == "sah":
+        from turkicnlp.resources.tag_mappings.sah import SakhaTagMapper
+        return SakhaTagMapper()
+    elif lang == "tyv":
+        from turkicnlp.resources.tag_mappings.tyv import TuvanTagMapper
+        return TuvanTagMapper()
+    elif lang == "uig":
+        from turkicnlp.resources.tag_mappings.uig import UyghurTagMapper
+        return UyghurTagMapper()
+    elif lang == "uzb":
+        from turkicnlp.resources.tag_mappings.uzb import UzbekTagMapper
+        return UzbekTagMapper()
     else:
         return TagMapper()

@@ -59,6 +59,19 @@ class TestApertiumMorphProcessor:
         assert readings[0]["pos"] == "n"
         assert readings[0]["feats"] == ["dat", "sg"]
 
+    def test_analyze_strips_hfst_epsilon_marker(self) -> None:
+        proc = ApertiumMorphProcessor(lang="kaz")
+        proc._analyzer = _FakeTransducer(
+            results=[
+                ("@_EPSILON_SYMBOL_@бар<v><past><p3><sg>", 0.0),
+            ]
+        )
+        readings = proc._analyze("барды")
+        assert len(readings) == 1
+        assert readings[0]["lemma"] == "бар"
+        assert readings[0]["pos"] == "v"
+        assert readings[0]["feats"] == ["past", "p3", "sg"]
+
     def test_disambiguate_prefers_weight_then_pos(self) -> None:
         proc = ApertiumMorphProcessor(lang="kaz")
         readings = [

@@ -206,6 +206,9 @@ class ApertiumMorphProcessor(Processor):
                 clean = clean[1:-1]
             if "/" in clean:
                 clean = clean.split("/")[-1]
+            # Some HFST outputs include explicit epsilon markers in analyses.
+            # Remove them so lemmas/tags are user-facing and stable.
+            clean = clean.replace("@_EPSILON_SYMBOL_@", "")
 
             lemma_match = re.match(r"^([^<]+)", clean)
             if not lemma_match:
