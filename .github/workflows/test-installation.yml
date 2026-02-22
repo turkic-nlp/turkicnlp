@@ -1,0 +1,47 @@
+# This workflow installs the package and runs a command with a variety of Python versions
+
+name: Package Installation Tests
+
+on:
+  schedule:
+    # Run nightly at 3:00 UTC to catch upstream dependency changes
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.extra || 'base' }} (${{ matrix.os }}, ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        extra: ["", stanza, embeddings, translation, nllb, all]
+        os: [ubuntu-22.04, ubuntu-24.04, macos-14, macos-15, windows-2025]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          if [ -z "${{ matrix.extra }}" ]; then
+            pip install .
+          else
+            pip install ".[${{ matrix.extra }}]"
+          fi
+
+      - name: Verify installation
+        run: |
+          python - <<'PY'
+          import turkicnlp
+          print("turkicnlp version:", turkicnlp.__version__)
+          PY
+          python -m pip check

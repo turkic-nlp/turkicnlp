@@ -25,7 +25,7 @@ If you use TurkicNLP in your research, please cite:
 
 ```bibtex
 @software{turkicnlp,
-  title = {TurkicNLP: NLP Toolkit for Turkic Languages},
+  title = {TurkicNLP: An Open-Source NLP Toolkit for Turkic Languages},
   author = {Sherzod Hakimov},
   year = {2026},
   url = {https://github.com/turkic-nlp/turkicnlp},
