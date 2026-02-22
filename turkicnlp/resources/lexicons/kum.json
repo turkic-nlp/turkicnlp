@@ -5,56 +5,243 @@
       "upos": "PRON",
       "feats": "PronType=Prs",
       "lemma_strategy": "lower",
-      "forms": ["мен", "сен", "ол", "биз", "сиз", "улар"]
+      "forms": [
+        "мен",
+        "сен",
+        "ол",
+        "биз",
+        "сиз",
+        "улар"
+      ]
     },
     {
       "type": "pronoun_demonstrative",
       "upos": "PRON",
       "feats": "PronType=Dem",
       "lemma_strategy": "lower",
-      "forms": ["бу", "шо", "у", "булар", "шолар", "улар"]
+      "forms": [
+        "бу",
+        "шо",
+        "у",
+        "булар",
+        "шолар",
+        "улар"
+      ]
     },
     {
       "type": "pronoun_interrogative",
       "upos": "PRON",
       "feats": "PronType=Int",
       "lemma_strategy": "lower",
-      "forms": ["ким", "не", "ни", "қайда", "ничик", "нечинчи"]
+      "forms": [
+        "ким",
+        "не",
+        "ни",
+        "қайда",
+        "ничик",
+        "нечинчи"
+      ]
     },
     {
       "type": "question_particle",
       "upos": "PART",
       "feats": "PartType=Int",
       "lemma_strategy": "lower",
-      "forms": ["му", "ма", "ме", "мю"]
+      "forms": [
+        "му",
+        "ма",
+        "ме",
+        "мю"
+      ]
     },
     {
       "type": "postposition",
       "upos": "ADP",
       "feats": "AdpType=Post",
       "lemma_strategy": "lower",
-      "forms": ["булан", "учун", "дейин", "йимик", "гёре", "сонг", "алдында"]
+      "forms": [
+        "булан",
+        "учун",
+        "дейин",
+        "йимик",
+        "гёре",
+        "сонг",
+        "алдында"
+      ]
     },
     {
       "type": "conjunction_coord",
       "upos": "CCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["ва", "да", "де", "та", "те", "ама", "лекин", "не"]
+      "forms": [
+        "ва",
+        "да",
+        "де",
+        "та",
+        "те",
+        "ама",
+        "лекин",
+        "не"
+      ]
     },
     {
       "type": "conjunction_sub",
       "upos": "SCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["нетесе", "тайа", "сылтавундан"]
+      "forms": [
+        "нетесе",
+        "тайа",
+        "сылтавундан"
+      ]
     },
     {
       "type": "negation_particle",
       "upos": "PART",
       "feats": "Polarity=Neg",
       "lemma_strategy": "lower",
-      "forms": ["йок", "тюгюл"]
+      "forms": [
+        "йок",
+        "тюгюл"
+      ]
+    },
+    {
+      "type": "pronoun_reflexive",
+      "upos": "PRON",
+      "feats": "Reflex=Yes",
+      "lemma_strategy": "lower",
+      "forms": [
+        "оьз",
+        "оьзюм",
+        "оьзюнг",
+        "оьзю",
+        "оьзюбюз",
+        "оьзлери"
+      ]
+    },
+    {
+      "type": "adverb_degree",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "бек",
+        "кёп",
+        "аз",
+        "эң",
+        "артыкъ"
+      ]
+    },
+    {
+      "type": "auxiliary_evidential",
+      "upos": "AUX",
+      "feats": "Evident=Nfh",
+      "lemma_strategy": "lower",
+      "forms": [
+        "имиш"
+      ]
+    },
+    {
+      "type": "adverb_interrogative",
+      "upos": "ADV",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": [
+        "қайда",
+        "қайдан",
+        "ничик",
+        "нечун",
+        "нече"
+      ]
+    },
+    {
+      "type": "determiner_universal",
+      "upos": "DET",
+      "feats": "PronType=Tot",
+      "lemma_strategy": "lower",
+      "forms": [
+        "барлыкъ",
+        "битев"
+      ]
+    },
+    {
+      "type": "determiner_indefinite",
+      "upos": "DET",
+      "feats": "PronType=Ind",
+      "lemma_strategy": "lower",
+      "forms": [
+        "кесек"
+      ]
+    },
+    {
+      "type": "adverb_modal",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "тек",
+        "бусагъат"
+      ]
+    },
+    {
+      "type": "particle_additive",
+      "upos": "PART",
+      "feats": "PartType=Add",
+      "lemma_strategy": "lower",
+      "forms": [
+        "хатта"
+      ]
+    },
+    {
+      "type": "temporal_adverb",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "бюгюн",
+        "тюнегюн",
+        "хазир",
+        "ярын"
+      ]
+    },
+    {
+      "type": "pronoun_reciprocal",
+      "upos": "PRON",
+      "feats": "PronType=Rcp",
+      "lemma_strategy": "lower",
+      "forms": [
+        "бир-бирине",
+        "бир-бирин"
+      ]
+    },
+    {
+      "type": "interjection",
+      "upos": "INTJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ха",
+        "яхшы"
+      ]
+    },
+    {
+      "type": "numeral_cardinal",
+      "upos": "NUM",
+      "feats": "NumType=Card",
+      "lemma_strategy": "lower",
+      "forms": [
+        "бир",
+        "эки",
+        "уьч",
+        "дёрт",
+        "беш",
+        "алты",
+        "йетти",
+        "сегиз",
+        "тогъуз",
+        "он"
+      ]
     }
   ]
 }

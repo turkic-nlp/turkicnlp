@@ -5,56 +5,270 @@
       "upos": "PRON",
       "feats": "PronType=Prs",
       "lemma_strategy": "lower",
-      "forms": ["men", "sen", "u", "biz", "siz", "ular"]
+      "forms": [
+        "men",
+        "sen",
+        "u",
+        "biz",
+        "siz",
+        "ular"
+      ]
     },
     {
       "type": "pronoun_demonstrative",
       "upos": "PRON",
       "feats": "PronType=Dem",
       "lemma_strategy": "lower",
-      "forms": ["bu", "shu", "bular", "shular", "ana", "mana"]
+      "forms": [
+        "bu",
+        "shu",
+        "bular",
+        "shular",
+        "ana",
+        "mana"
+      ]
     },
     {
       "type": "pronoun_interrogative",
       "upos": "PRON",
       "feats": "PronType=Int",
       "lemma_strategy": "lower",
-      "forms": ["kim", "nima", "qayerda", "qayerga", "qayerdan", "qachon", "qanday", "qancha", "qaysi", "nega"]
+      "forms": [
+        "kim",
+        "nima",
+        "qayerda",
+        "qayerga",
+        "qayerdan",
+        "qachon",
+        "qanday",
+        "qancha",
+        "qaysi",
+        "nega"
+      ]
     },
     {
       "type": "question_particle",
       "upos": "PART",
       "feats": "PartType=Int",
       "lemma_strategy": "lower",
-      "forms": ["mi"]
+      "forms": [
+        "mi"
+      ]
     },
     {
       "type": "postposition",
       "upos": "ADP",
       "feats": "AdpType=Post",
       "lemma_strategy": "lower",
-      "forms": ["bilan", "uchun", "qadar", "kabi", "ko'ra", "keyin", "oldin", "haqida", "bo'yicha", "qarshi"]
+      "forms": [
+        "bilan",
+        "uchun",
+        "qadar",
+        "kabi",
+        "ko'ra",
+        "keyin",
+        "oldin",
+        "haqida",
+        "bo'yicha",
+        "qarshi"
+      ]
     },
     {
       "type": "conjunction_coord",
       "upos": "CCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["va", "ham", "yoki", "lekin", "ammo", "balki"]
+      "forms": [
+        "va",
+        "ham",
+        "yoki",
+        "lekin",
+        "ammo",
+        "balki"
+      ]
     },
     {
       "type": "conjunction_sub",
       "upos": "SCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["chunki", "agar", "garchi", "holda"]
+      "forms": [
+        "chunki",
+        "agar",
+        "garchi",
+        "holda"
+      ]
     },
     {
       "type": "negation_particle",
       "upos": "PART",
       "feats": "Polarity=Neg",
       "lemma_strategy": "lower",
-      "forms": ["yo'q", "emas"]
+      "forms": [
+        "yo'q",
+        "emas"
+      ]
+    },
+    {
+      "type": "pronoun_reflexive",
+      "upos": "PRON",
+      "feats": "Reflex=Yes",
+      "lemma_strategy": "lower",
+      "forms": [
+        "o'z",
+        "o'zim",
+        "o'zing",
+        "o'zi",
+        "o'zimiz",
+        "o'zingiz",
+        "o'zlari"
+      ]
+    },
+    {
+      "type": "adverb_degree",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "juda",
+        "o'ta",
+        "ko'p",
+        "oz",
+        "ko'proq",
+        "eng"
+      ]
+    },
+    {
+      "type": "auxiliary_evidential",
+      "upos": "AUX",
+      "feats": "Evident=Nfh",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ekan"
+      ]
+    },
+    {
+      "type": "adverb_interrogative",
+      "upos": "ADV",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": [
+        "qayerda",
+        "qayerga",
+        "qayerdan",
+        "qanday",
+        "nega",
+        "qancha",
+        "necha",
+        "qachon"
+      ]
+    },
+    {
+      "type": "determiner_universal",
+      "upos": "DET",
+      "feats": "PronType=Tot",
+      "lemma_strategy": "lower",
+      "forms": [
+        "hamma",
+        "barcha",
+        "butun",
+        "har"
+      ]
+    },
+    {
+      "type": "determiner_indefinite",
+      "upos": "DET",
+      "feats": "PronType=Ind",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ba'zi",
+        "biroz",
+        "ayrim"
+      ]
+    },
+    {
+      "type": "determiner_negative",
+      "upos": "DET",
+      "feats": "PronType=Neg",
+      "lemma_strategy": "lower",
+      "forms": [
+        "hech"
+      ]
+    },
+    {
+      "type": "adverb_modal",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "balki",
+        "albatta",
+        "hali",
+        "faqat",
+        "ayniqsa"
+      ]
+    },
+    {
+      "type": "particle_additive",
+      "upos": "PART",
+      "feats": "PartType=Add",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ham",
+        "hatto"
+      ]
+    },
+    {
+      "type": "temporal_adverb",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bugun",
+        "kecha",
+        "hozir",
+        "ertaga"
+      ]
+    },
+    {
+      "type": "pronoun_reciprocal",
+      "upos": "PRON",
+      "feats": "PronType=Rcp",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bir-biriga",
+        "bir-birini",
+        "bir-biridan"
+      ]
+    },
+    {
+      "type": "interjection",
+      "upos": "INTJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ha",
+        "xo'p",
+        "mayli"
+      ]
+    },
+    {
+      "type": "numeral_cardinal",
+      "upos": "NUM",
+      "feats": "NumType=Card",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bir",
+        "ikki",
+        "uch",
+        "to'rt",
+        "besh",
+        "olti",
+        "yetti",
+        "sakkiz",
+        "to'qqiz",
+        "o'n"
+      ]
     }
   ]
 }

@@ -5,56 +5,289 @@
       "upos": "PRON",
       "feats": "PronType=Prs",
       "lemma_strategy": "lower",
-      "forms": ["ben", "sen", "o", "biz", "siz", "onlar"]
+      "forms": [
+        "ben",
+        "sen",
+        "o",
+        "biz",
+        "siz",
+        "onlar"
+      ]
     },
     {
       "type": "pronoun_demonstrative",
       "upos": "PRON",
       "feats": "PronType=Dem",
       "lemma_strategy": "lower",
-      "forms": ["bu", "şu", "bunlar", "şunlar", "onlar"]
+      "forms": [
+        "bu",
+        "şu",
+        "bunlar",
+        "şunlar",
+        "onlar"
+      ]
     },
     {
       "type": "pronoun_interrogative",
       "upos": "PRON",
       "feats": "PronType=Int",
       "lemma_strategy": "lower",
-      "forms": ["kim", "ne", "nerede", "nereye", "nereden", "nasıl", "neden", "hangi", "hangisi", "kaçı"]
+      "forms": [
+        "kim",
+        "ne",
+        "nerede",
+        "nereye",
+        "nereden",
+        "nasıl",
+        "neden",
+        "hangi",
+        "hangisi",
+        "kaçı"
+      ]
     },
     {
       "type": "question_particle",
       "upos": "PART",
       "feats": "PartType=Int",
       "lemma_strategy": "lower",
-      "forms": ["mi", "mı", "mu", "mü"]
+      "forms": [
+        "mi",
+        "mı",
+        "mu",
+        "mü"
+      ]
     },
     {
       "type": "postposition",
       "upos": "ADP",
       "feats": "AdpType=Post",
       "lemma_strategy": "lower",
-      "forms": ["ile", "için", "kadar", "gibi", "göre", "sonra", "önce", "karşı", "hakkında", "rağmen", "beri", "dair", "itibaren"]
+      "forms": [
+        "ile",
+        "için",
+        "kadar",
+        "gibi",
+        "göre",
+        "sonra",
+        "önce",
+        "karşı",
+        "hakkında",
+        "rağmen",
+        "beri",
+        "dair",
+        "itibaren"
+      ]
     },
     {
       "type": "conjunction_coord",
       "upos": "CCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["ve", "ya", "veya", "ama", "fakat", "lakin", "ancak", "hem"]
+      "forms": [
+        "ve",
+        "ya",
+        "veya",
+        "ama",
+        "fakat",
+        "lakin",
+        "ancak",
+        "hem"
+      ]
     },
     {
       "type": "conjunction_sub",
       "upos": "SCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["ki", "çünkü", "eğer", "madem", "ise", "diye"]
+      "forms": [
+        "ki",
+        "çünkü",
+        "eğer",
+        "madem",
+        "ise",
+        "diye"
+      ]
     },
     {
       "type": "negation_particle",
       "upos": "PART",
       "feats": "Polarity=Neg",
       "lemma_strategy": "lower",
-      "forms": ["değil"]
+      "forms": [
+        "değil"
+      ]
+    },
+    {
+      "type": "pronoun_reflexive",
+      "upos": "PRON",
+      "feats": "Reflex=Yes",
+      "lemma_strategy": "lower",
+      "forms": [
+        "kendi",
+        "kendim",
+        "kendin",
+        "kendisi",
+        "kendimiz",
+        "kendiniz",
+        "kendileri"
+      ]
+    },
+    {
+      "type": "adverb_degree",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "çok",
+        "az",
+        "daha",
+        "en",
+        "fazla",
+        "biraz",
+        "epey"
+      ]
+    },
+    {
+      "type": "auxiliary_evidential",
+      "upos": "AUX",
+      "feats": "Evident=Nfh",
+      "lemma_strategy": "lower",
+      "forms": [
+        "imiş"
+      ]
+    },
+    {
+      "type": "adverb_interrogative",
+      "upos": "ADV",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": [
+        "nerede",
+        "nereye",
+        "nereden",
+        "nasıl",
+        "neden",
+        "niçin",
+        "kaç"
+      ]
+    },
+    {
+      "type": "determiner_universal",
+      "upos": "DET",
+      "feats": "PronType=Tot",
+      "lemma_strategy": "lower",
+      "forms": [
+        "tüm",
+        "bütün",
+        "hep",
+        "hepsi",
+        "her"
+      ]
+    },
+    {
+      "type": "determiner_indefinite",
+      "upos": "DET",
+      "feats": "PronType=Ind",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bazı",
+        "birkaç",
+        "birçok",
+        "kimi"
+      ]
+    },
+    {
+      "type": "determiner_negative",
+      "upos": "DET",
+      "feats": "PronType=Neg",
+      "lemma_strategy": "lower",
+      "forms": [
+        "hiç",
+        "hiçbir"
+      ]
+    },
+    {
+      "type": "adverb_modal",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "belki",
+        "tabii",
+        "elbette",
+        "hâlâ",
+        "henüz",
+        "artık",
+        "zaten",
+        "sadece",
+        "yalnızca",
+        "özellikle"
+      ]
+    },
+    {
+      "type": "particle_additive",
+      "upos": "PART",
+      "feats": "PartType=Add",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bile",
+        "dahi"
+      ]
+    },
+    {
+      "type": "temporal_adverb",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bugün",
+        "dün",
+        "şimdi",
+        "yarın",
+        "sabah",
+        "akşam"
+      ]
+    },
+    {
+      "type": "pronoun_reciprocal",
+      "upos": "PRON",
+      "feats": "PronType=Rcp",
+      "lemma_strategy": "lower",
+      "forms": [
+        "birbirine",
+        "birbirini",
+        "birbirinden",
+        "birbirleri"
+      ]
+    },
+    {
+      "type": "interjection",
+      "upos": "INTJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "evet",
+        "tamam",
+        "hayır"
+      ]
+    },
+    {
+      "type": "numeral_cardinal",
+      "upos": "NUM",
+      "feats": "NumType=Card",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bir",
+        "iki",
+        "üç",
+        "dört",
+        "beş",
+        "altı",
+        "yedi",
+        "sekiz",
+        "dokuz",
+        "on"
+      ]
     }
   ]
 }

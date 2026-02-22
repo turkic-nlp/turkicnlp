@@ -5,56 +5,268 @@
       "upos": "PRON",
       "feats": "PronType=Prs",
       "lemma_strategy": "lower",
-      "forms": ["mən", "sən", "o", "biz", "siz", "onlar"]
+      "forms": [
+        "mən",
+        "sən",
+        "o",
+        "biz",
+        "siz",
+        "onlar"
+      ]
     },
     {
       "type": "pronoun_demonstrative",
       "upos": "PRON",
       "feats": "PronType=Dem",
       "lemma_strategy": "lower",
-      "forms": ["bu", "bunlar", "onlar", "həmin"]
+      "forms": [
+        "bu",
+        "bunlar",
+        "onlar",
+        "həmin"
+      ]
     },
     {
       "type": "pronoun_interrogative",
       "upos": "PRON",
       "feats": "PronType=Int",
       "lemma_strategy": "lower",
-      "forms": ["kim", "nə", "harada", "haraya", "haradan", "necə", "niyə", "hansı"]
+      "forms": [
+        "kim",
+        "nə",
+        "harada",
+        "haraya",
+        "haradan",
+        "necə",
+        "niyə",
+        "hansı"
+      ]
     },
     {
       "type": "question_particle",
       "upos": "PART",
       "feats": "PartType=Int",
       "lemma_strategy": "lower",
-      "forms": ["mi", "mı", "mu", "mü"]
+      "forms": [
+        "mi",
+        "mı",
+        "mu",
+        "mü"
+      ]
     },
     {
       "type": "postposition",
       "upos": "ADP",
       "feats": "AdpType=Post",
       "lemma_strategy": "lower",
-      "forms": ["ilə", "üçün", "qədər", "kimi", "görə", "sonra", "əvvəl", "qarşı", "barədə", "haqqında", "bərəsində"]
+      "forms": [
+        "ilə",
+        "üçün",
+        "qədər",
+        "kimi",
+        "görə",
+        "sonra",
+        "əvvəl",
+        "qarşı",
+        "barədə",
+        "haqqında",
+        "bərəsində"
+      ]
     },
     {
       "type": "conjunction_coord",
       "upos": "CCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["və", "ya", "amma", "lakin", "ancaq", "habelə", "yaxud"]
+      "forms": [
+        "və",
+        "ya",
+        "amma",
+        "lakin",
+        "ancaq",
+        "habelə",
+        "yaxud"
+      ]
     },
     {
       "type": "conjunction_sub",
       "upos": "SCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["ki", "çünki", "əgər", "isə", "halda"]
+      "forms": [
+        "ki",
+        "çünki",
+        "əgər",
+        "isə",
+        "halda"
+      ]
     },
     {
       "type": "negation_particle",
       "upos": "PART",
       "feats": "Polarity=Neg",
       "lemma_strategy": "lower",
-      "forms": ["deyil"]
+      "forms": [
+        "deyil"
+      ]
+    },
+    {
+      "type": "pronoun_reflexive",
+      "upos": "PRON",
+      "feats": "Reflex=Yes",
+      "lemma_strategy": "lower",
+      "forms": [
+        "öz",
+        "özüm",
+        "özün",
+        "özü",
+        "özümüz",
+        "özünüz",
+        "özləri"
+      ]
+    },
+    {
+      "type": "adverb_degree",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "çox",
+        "az",
+        "daha",
+        "ən",
+        "biraz"
+      ]
+    },
+    {
+      "type": "auxiliary_evidential",
+      "upos": "AUX",
+      "feats": "Evident=Nfh",
+      "lemma_strategy": "lower",
+      "forms": [
+        "imiş"
+      ]
+    },
+    {
+      "type": "adverb_interrogative",
+      "upos": "ADV",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": [
+        "harada",
+        "haraya",
+        "haradan",
+        "necə",
+        "niyə",
+        "neçə"
+      ]
+    },
+    {
+      "type": "determiner_universal",
+      "upos": "DET",
+      "feats": "PronType=Tot",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bütün",
+        "hamısı",
+        "hər",
+        "hamı"
+      ]
+    },
+    {
+      "type": "determiner_indefinite",
+      "upos": "DET",
+      "feats": "PronType=Ind",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bəzi"
+      ]
+    },
+    {
+      "type": "determiner_negative",
+      "upos": "DET",
+      "feats": "PronType=Neg",
+      "lemma_strategy": "lower",
+      "forms": [
+        "heç"
+      ]
+    },
+    {
+      "type": "adverb_modal",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bəlkə",
+        "əlbəttə",
+        "hələ",
+        "artıq",
+        "yalnız",
+        "xüsusilə"
+      ]
+    },
+    {
+      "type": "particle_additive",
+      "upos": "PART",
+      "feats": "PartType=Add",
+      "lemma_strategy": "lower",
+      "forms": [
+        "belə",
+        "hətta"
+      ]
+    },
+    {
+      "type": "temporal_adverb",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "dünən",
+        "indi",
+        "sabah",
+        "axşam"
+      ]
+    },
+    {
+      "type": "pronoun_reciprocal",
+      "upos": "PRON",
+      "feats": "PronType=Rcp",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bir-birinə",
+        "bir-birini",
+        "bir-birindən"
+      ]
+    },
+    {
+      "type": "interjection",
+      "upos": "INTJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bəli",
+        "hə",
+        "tamam",
+        "xeyr"
+      ]
+    },
+    {
+      "type": "numeral_cardinal",
+      "upos": "NUM",
+      "feats": "NumType=Card",
+      "lemma_strategy": "lower",
+      "forms": [
+        "bir",
+        "iki",
+        "üç",
+        "dörd",
+        "beş",
+        "altı",
+        "yeddi",
+        "səkkiz",
+        "doqquz",
+        "on"
+      ]
     }
   ]
 }

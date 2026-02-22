@@ -5,56 +5,223 @@
       "upos": "PRON",
       "feats": "PronType=Prs",
       "lemma_strategy": "lower",
-      "forms": ["мин", "сін", "ол", "піс", "слер", "олар"]
+      "forms": [
+        "мин",
+        "сін",
+        "ол",
+        "піс",
+        "слер",
+        "олар"
+      ]
     },
     {
       "type": "pronoun_demonstrative",
       "upos": "PRON",
       "feats": "PronType=Dem",
       "lemma_strategy": "lower",
-      "forms": ["пу", "ол", "ана", "тиге", "мында"]
+      "forms": [
+        "пу",
+        "ол",
+        "ана",
+        "тиге",
+        "мында"
+      ]
     },
     {
       "type": "pronoun_interrogative",
       "upos": "PRON",
       "feats": "PronType=Int",
       "lemma_strategy": "lower",
-      "forms": ["кем", "не", "қайда", "хайзы", "хаçан", "хайдаң", "нимес"]
+      "forms": [
+        "кем",
+        "не",
+        "қайда",
+        "хайзы",
+        "хаçан",
+        "хайдаң",
+        "нимес"
+      ]
     },
     {
       "type": "question_particle",
       "upos": "PART",
       "feats": "PartType=Int",
       "lemma_strategy": "lower",
-      "forms": ["па", "пе", "ба", "бе", "ма", "ме"]
+      "forms": [
+        "па",
+        "пе",
+        "ба",
+        "бе",
+        "ма",
+        "ме"
+      ]
     },
     {
       "type": "postposition",
       "upos": "ADP",
       "feats": "AdpType=Post",
       "lemma_strategy": "lower",
-      "forms": ["учун", "пілен", "теере", "кібік", "аразынча", "соонда"]
+      "forms": [
+        "учун",
+        "пілен",
+        "теере",
+        "кібік",
+        "аразынча",
+        "соонда"
+      ]
     },
     {
       "type": "conjunction_coord",
       "upos": "CCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["тиг", "дее", "де", "та", "те", "анчах", "неке", "ниме"]
+      "forms": [
+        "тиг",
+        "дее",
+        "де",
+        "та",
+        "те",
+        "анчах",
+        "неке",
+        "ниме"
+      ]
     },
     {
       "type": "conjunction_sub",
       "upos": "SCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["хайдаң", "нимес", "болза"]
+      "forms": [
+        "хайдаң",
+        "нимес",
+        "болза"
+      ]
     },
     {
       "type": "negation_particle",
       "upos": "PART",
       "feats": "Polarity=Neg",
       "lemma_strategy": "lower",
-      "forms": ["чох", "нимес"]
+      "forms": [
+        "чох",
+        "нимес"
+      ]
+    },
+    {
+      "type": "pronoun_reflexive",
+      "upos": "PRON",
+      "feats": "Reflex=Yes",
+      "lemma_strategy": "lower",
+      "forms": [
+        "пос",
+        "позым",
+        "позың",
+        "позы",
+        "позыбыс",
+        "позлары"
+      ]
+    },
+    {
+      "type": "adverb_degree",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "нарын",
+        "кöп",
+        "öте",
+        "аз",
+        "эҥ"
+      ]
+    },
+    {
+      "type": "auxiliary_evidential",
+      "upos": "AUX",
+      "feats": "Evident=Nfh",
+      "lemma_strategy": "lower",
+      "forms": [
+        "иміс"
+      ]
+    },
+    {
+      "type": "adverb_interrogative",
+      "upos": "ADV",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": [
+        "хайда",
+        "хайдаң",
+        "хаçан",
+        "неше"
+      ]
+    },
+    {
+      "type": "determiner_universal",
+      "upos": "DET",
+      "feats": "PronType=Tot",
+      "lemma_strategy": "lower",
+      "forms": [
+        "пöрi",
+        "чыла"
+      ]
+    },
+    {
+      "type": "determiner_indefinite",
+      "upos": "DET",
+      "feats": "PronType=Ind",
+      "lemma_strategy": "lower",
+      "forms": [
+        "нимес"
+      ]
+    },
+    {
+      "type": "adverb_modal",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "белки",
+        "тек",
+        "чылап"
+      ]
+    },
+    {
+      "type": "temporal_adverb",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "пÿгÿн",
+        "ирте"
+      ]
+    },
+    {
+      "type": "interjection",
+      "upos": "INTJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "хоосха",
+        "ии"
+      ]
+    },
+    {
+      "type": "numeral_cardinal",
+      "upos": "NUM",
+      "feats": "NumType=Card",
+      "lemma_strategy": "lower",
+      "forms": [
+        "пір",
+        "ікі",
+        "ÿс",
+        "тöрт",
+        "піс",
+        "алты",
+        "четі",
+        "сегіс",
+        "тоғыс",
+        "он"
+      ]
     }
   ]
 }

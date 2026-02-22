@@ -5,56 +5,277 @@
       "upos": "PRON",
       "feats": "PronType=Prs",
       "lemma_strategy": "lower",
-      "forms": ["мен", "сен", "ол", "біз", "сіз", "олар"]
+      "forms": [
+        "мен",
+        "сен",
+        "ол",
+        "біз",
+        "сіз",
+        "олар"
+      ]
     },
     {
       "type": "pronoun_demonstrative",
       "upos": "PRON",
       "feats": "PronType=Dem",
       "lemma_strategy": "lower",
-      "forms": ["бұл", "осы", "сол", "мынау", "ана", "анау"]
+      "forms": [
+        "бұл",
+        "осы",
+        "сол",
+        "мынау",
+        "ана",
+        "анау"
+      ]
     },
     {
       "type": "pronoun_interrogative",
       "upos": "PRON",
       "feats": "PronType=Int",
       "lemma_strategy": "lower",
-      "forms": ["кім", "не", "қайда", "қашан", "қалай", "қанша", "қай", "қайсы", "неліктен"]
+      "forms": [
+        "кім",
+        "не",
+        "қайда",
+        "қашан",
+        "қалай",
+        "қанша",
+        "қай",
+        "қайсы",
+        "неліктен"
+      ]
     },
     {
       "type": "question_particle",
       "upos": "PART",
       "feats": "PartType=Int",
       "lemma_strategy": "lower",
-      "forms": ["ма", "ме", "ба", "бе", "па", "пе"]
+      "forms": [
+        "ма",
+        "ме",
+        "ба",
+        "бе",
+        "па",
+        "пе"
+      ]
     },
     {
       "type": "postposition",
       "upos": "ADP",
       "feats": "AdpType=Post",
       "lemma_strategy": "lower",
-      "forms": ["үшін", "арқылы", "дейін", "туралы", "бойынша", "сияқты", "сайын", "кейін", "алдында", "қарсы"]
+      "forms": [
+        "үшін",
+        "арқылы",
+        "дейін",
+        "туралы",
+        "бойынша",
+        "сияқты",
+        "сайын",
+        "кейін",
+        "алдында",
+        "қарсы"
+      ]
     },
     {
       "type": "conjunction_coord",
       "upos": "CCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["және", "да", "де", "та", "те", "бірақ", "алайда", "немесе", "яки"]
+      "forms": [
+        "және",
+        "да",
+        "де",
+        "та",
+        "те",
+        "бірақ",
+        "алайда",
+        "немесе",
+        "яки"
+      ]
     },
     {
       "type": "conjunction_sub",
       "upos": "SCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["себебі", "өйткені", "егер", "сондықтан", "болса"]
+      "forms": [
+        "себебі",
+        "өйткені",
+        "егер",
+        "сондықтан",
+        "болса"
+      ]
     },
     {
       "type": "negation_particle",
       "upos": "PART",
       "feats": "Polarity=Neg",
       "lemma_strategy": "lower",
-      "forms": ["жоқ", "емес"]
+      "forms": [
+        "жоқ",
+        "емес"
+      ]
+    },
+    {
+      "type": "pronoun_reflexive",
+      "upos": "PRON",
+      "feats": "Reflex=Yes",
+      "lemma_strategy": "lower",
+      "forms": [
+        "өз",
+        "өзім",
+        "өзің",
+        "өзі",
+        "өзіміз",
+        "өзіңіз",
+        "өздері"
+      ]
+    },
+    {
+      "type": "adverb_degree",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "өте",
+        "тым",
+        "көп",
+        "аз",
+        "ең",
+        "біраз"
+      ]
+    },
+    {
+      "type": "auxiliary_evidential",
+      "upos": "AUX",
+      "feats": "Evident=Nfh",
+      "lemma_strategy": "lower",
+      "forms": [
+        "екен"
+      ]
+    },
+    {
+      "type": "adverb_interrogative",
+      "upos": "ADV",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": [
+        "қайда",
+        "қайға",
+        "қашан",
+        "қалай",
+        "неге",
+        "қанша"
+      ]
+    },
+    {
+      "type": "determiner_universal",
+      "upos": "DET",
+      "feats": "PronType=Tot",
+      "lemma_strategy": "lower",
+      "forms": [
+        "барлық",
+        "бүкіл",
+        "бәрі",
+        "әр"
+      ]
+    },
+    {
+      "type": "determiner_indefinite",
+      "upos": "DET",
+      "feats": "PronType=Ind",
+      "lemma_strategy": "lower",
+      "forms": [
+        "кейбір",
+        "бірнеше"
+      ]
+    },
+    {
+      "type": "determiner_negative",
+      "upos": "DET",
+      "feats": "PronType=Neg",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ешбір",
+        "еш"
+      ]
+    },
+    {
+      "type": "adverb_modal",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "бәлкім",
+        "мүмкін",
+        "әрине",
+        "әлі",
+        "тек",
+        "ғана",
+        "әсіресе"
+      ]
+    },
+    {
+      "type": "particle_additive",
+      "upos": "PART",
+      "feats": "PartType=Add",
+      "lemma_strategy": "lower",
+      "forms": [
+        "тіпті"
+      ]
+    },
+    {
+      "type": "temporal_adverb",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "бүгін",
+        "кеше",
+        "қазір",
+        "ертең"
+      ]
+    },
+    {
+      "type": "pronoun_reciprocal",
+      "upos": "PRON",
+      "feats": "PronType=Rcp",
+      "lemma_strategy": "lower",
+      "forms": [
+        "бір-біріне",
+        "бір-бірін"
+      ]
+    },
+    {
+      "type": "interjection",
+      "upos": "INTJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "иә",
+        "ия",
+        "жарайды",
+        "мақұл"
+      ]
+    },
+    {
+      "type": "numeral_cardinal",
+      "upos": "NUM",
+      "feats": "NumType=Card",
+      "lemma_strategy": "lower",
+      "forms": [
+        "бір",
+        "екі",
+        "үш",
+        "төрт",
+        "бес",
+        "алты",
+        "жеті",
+        "сегіз",
+        "тоғыз",
+        "он"
+      ]
     }
   ]
 }

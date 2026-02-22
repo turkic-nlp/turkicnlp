@@ -5,49 +5,230 @@
       "upos": "PRON",
       "feats": "PronType=Prs",
       "lemma_strategy": "lower",
-      "forms": ["эпĕ", "эсĕ", "вăл", "эпир", "эсир", "вĕсем"]
+      "forms": [
+        "эпĕ",
+        "эсĕ",
+        "вăл",
+        "эпир",
+        "эсир",
+        "вĕсем"
+      ]
     },
     {
       "type": "pronoun_demonstrative",
       "upos": "PRON",
       "feats": "PronType=Dem",
       "lemma_strategy": "lower",
-      "forms": ["ку", "çав", "вăл", "çавă", "ман"]
+      "forms": [
+        "ку",
+        "çав",
+        "вăл",
+        "çавă",
+        "ман"
+      ]
     },
     {
       "type": "pronoun_interrogative",
       "upos": "PRON",
       "feats": "PronType=Int",
       "lemma_strategy": "lower",
-      "forms": ["кам", "мĕн", "ăçта", "хăçан", "мĕнле", "миçе"]
+      "forms": [
+        "кам",
+        "мĕн",
+        "ăçта",
+        "хăçан",
+        "мĕнле",
+        "миçе"
+      ]
     },
     {
       "type": "postposition",
       "upos": "ADP",
       "feats": "AdpType=Post",
       "lemma_strategy": "lower",
-      "forms": ["пирки", "умĕн", "хушшинче", "тăрăх", "валли", "хушне", "çинче"]
+      "forms": [
+        "пирки",
+        "умĕн",
+        "хушшинче",
+        "тăрăх",
+        "валли",
+        "хушне",
+        "çинче"
+      ]
     },
     {
       "type": "conjunction_coord",
       "upos": "CCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["тата", "е", "çапах", "анчах", "та", "те"]
+      "forms": [
+        "тата",
+        "е",
+        "çапах",
+        "анчах",
+        "та",
+        "те"
+      ]
     },
     {
       "type": "conjunction_sub",
       "upos": "SCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["çавăнпа", "мĕнлен", "пулсан", "хăй"]
+      "forms": [
+        "çавăнпа",
+        "мĕнлен",
+        "пулсан",
+        "хăй"
+      ]
     },
     {
       "type": "negation_particle",
       "upos": "PART",
       "feats": "Polarity=Neg",
       "lemma_strategy": "lower",
-      "forms": ["çук", "мар"]
+      "forms": [
+        "çук",
+        "мар"
+      ]
+    },
+    {
+      "type": "pronoun_reflexive",
+      "upos": "PRON",
+      "feats": "Reflex=Yes",
+      "lemma_strategy": "lower",
+      "forms": [
+        "хăй",
+        "хăйĕм",
+        "хăйĕ",
+        "хăймăр",
+        "хăйсем"
+      ]
+    },
+    {
+      "type": "adverb_degree",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "питĕ",
+        "нумай",
+        "сахал",
+        "ытла"
+      ]
+    },
+    {
+      "type": "auxiliary_evidential",
+      "upos": "AUX",
+      "feats": "Evident=Nfh",
+      "lemma_strategy": "lower",
+      "forms": [
+        "пулнă"
+      ]
+    },
+    {
+      "type": "adverb_interrogative",
+      "upos": "ADV",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ăçта",
+        "ăçтан",
+        "хăçан",
+        "мĕнле",
+        "миçе"
+      ]
+    },
+    {
+      "type": "determiner_universal",
+      "upos": "DET",
+      "feats": "PronType=Tot",
+      "lemma_strategy": "lower",
+      "forms": [
+        "пĕтĕм",
+        "пурĕ"
+      ]
+    },
+    {
+      "type": "determiner_indefinite",
+      "upos": "DET",
+      "feats": "PronType=Ind",
+      "lemma_strategy": "lower",
+      "forms": [
+        "нихăш",
+        "пĕр"
+      ]
+    },
+    {
+      "type": "determiner_negative",
+      "upos": "DET",
+      "feats": "PronType=Neg",
+      "lemma_strategy": "lower",
+      "forms": [
+        "никам",
+        "нимĕн"
+      ]
+    },
+    {
+      "type": "adverb_modal",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "çапах",
+        "чăнах",
+        "кăна",
+        "анçах"
+      ]
+    },
+    {
+      "type": "temporal_adverb",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "паян",
+        "ĕнер",
+        "халь",
+        "ыран"
+      ]
+    },
+    {
+      "type": "pronoun_reciprocal",
+      "upos": "PRON",
+      "feats": "PronType=Rcp",
+      "lemma_strategy": "lower",
+      "forms": [
+        "пĕр-пĕрне"
+      ]
+    },
+    {
+      "type": "interjection",
+      "upos": "INTJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ă",
+        "лайăх"
+      ]
+    },
+    {
+      "type": "numeral_cardinal",
+      "upos": "NUM",
+      "feats": "NumType=Card",
+      "lemma_strategy": "lower",
+      "forms": [
+        "пĕр",
+        "иккĕ",
+        "виç",
+        "тăват",
+        "пилĕк",
+        "улт",
+        "çиççĕ",
+        "саккăр",
+        "тăхăр",
+        "вун"
+      ]
     }
   ]
 }

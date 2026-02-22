@@ -5,56 +5,259 @@
       "upos": "PRON",
       "feats": "PronType=Prs",
       "lemma_strategy": "lower",
-      "forms": ["مەن", "سەن", "ئۇ", "بىز", "سىز", "ئۇلار"]
+      "forms": [
+        "مەن",
+        "سەن",
+        "ئۇ",
+        "بىز",
+        "سىز",
+        "ئۇلار"
+      ]
     },
     {
       "type": "pronoun_demonstrative",
       "upos": "PRON",
       "feats": "PronType=Dem",
       "lemma_strategy": "lower",
-      "forms": ["بۇ", "شۇ", "ئۇ", "بۇلار", "شۇلار", "ئۇلار"]
+      "forms": [
+        "بۇ",
+        "شۇ",
+        "ئۇ",
+        "بۇلار",
+        "شۇلار",
+        "ئۇلار"
+      ]
     },
     {
       "type": "pronoun_interrogative",
       "upos": "PRON",
       "feats": "PronType=Int",
       "lemma_strategy": "lower",
-      "forms": ["كىم", "نېمە", "قەيەردە", "قاچان", "قانداق", "قانچە", "قايسى", "نېمىشقا"]
+      "forms": [
+        "كىم",
+        "نېمە",
+        "قەيەردە",
+        "قاچان",
+        "قانداق",
+        "قانچە",
+        "قايسى",
+        "نېمىشقا"
+      ]
     },
     {
       "type": "question_particle",
       "upos": "PART",
       "feats": "PartType=Int",
       "lemma_strategy": "lower",
-      "forms": ["مۇ"]
+      "forms": [
+        "مۇ"
+      ]
     },
     {
       "type": "postposition",
       "upos": "ADP",
       "feats": "AdpType=Post",
       "lemma_strategy": "lower",
-      "forms": ["بىلەن", "ئۈچۈن", "قەدەر", "ئوخشاش", "توغرىسىدا", "بويىچە", "كېيىن", "ئالدىدا"]
+      "forms": [
+        "بىلەن",
+        "ئۈچۈن",
+        "قەدەر",
+        "ئوخشاش",
+        "توغرىسىدا",
+        "بويىچە",
+        "كېيىن",
+        "ئالدىدا"
+      ]
     },
     {
       "type": "conjunction_coord",
       "upos": "CCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["ۋە", "ياكى", "لېكىن", "ئەمما", "بىراق", "ھەم"]
+      "forms": [
+        "ۋە",
+        "ياكى",
+        "لېكىن",
+        "ئەمما",
+        "بىراق",
+        "ھەم"
+      ]
     },
     {
       "type": "conjunction_sub",
       "upos": "SCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["چۈنكى", "ئەگەر", "بولسا"]
+      "forms": [
+        "چۈنكى",
+        "ئەگەر",
+        "بولسا"
+      ]
     },
     {
       "type": "negation_particle",
       "upos": "PART",
       "feats": "Polarity=Neg",
       "lemma_strategy": "lower",
-      "forms": ["يوق", "ئەمەس"]
+      "forms": [
+        "يوق",
+        "ئەمەس"
+      ]
+    },
+    {
+      "type": "pronoun_reflexive",
+      "upos": "PRON",
+      "feats": "Reflex=Yes",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ئۆز",
+        "ئۆزۈم",
+        "ئۆزۈڭ",
+        "ئۆزى",
+        "ئۆزىمىز",
+        "ئۆزۈڭىز",
+        "ئۆزلىرى"
+      ]
+    },
+    {
+      "type": "adverb_degree",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ناھايىتى",
+        "كۆپ",
+        "بەك",
+        "ئاز",
+        "تېخىمۇ",
+        "ئەڭ"
+      ]
+    },
+    {
+      "type": "auxiliary_evidential",
+      "upos": "AUX",
+      "feats": "Evident=Nfh",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ئىكەن"
+      ]
+    },
+    {
+      "type": "adverb_interrogative",
+      "upos": "ADV",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": [
+        "قەيەردە",
+        "قەيەرگە",
+        "قەيەردىن",
+        "قاچان",
+        "قانداق",
+        "نېمىشقا",
+        "قانچە"
+      ]
+    },
+    {
+      "type": "determiner_universal",
+      "upos": "DET",
+      "feats": "PronType=Tot",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ھەممە",
+        "بارلىق",
+        "ھەر"
+      ]
+    },
+    {
+      "type": "determiner_indefinite",
+      "upos": "DET",
+      "feats": "PronType=Ind",
+      "lemma_strategy": "lower",
+      "forms": [
+        "بەزى"
+      ]
+    },
+    {
+      "type": "determiner_negative",
+      "upos": "DET",
+      "feats": "PronType=Neg",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ھېچ",
+        "ھېچبىر"
+      ]
+    },
+    {
+      "type": "adverb_modal",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "بەلكىم",
+        "مۇمكىن",
+        "پەقەت",
+        "ئالاھىدە"
+      ]
+    },
+    {
+      "type": "particle_additive",
+      "upos": "PART",
+      "feats": "PartType=Add",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ھەتتا",
+        "يەنە"
+      ]
+    },
+    {
+      "type": "temporal_adverb",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "بۈگۈن",
+        "كېچە",
+        "ھازىر",
+        "ئەتە"
+      ]
+    },
+    {
+      "type": "pronoun_reciprocal",
+      "upos": "PRON",
+      "feats": "PronType=Rcp",
+      "lemma_strategy": "lower",
+      "forms": [
+        "بىر-بىرىگە",
+        "بىر-بىرىنى"
+      ]
+    },
+    {
+      "type": "interjection",
+      "upos": "INTJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ھە",
+        "بولىدۇ"
+      ]
+    },
+    {
+      "type": "numeral_cardinal",
+      "upos": "NUM",
+      "feats": "NumType=Card",
+      "lemma_strategy": "lower",
+      "forms": [
+        "بىر",
+        "ئىككى",
+        "ئۈچ",
+        "تۆت",
+        "بەش",
+        "ئالتە",
+        "يەتتە",
+        "سەككىز",
+        "توققۇز",
+        "ئون"
+      ]
     }
   ]
 }

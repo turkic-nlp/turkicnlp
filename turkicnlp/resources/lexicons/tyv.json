@@ -5,56 +5,234 @@
       "upos": "PRON",
       "feats": "PronType=Prs",
       "lemma_strategy": "lower",
-      "forms": ["мен", "сен", "ол", "бис", "силер", "олар"]
+      "forms": [
+        "мен",
+        "сен",
+        "ол",
+        "бис",
+        "силер",
+        "олар"
+      ]
     },
     {
       "type": "pronoun_demonstrative",
       "upos": "PRON",
       "feats": "PronType=Dem",
       "lemma_strategy": "lower",
-      "forms": ["бо", "ол", "мынча", "ынча", "тере"]
+      "forms": [
+        "бо",
+        "ол",
+        "мынча",
+        "ынча",
+        "тере"
+      ]
     },
     {
       "type": "pronoun_interrogative",
       "upos": "PRON",
       "feats": "PronType=Int",
       "lemma_strategy": "lower",
-      "forms": ["кым", "чүү", "кайда", "каш", "кандыг", "чеже", "чүге"]
+      "forms": [
+        "кым",
+        "чүү",
+        "кайда",
+        "каш",
+        "кандыг",
+        "чеже",
+        "чүге"
+      ]
     },
     {
       "type": "question_particle",
       "upos": "PART",
       "feats": "PartType=Int",
       "lemma_strategy": "lower",
-      "forms": ["бе", "ме", "ма", "па", "пе", "дë", "до", "ду"]
+      "forms": [
+        "бе",
+        "ме",
+        "ма",
+        "па",
+        "пе",
+        "дë",
+        "до",
+        "ду"
+      ]
     },
     {
       "type": "postposition",
       "upos": "ADP",
       "feats": "AdpType=Post",
       "lemma_strategy": "lower",
-      "forms": ["дугайында", "мурнунда", "соонда", "кады", "биле", "дизе"]
+      "forms": [
+        "дугайында",
+        "мурнунда",
+        "соонда",
+        "кады",
+        "биле",
+        "дизе"
+      ]
     },
     {
       "type": "conjunction_coord",
       "upos": "CCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["база", "болгаш", "азы", "харын", "бо", "да", "де"]
+      "forms": [
+        "база",
+        "болгаш",
+        "азы",
+        "харын",
+        "бо",
+        "да",
+        "де"
+      ]
     },
     {
       "type": "conjunction_sub",
       "upos": "SCONJ",
       "feats": "_",
       "lemma_strategy": "lower",
-      "forms": ["чөөн", "чүге", "дизе", "болза"]
+      "forms": [
+        "чөөн",
+        "чүге",
+        "дизе",
+        "болза"
+      ]
     },
     {
       "type": "negation_particle",
       "upos": "PART",
       "feats": "Polarity=Neg",
       "lemma_strategy": "lower",
-      "forms": ["чок", "эвес"]
+      "forms": [
+        "чок",
+        "эвес"
+      ]
+    },
+    {
+      "type": "pronoun_reflexive",
+      "upos": "PRON",
+      "feats": "Reflex=Yes",
+      "lemma_strategy": "lower",
+      "forms": [
+        "боду",
+        "бодум",
+        "бодуң",
+        "боду",
+        "бодувус",
+        "бодулар"
+      ]
+    },
+    {
+      "type": "adverb_degree",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "нарын",
+        "хөй",
+        "эвээш",
+        "эң"
+      ]
+    },
+    {
+      "type": "auxiliary_evidential",
+      "upos": "AUX",
+      "feats": "Evident=Nfh",
+      "lemma_strategy": "lower",
+      "forms": [
+        "иймит"
+      ]
+    },
+    {
+      "type": "adverb_interrogative",
+      "upos": "ADV",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": [
+        "кайда",
+        "кайга",
+        "кайдан",
+        "качан",
+        "кандыг",
+        "канчаа"
+      ]
+    },
+    {
+      "type": "determiner_universal",
+      "upos": "DET",
+      "feats": "PronType=Tot",
+      "lemma_strategy": "lower",
+      "forms": [
+        "шупту"
+      ]
+    },
+    {
+      "type": "determiner_indefinite",
+      "upos": "DET",
+      "feats": "PronType=Ind",
+      "lemma_strategy": "lower",
+      "forms": [
+        "чамдык"
+      ]
+    },
+    {
+      "type": "adverb_modal",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "магаадыр",
+        "чүгле",
+        "тек"
+      ]
+    },
+    {
+      "type": "temporal_adverb",
+      "upos": "ADV",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "амдыы",
+        "даарта"
+      ]
+    },
+    {
+      "type": "pronoun_reciprocal",
+      "upos": "PRON",
+      "feats": "PronType=Rcp",
+      "lemma_strategy": "lower",
+      "forms": [
+        "бот-боттарын",
+        "бот-боттарынга"
+      ]
+    },
+    {
+      "type": "interjection",
+      "upos": "INTJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": [
+        "ийе"
+      ]
+    },
+    {
+      "type": "numeral_cardinal",
+      "upos": "NUM",
+      "feats": "NumType=Card",
+      "lemma_strategy": "lower",
+      "forms": [
+        "бир",
+        "ийи",
+        "үш",
+        "дөрт",
+        "беш",
+        "алды",
+        "чеди",
+        "сес",
+        "тос",
+        "он"
+      ]
     }
   ]
 }

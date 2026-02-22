@@ -591,6 +591,7 @@ class ApertiumMorphProcessor(Processor):
                 "Degree=",
                 "Polarity=",
                 "AdvType=",
+                "PronType=",
             ),
             "NUM": (
                 "Case=",
