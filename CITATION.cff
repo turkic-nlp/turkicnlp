@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use TurkicNLP in your research, please cite the following paper."
+title: "TurkicNLP: An NLP Toolkit for Turkic Languages"
+version: 1.0.0
+date-released: 2026-02-20
+authors:
+  - family-names: "Hakimov"
+    given-names: "Sherzod"
+    orcid: "https://orcid.org/0000-0002-7421-6213"
+repository-code: "https://github.com/turkic-nlp/turkicnlp"
+license: "Apache-2.0"
+
+preferred-citation:
+  type: article
+  title: "TurkicNLP: An NLP Toolkit for Turkic Languages"
+  authors:
+    - family-names: "Hakimov"
+      given-names: "Sherzod"
+  year: 2026
+  journal: "arXiv preprint arXiv:XXXX.XXXXX"
+  url: "https://arxiv.org/abs/XXXX.XXXXX"

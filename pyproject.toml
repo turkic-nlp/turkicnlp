@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "turkicnlp"
-version = "0.1.3"
-description = "NLP toolkit for 20+ Turkic languages"
+version = "0.1.4"
+description = "NLP toolkit for Turkic languages"
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.9"
@@ -40,21 +40,6 @@ dependencies = [
 [project.optional-dependencies]
 stanza = [
     "stanza>=1.8",
-]
-embeddings = [
-    "torch>=2.0",
-    "transformers>=4.30",
-    "tokenizers>=0.13",
-]
-translation = [
-    "torch>=2.0",
-    "transformers>=4.30",
-    "tokenizers>=0.13",
-]
-nllb = [
-    "torch>=2.0",
-    "transformers>=4.30",
-    "tokenizers>=0.13",
 ]
 all = [
     "stanza>=1.8",

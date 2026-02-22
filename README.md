@@ -60,7 +60,6 @@ With optional dependencies:
 
 ```bash
 pip install "turkicnlp[stanza]"        # Stanza/UD neural models
-pip install "turkicnlp[nllb]"          # NLLB embeddings and translation backend (transformers, tokenizer libraries)
 pip install "turkicnlp[all]"           # Everything: stanza, NLLB embeddings & translations
 pip install "turkicnlp[dev]"           # Development tools
 ```
