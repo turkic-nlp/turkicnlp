@@ -40,6 +40,9 @@ def load_tag_map(lang: str) -> TagMapper:
     elif lang == "aze":
         from turkicnlp.resources.tag_mappings.aze import AzerbaijaniTagMapper
         return AzerbaijaniTagMapper()
+    elif lang == "azb":
+        from turkicnlp.resources.tag_mappings.azb import SouthAzerbaijaniTagMapper
+        return SouthAzerbaijaniTagMapper()
     elif lang == "bak":
         from turkicnlp.resources.tag_mappings.bak import BashkirTagMapper
         return BashkirTagMapper()

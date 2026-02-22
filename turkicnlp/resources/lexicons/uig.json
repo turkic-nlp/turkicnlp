@@ -1,0 +1,60 @@
+{
+  "entries": [
+    {
+      "type": "pronoun_personal",
+      "upos": "PRON",
+      "feats": "PronType=Prs",
+      "lemma_strategy": "lower",
+      "forms": ["مەن", "سەن", "ئۇ", "بىز", "سىز", "ئۇلار"]
+    },
+    {
+      "type": "pronoun_demonstrative",
+      "upos": "PRON",
+      "feats": "PronType=Dem",
+      "lemma_strategy": "lower",
+      "forms": ["بۇ", "شۇ", "ئۇ", "بۇلار", "شۇلار", "ئۇلار"]
+    },
+    {
+      "type": "pronoun_interrogative",
+      "upos": "PRON",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": ["كىم", "نېمە", "قەيەردە", "قاچان", "قانداق", "قانچە", "قايسى", "نېمىشقا"]
+    },
+    {
+      "type": "question_particle",
+      "upos": "PART",
+      "feats": "PartType=Int",
+      "lemma_strategy": "lower",
+      "forms": ["مۇ"]
+    },
+    {
+      "type": "postposition",
+      "upos": "ADP",
+      "feats": "AdpType=Post",
+      "lemma_strategy": "lower",
+      "forms": ["بىلەن", "ئۈچۈن", "قەدەر", "ئوخشاش", "توغرىسىدا", "بويىچە", "كېيىن", "ئالدىدا"]
+    },
+    {
+      "type": "conjunction_coord",
+      "upos": "CCONJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": ["ۋە", "ياكى", "لېكىن", "ئەمما", "بىراق", "ھەم"]
+    },
+    {
+      "type": "conjunction_sub",
+      "upos": "SCONJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": ["چۈنكى", "ئەگەر", "بولسا"]
+    },
+    {
+      "type": "negation_particle",
+      "upos": "PART",
+      "feats": "Polarity=Neg",
+      "lemma_strategy": "lower",
+      "forms": ["يوق", "ئەمەس"]
+    }
+  ]
+}

@@ -82,6 +82,15 @@ include = ["turkicnlp*"]
 [tool.setuptools]
 include-package-data = true
 
+[tool.setuptools.package-data]
+turkicnlp = [
+    "resources/*.json",
+    "resources/lexicons/*.json",
+    "resources/mwt_rules/*.json",
+    "resources/mwt_rules_extracted/*.json",
+    "resources/tag_mappings/*.json",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["turkicnlp/tests"]
 markers = [

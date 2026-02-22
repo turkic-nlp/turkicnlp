@@ -1,0 +1,60 @@
+{
+  "entries": [
+    {
+      "type": "pronoun_personal",
+      "upos": "PRON",
+      "feats": "PronType=Prs",
+      "lemma_strategy": "lower",
+      "forms": ["ben", "sen", "o", "biz", "siz", "onlar"]
+    },
+    {
+      "type": "pronoun_demonstrative",
+      "upos": "PRON",
+      "feats": "PronType=Dem",
+      "lemma_strategy": "lower",
+      "forms": ["bu", "şu", "bunlar", "şunlar", "onlar"]
+    },
+    {
+      "type": "pronoun_interrogative",
+      "upos": "PRON",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": ["kim", "ne", "nerede", "nereye", "nereden", "nasıl", "neden", "hangi", "hangisi", "kaçı"]
+    },
+    {
+      "type": "question_particle",
+      "upos": "PART",
+      "feats": "PartType=Int",
+      "lemma_strategy": "lower",
+      "forms": ["mi", "mı", "mu", "mü"]
+    },
+    {
+      "type": "postposition",
+      "upos": "ADP",
+      "feats": "AdpType=Post",
+      "lemma_strategy": "lower",
+      "forms": ["ile", "için", "kadar", "gibi", "göre", "sonra", "önce", "karşı", "hakkında", "rağmen", "beri", "dair", "itibaren"]
+    },
+    {
+      "type": "conjunction_coord",
+      "upos": "CCONJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": ["ve", "ya", "veya", "ama", "fakat", "lakin", "ancak", "hem"]
+    },
+    {
+      "type": "conjunction_sub",
+      "upos": "SCONJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": ["ki", "çünkü", "eğer", "madem", "ise", "diye"]
+    },
+    {
+      "type": "negation_particle",
+      "upos": "PART",
+      "feats": "Polarity=Neg",
+      "lemma_strategy": "lower",
+      "forms": ["değil"]
+    }
+  ]
+}

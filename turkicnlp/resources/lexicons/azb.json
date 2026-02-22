@@ -1,0 +1,60 @@
+{
+  "entries": [
+    {
+      "type": "pronoun_personal",
+      "upos": "PRON",
+      "feats": "PronType=Prs",
+      "lemma_strategy": "lower",
+      "forms": ["من", "سن", "او", "بیز", "سیز", "اونلار"]
+    },
+    {
+      "type": "pronoun_demonstrative",
+      "upos": "PRON",
+      "feats": "PronType=Dem",
+      "lemma_strategy": "lower",
+      "forms": ["بو", "او", "بونلار", "اونلار", "همین"]
+    },
+    {
+      "type": "pronoun_interrogative",
+      "upos": "PRON",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": ["کیم", "نه", "هارادا", "نجه", "نییه", "هانسی"]
+    },
+    {
+      "type": "question_particle",
+      "upos": "PART",
+      "feats": "PartType=Int",
+      "lemma_strategy": "lower",
+      "forms": ["می", "مو", "مۇ", "ما"]
+    },
+    {
+      "type": "postposition",
+      "upos": "ADP",
+      "feats": "AdpType=Post",
+      "lemma_strategy": "lower",
+      "forms": ["ایله", "اوچون", "قدر", "کیمی", "گوره", "سونرا", "قارشی"]
+    },
+    {
+      "type": "conjunction_coord",
+      "upos": "CCONJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": ["و", "یا", "اما", "لاکین", "انجاق", "هابله"]
+    },
+    {
+      "type": "conjunction_sub",
+      "upos": "SCONJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": ["کی", "چونکی", "اگر", "اگه"]
+    },
+    {
+      "type": "negation_particle",
+      "upos": "PART",
+      "feats": "Polarity=Neg",
+      "lemma_strategy": "lower",
+      "forms": ["دییل", "یوخ"]
+    }
+  ]
+}

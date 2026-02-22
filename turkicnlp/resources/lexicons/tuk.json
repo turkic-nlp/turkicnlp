@@ -1,0 +1,60 @@
+{
+  "entries": [
+    {
+      "type": "pronoun_personal",
+      "upos": "PRON",
+      "feats": "PronType=Prs",
+      "lemma_strategy": "lower",
+      "forms": ["men", "sen", "ol", "biz", "siz", "olar"]
+    },
+    {
+      "type": "pronoun_demonstrative",
+      "upos": "PRON",
+      "feats": "PronType=Dem",
+      "lemma_strategy": "lower",
+      "forms": ["bu", "şu", "bular", "şular"]
+    },
+    {
+      "type": "pronoun_interrogative",
+      "upos": "PRON",
+      "feats": "PronType=Int",
+      "lemma_strategy": "lower",
+      "forms": ["kim", "näme", "nirede", "nireden", "haçan", "nähili", "näçe", "haýsy"]
+    },
+    {
+      "type": "question_particle",
+      "upos": "PART",
+      "feats": "PartType=Int",
+      "lemma_strategy": "lower",
+      "forms": ["my", "mi", "mu", "mü"]
+    },
+    {
+      "type": "postposition",
+      "upos": "ADP",
+      "feats": "AdpType=Post",
+      "lemma_strategy": "lower",
+      "forms": ["bilen", "üçin", "çenli", "ýaly", "görä", "soňra", "öň", "garşy", "barada", "hakynda"]
+    },
+    {
+      "type": "conjunction_coord",
+      "upos": "CCONJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": ["we", "ýa", "ýa-da", "ýöne", "emma"]
+    },
+    {
+      "type": "conjunction_sub",
+      "upos": "SCONJ",
+      "feats": "_",
+      "lemma_strategy": "lower",
+      "forms": ["sebäbi", "eger", "çünki", "bolsa"]
+    },
+    {
+      "type": "negation_particle",
+      "upos": "PART",
+      "feats": "Polarity=Neg",
+      "lemma_strategy": "lower",
+      "forms": ["däl"]
+    }
+  ]
+}

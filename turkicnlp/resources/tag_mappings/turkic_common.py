@@ -30,9 +30,14 @@ class CommonTurkicTagMapper(TagMapper):
         "p1": "Person=1",
         "p2": "Person=2",
         "p3": "Person=3",
+        # Clusivity / dual (rare but present in some tagsets)
+        "du": "Number=Dual",
+        "excl": "Clusivity=Excl",
+        "incl": "Clusivity=Incl",
         # Possession
         "px1sg": "Number[psor]=Sing|Person[psor]=1",
         "px2sg": "Number[psor]=Sing|Person[psor]=2",
+        "px3sg": "Number[psor]=Sing|Person[psor]=3",
         "px3sp": "Number[psor]=Sing|Person[psor]=3",
         "px1pl": "Number[psor]=Plur|Person[psor]=1",
         "px2pl": "Number[psor]=Plur|Person[psor]=2",
@@ -42,6 +47,9 @@ class CommonTurkicTagMapper(TagMapper):
         "pres": "Tense=Pres",
         "fut": "Tense=Fut",
         "aor": "Tense=Aor",
+        # Aspect
+        "prog": "Aspect=Prog",
+        "perf": "Aspect=Perf",
         # Mood
         "ind": "Mood=Ind",
         "imp": "Mood=Imp",
@@ -55,5 +63,20 @@ class CommonTurkicTagMapper(TagMapper):
         "neg": "Polarity=Neg",
         "pass": "Voice=Pass",
         "rcp": "Voice=Rcp",
+        "rfl": "Voice=Rfl",
+        # Degree
+        "comp": "Degree=Cmp",
+        "sup": "Degree=Sup",
+        # Gender (rare for Turkic but present in some tagsets)
+        "f": "Gender=Fem",
+        "m": "Gender=Masc",
+        "n": "Gender=Neut",
+        # Pronouns / particles
+        "pers": "PronType=Prs",
+        "dem": "PronType=Dem",
+        "qst": "PartType=Int",
+        "int": "PronType=Int",
+        "rel": "PronType=Rel",
+        "ind": "PronType=Ind",
+        "refl": "Reflex=Yes",
     }
-
