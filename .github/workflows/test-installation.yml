@@ -46,6 +46,7 @@ jobs:
           fi
 
       - name: Verify installation
+        shell: bash
         run: |
           python - <<'PY'
           import turkicnlp

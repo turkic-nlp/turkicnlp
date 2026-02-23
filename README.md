@@ -71,7 +71,7 @@ Installation tests run nightly across all combinations of OS, Python version, an
 | `[translation]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
 | `[all]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ❌ not available |
 
-> **Windows users:** the `hfst` Python package has no published wheels for Python 3.7 or later on Windows — this is an upstream limitation with no current workaround. All features except Apertium FST morphology work normally on Windows; use `turkicnlp[stanza]` or `turkicnlp[translation]` instead.
+> **Windows users:** the `hfst` Python package has no published wheels for Python 3.7 or later on Windows — this is an upstream limitation with no current workaround. All features except Apertium FST morphology work normally on Windows; use `turkicnlp[stanza]` or `turkicnlp[translation]` instead. If you need Apertium FST morphology on Windows, the recommended approach is [Windows Subsystem for Linux (WSL)](https://wiki.apertium.org/wiki/Apertium_on_Windows), where `hfst` installs normally.
 
 ## Quick Start
 
