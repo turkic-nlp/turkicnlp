@@ -15,9 +15,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        extra: ["", stanza, embeddings, translation, nllb, all]
+        extra: ["", hfst, stanza, translation, all]
         os: [ubuntu-22.04, ubuntu-24.04, macos-14, macos-15, windows-2025]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
+        exclude:
+          # hfst has no Windows wheels for Python 3.7+
+          - os: windows-2025
+            extra: hfst
+          # [all] includes hfst, so also excluded from Windows
+          - os: windows-2025
+            extra: all
 
     steps:
       - name: Checkout repository

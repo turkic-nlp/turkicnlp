@@ -14,9 +14,10 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License: Apache-2.0"></a>
-  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python 3.9+"></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9%20|%203.10%20|%203.11%20|%203.12-blue.svg" alt="Python 3.9 | 3.10 | 3.11 | 3.12"></a>
   <img src="https://img.shields.io/badge/status-pre--alpha-orange.svg" alt="Status: Pre-Alpha">
   <img src="https://img.shields.io/badge/languages-24_Turkic-green.svg" alt="24 Turkic Languages">
+  <a href="https://github.com/turkic-nlp/turkicnlp/actions/workflows/test-installation.yml"><img src="https://github.com/turkic-nlp/turkicnlp/actions/workflows/test-installation.yml/badge.svg" alt="Package Installation Tests"></a>
 </p>
 
 ## Citation
@@ -47,22 +48,30 @@ If you use TurkicNLP in your research, please cite:
 
 ## Installation
 
-```bash
-pip install turkicnlp
-```
-
-To install all required dependencies at once:
-```bash
-pip install "turkicnlp[all]"
-```
-
-With optional dependencies:
+**Requirements:** Python 3.9, 3.10, 3.11, or 3.12
 
 ```bash
-pip install "turkicnlp[stanza]"        # Stanza/UD neural models
-pip install "turkicnlp[all]"           # Everything: stanza, NLLB embeddings & translations
-pip install "turkicnlp[dev]"           # Development tools
+pip install turkicnlp                    # core — tokenization, rule-based processing, CoNLL-U I/O
+pip install "turkicnlp[hfst]"           # + Apertium FST morphology (Linux and macOS only)
+pip install "turkicnlp[stanza]"         # + Stanza neural models (tokenize, POS, lemma, depparse, NER)
+pip install "turkicnlp[translation]"    # + NLLB embeddings and machine translation
+pip install "turkicnlp[all]"            # everything above (Linux and macOS only)
+pip install "turkicnlp[dev]"            # development tools (pytest, black, ruff, mypy)
 ```
+
+### Platform compatibility
+
+Installation tests run nightly across all combinations of OS, Python version, and install extra (see [CI workflow](https://github.com/turkic-nlp/turkicnlp/actions/workflows/test-installation.yml)).
+
+| Extra | Ubuntu 22.04 / 24.04 | macOS 14 / 15 | Windows 2025 |
+|---|---|---|---|
+| base | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
+| `[hfst]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ❌ not available |
+| `[stanza]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
+| `[translation]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
+| `[all]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ❌ not available |
+
+> **Windows users:** the `hfst` Python package has no published wheels for Python 3.7 or later on Windows — this is an upstream limitation with no current workaround. All features except Apertium FST morphology work normally on Windows; use `turkicnlp[stanza]` or `turkicnlp[translation]` instead.
 
 ## Quick Start
 
