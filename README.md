@@ -25,14 +25,19 @@
 If you use TurkicNLP in your research, please cite:
 
 ```bibtex
-@software{turkicnlp,
-  title = {TurkicNLP: An Open-Source NLP Toolkit for Turkic Languages},
-  author = {Sherzod Hakimov},
-  year = {2026},
-  url = {https://github.com/turkic-nlp/turkicnlp},
-  license = {Apache-2.0},
+@misc{hakimov2026turkicnlpnlptoolkit,
+      title={TurkicNLP: An NLP Toolkit for Turkic Languages}, 
+      author={Sherzod Hakimov},
+      year={2026},
+      eprint={2602.19174},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2602.19174}, 
 }
 ```
+
+## Arxiv preprint
+[PDF](https://arxiv.org/pdf/2602.19174)
 
 ## Features
 
