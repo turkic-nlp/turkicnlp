@@ -572,7 +572,8 @@ Reference:
 ### Other Organisations
 
 - [Apertium](https://apertium.org/) — morphological transducers covering 20+ Turkic languages
-- [SIGTURK](https://sigturk.com/) — ACL Special Interest Group on Turkic Languages
+- [SIGTURK](https://sigturk.github.io/) — ACL Special Interest Group on Turkic Languages
 - [ISSAI](https://issai.nu.edu.kz/) — Institute of Smart Systems and Artificial Intelligence, Nazarbayev University, for Kazakh NLP resources
 - [Universal Dependencies](https://universaldependencies.org/) — the framework and community behind Turkic treebanks
 - [Turkic Interlingua](https://github.com/turkic-interlingua) — resources for machine translation for Turkic languages
+- [Turkic UD](https://github.com/ud-turkic) - group working on harmonizing Turkic UD treebanks
