@@ -61,6 +61,7 @@ def download(
     base_dir = Path(model_dir) if model_dir else ModelRegistry.default_dir()
     base_dir.mkdir(parents=True, exist_ok=True)
     stanza_checked: set[str] = set()
+    stanza_custom_checked: set[str] = set()
     hf_checked: set[str] = set()
 
     for scr in scripts_to_download:
@@ -102,6 +103,17 @@ def download(
                         f"(backend={backend_name})"
                     )
                     _download_neural_model(lang, scr, proc_name, backend_info, dest)
+                elif backend_type == "stanza_custom":
+                    if lang not in stanza_custom_checked:
+                        dest_dir = base_dir / "stanza_custom" / lang
+                        if dest_dir.exists() and any(dest_dir.iterdir()):
+                            print(f"  → Loading Stanza models for {lang} from {dest_dir}")
+                        else:
+                            print(f"  ↓ Downloading Stanza models for {lang}")
+                        stanza_custom_checked.add(lang)
+                    _download_stanza_custom_model(
+                        lang, proc_name, backend_info, base_dir, force
+                    )
                 elif backend_type == "stanza":
                     # Keep Stanza assets only in ~/.turkicnlp/models/stanza/.
                     # Clean up legacy empty per-processor stanza dirs.
@@ -339,8 +351,83 @@ def _download_huggingface_seq2seq(
     )
 
 
+def _download_stanza_custom_model(
+    lang: str,
+    proc_name: str,
+    backend_info: dict,
+    base_dir: Path,
+    force: bool,
+) -> None:
+    """Download a custom-trained Stanza model file.
+
+    Custom Stanza models are individual ``.pt`` files hosted outside the
+    official Stanza model hub. They are stored at::
+
+        {base_dir}/stanza_custom/{lang}/{filename}
+
+    Args:
+        lang: ISO 639-3 language code.
+        proc_name: Processor name (e.g. ``tokenize``, ``pos``).
+        backend_info: Catalog entry with ``url``, ``sha256``, ``filename``.
+        base_dir: Base model directory.
+        force: Re-download even if already present.
+    """
+    dest_dir = base_dir / "stanza_custom" / lang
+    dest_dir.mkdir(parents=True, exist_ok=True)
+
+    # Download the main model file
+    filename = backend_info.get("filename", f"{proc_name}.pt")
+    dest_file = dest_dir / filename
+    url = backend_info.get("url")
+    if not url:
+        raise FileNotFoundError(
+            f"No download URL for custom Stanza model {lang}/{proc_name}."
+        )
+    if not dest_file.exists() or force:
+        print(f"    ↓ {filename}")
+        urllib.request.urlretrieve(url, dest_file, reporthook=_progress_hook)
+        expected_sha = backend_info.get("sha256")
+        if expected_sha:
+            actual_sha = _sha256(dest_file)
+            if actual_sha != expected_sha:
+                dest_file.unlink()
+                raise ValueError(
+                    f"SHA-256 mismatch for {dest_file}: "
+                    f"expected {expected_sha}, got {actual_sha}"
+                )
+
+    # Download pretrain file if specified (shared across pos/depparse)
+    pretrain_url = backend_info.get("pretrain_url")
+    if pretrain_url:
+        pretrain_filename = backend_info.get("pretrain_filename", "pretrain.pt")
+        pretrain_file = dest_dir / pretrain_filename
+        if not pretrain_file.exists() or force:
+            print(f"    ↓ {pretrain_filename}")
+            urllib.request.urlretrieve(
+                pretrain_url, pretrain_file, reporthook=_progress_hook
+            )
+            pretrain_sha = backend_info.get("pretrain_sha256")
+            if pretrain_sha:
+                actual_sha = _sha256(pretrain_file)
+                if actual_sha != pretrain_sha:
+                    pretrain_file.unlink()
+                    raise ValueError(
+                        f"SHA-256 mismatch for {pretrain_file}: "
+                        f"expected {pretrain_sha}, got {actual_sha}"
+                    )
+
+
 def _download_stanza_model(lang: str) -> None:
-    """Download Stanza models into the shared model directory."""
+    """Download Stanza models into the shared model directory.
+
+    Skips custom-trained languages (e.g. Uzbek) whose models are
+    downloaded individually via :func:`_download_stanza_custom_model`.
+    """
+    from turkicnlp.processors.stanza_backend import _is_custom_stanza
+
+    if _is_custom_stanza(lang):
+        return
+
     try:
         import stanza
     except ImportError as exc:

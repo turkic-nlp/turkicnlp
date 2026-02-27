@@ -30,6 +30,25 @@ _LANG_MAP: dict[str, str] = {
     "uig": "ug",   # UD treebank: UDT
     "kir": "ky",   # UD treebank: KTMU
     "ota": "ota",  # UD treebank: BOUN
+    "uzb": "uz",   # Custom-trained on UzUDT (turkic-nlp/trained-stanza-models)
+}
+
+# Languages with custom-trained Stanza models (not from official Stanza hub).
+# These require explicit model paths and allow_unknown_language=True.
+_CUSTOM_STANZA_LANGS: set[str] = {"uzb"}
+
+# Mapping from processor name to model path kwarg name used by stanza.Pipeline
+_CUSTOM_MODEL_PATH_KWARGS: dict[str, tuple[str, str]] = {
+    "tokenize": ("tokenize_model_path", "tokenizer.pt"),
+    "pos":      ("pos_model_path",      "tagger.pt"),
+    "lemma":    ("lemma_model_path",     "lemmatizer.pt"),
+    "depparse": ("depparse_model_path",  "parser.pt"),
+}
+
+# Processors that need a pretrain embedding path
+_CUSTOM_PRETRAIN_KWARGS: dict[str, str] = {
+    "pos":      "pos_pretrain_path",
+    "depparse": "depparse_pretrain_path",
 }
 
 STANZA_SUPPORTED_LANGUAGES: set[str] = set(_LANG_MAP.keys())
@@ -66,12 +85,72 @@ def _get_stanza_lang(lang: str) -> str:
     return _LANG_MAP[lang]
 
 
+def _is_custom_stanza(lang: str) -> bool:
+    """Check if a language uses custom-trained Stanza models."""
+    return lang in _CUSTOM_STANZA_LANGS
+
+
+def _get_custom_model_dir(lang: str) -> "Path":
+    """Return the directory containing custom Stanza model files.
+
+    Uses ISO 639-3 code (e.g. ``uzb``) as directory name, consistent
+    with the rest of the library.
+    """
+    from pathlib import Path
+    return ModelRegistry.default_dir() / "stanza_custom" / lang
+
+
+def _build_custom_kwargs(lang: str, processors: list[str]) -> dict[str, Any]:
+    """Build stanza.Pipeline kwargs for custom-trained models.
+
+    Args:
+        lang: ISO 639-3 language code.
+        processors: List of processor names to include.
+
+    Returns:
+        Dict of keyword arguments for stanza.Pipeline.
+    """
+    model_dir = _get_custom_model_dir(lang)
+    kwargs: dict[str, Any] = {
+        "lang": _LANG_MAP[lang],
+        "allow_unknown_language": True,
+    }
+    stanza_procs: list[str] = []
+    for proc_name in processors:
+        if proc_name in _CUSTOM_MODEL_PATH_KWARGS:
+            kwarg_name, filename = _CUSTOM_MODEL_PATH_KWARGS[proc_name]
+            model_path = model_dir / filename
+            if not model_path.exists():
+                raise FileNotFoundError(
+                    f"Custom Stanza model not found: {model_path}. "
+                    f"Run: turkicnlp.download('{lang}')"
+                )
+            kwargs[kwarg_name] = str(model_path)
+            stanza_procs.append(proc_name)
+        if proc_name in _CUSTOM_PRETRAIN_KWARGS:
+            pretrain_path = model_dir / "pretrain.pt"
+            if not pretrain_path.exists():
+                raise FileNotFoundError(
+                    f"Custom Stanza pretrain not found: {pretrain_path}. "
+                    f"Run: turkicnlp.download('{lang}')"
+                )
+            kwargs[_CUSTOM_PRETRAIN_KWARGS[proc_name]] = str(pretrain_path)
+    kwargs["processors"] = ",".join(stanza_procs)
+    return kwargs
+
+
 def download_stanza_model(lang: str) -> None:
     """Download Stanza models for a Turkic language.
+
+    For custom-trained models (e.g. Uzbek), this is a no-op since their
+    download is handled by :func:`_download_stanza_custom_model` in the
+    downloader module.
 
     Args:
         lang: ISO 639-3 language code (e.g. ``tur``, ``kaz``).
     """
+    if _is_custom_stanza(lang):
+        return
     stanza = _require_stanza()
     stanza_lang = _get_stanza_lang(lang)
     stanza_dir = ModelRegistry.default_dir() / "stanza"
@@ -120,33 +199,51 @@ class _StanzaManager:
 
         Uses Stanza's default processor set for the language, which typically
         includes tokenize, mwt (if applicable), pos, lemma, and depparse.
+        For custom-trained models, uses explicit model paths.
         """
         key = (lang, use_gpu)
         if key not in cls._full_pipelines:
             stanza = _require_stanza()
             stanza_lang = _get_stanza_lang(lang)
-            stanza_dir = ModelRegistry.default_dir() / "stanza"
-            try:
-                stanza.download(
-                    stanza_lang, model_dir=str(stanza_dir), logging_level="WARNING"
+
+            if _is_custom_stanza(lang):
+                kwargs = _build_custom_kwargs(
+                    lang, ["tokenize", "pos", "lemma", "depparse"]
                 )
-            except TypeError:
-                stanza.download(stanza_lang, dir=str(stanza_dir), logging_level="WARNING")
-            logger.info("Creating Stanza pipeline for '%s'", stanza_lang)
-            try:
+                logger.info(
+                    "Creating custom Stanza pipeline for '%s'", stanza_lang
+                )
+                # Use ERROR level during construction to suppress Stanza's
+                # "unsupported language" warning, then restore to WARNING.
                 cls._full_pipelines[key] = stanza.Pipeline(
-                    stanza_lang,
-                    model_dir=str(stanza_dir),
                     use_gpu=use_gpu,
-                    logging_level="WARNING",
+                    logging_level="ERROR",
+                    **kwargs,
                 )
-            except TypeError:
-                cls._full_pipelines[key] = stanza.Pipeline(
-                    stanza_lang,
-                    dir=str(stanza_dir),
-                    use_gpu=use_gpu,
-                    logging_level="WARNING",
-                )
+                logging.getLogger("stanza").setLevel(logging.WARNING)
+            else:
+                stanza_dir = ModelRegistry.default_dir() / "stanza"
+                try:
+                    stanza.download(
+                        stanza_lang, model_dir=str(stanza_dir), logging_level="WARNING"
+                    )
+                except TypeError:
+                    stanza.download(stanza_lang, dir=str(stanza_dir), logging_level="WARNING")
+                logger.info("Creating Stanza pipeline for '%s'", stanza_lang)
+                try:
+                    cls._full_pipelines[key] = stanza.Pipeline(
+                        stanza_lang,
+                        model_dir=str(stanza_dir),
+                        use_gpu=use_gpu,
+                        logging_level="WARNING",
+                    )
+                except TypeError:
+                    cls._full_pipelines[key] = stanza.Pipeline(
+                        stanza_lang,
+                        dir=str(stanza_dir),
+                        use_gpu=use_gpu,
+                        logging_level="WARNING",
+                    )
         return cls._full_pipelines[key]
 
     @classmethod
@@ -160,39 +257,61 @@ class _StanzaManager:
         if key not in cls._pretok_pipelines:
             stanza = _require_stanza()
             stanza_lang = _get_stanza_lang(lang)
-            stanza_dir = ModelRegistry.default_dir() / "stanza"
-            try:
-                stanza.download(
-                    stanza_lang, model_dir=str(stanza_dir), logging_level="WARNING"
+
+            if _is_custom_stanza(lang):
+                kwargs = _build_custom_kwargs(
+                    lang, ["tokenize", "pos", "lemma", "depparse"]
                 )
-            except TypeError:
-                stanza.download(stanza_lang, dir=str(stanza_dir), logging_level="WARNING")
-            logger.info(
-                "Creating pretokenized Stanza pipeline for '%s'", stanza_lang
-            )
-            try:
-                cls._pretok_pipelines[key] = stanza.Pipeline(
+                kwargs["tokenize_pretokenized"] = True
+                logger.info(
+                    "Creating pretokenized custom Stanza pipeline for '%s'",
                     stanza_lang,
-                    processors="tokenize,pos,lemma,depparse",
-                    tokenize_pretokenized=True,
-                    model_dir=str(stanza_dir),
-                    use_gpu=use_gpu,
-                    logging_level="WARNING",
                 )
-            except TypeError:
                 cls._pretok_pipelines[key] = stanza.Pipeline(
-                    stanza_lang,
-                    processors="tokenize,pos,lemma,depparse",
-                    tokenize_pretokenized=True,
-                    dir=str(stanza_dir),
                     use_gpu=use_gpu,
-                    logging_level="WARNING",
+                    logging_level="ERROR",
+                    **kwargs,
                 )
+                logging.getLogger("stanza").setLevel(logging.WARNING)
+            else:
+                stanza_dir = ModelRegistry.default_dir() / "stanza"
+                try:
+                    stanza.download(
+                        stanza_lang, model_dir=str(stanza_dir), logging_level="WARNING"
+                    )
+                except TypeError:
+                    stanza.download(stanza_lang, dir=str(stanza_dir), logging_level="WARNING")
+                logger.info(
+                    "Creating pretokenized Stanza pipeline for '%s'", stanza_lang
+                )
+                try:
+                    cls._pretok_pipelines[key] = stanza.Pipeline(
+                        stanza_lang,
+                        processors="tokenize,pos,lemma,depparse",
+                        tokenize_pretokenized=True,
+                        model_dir=str(stanza_dir),
+                        use_gpu=use_gpu,
+                        logging_level="WARNING",
+                    )
+                except TypeError:
+                    cls._pretok_pipelines[key] = stanza.Pipeline(
+                        stanza_lang,
+                        processors="tokenize,pos,lemma,depparse",
+                        tokenize_pretokenized=True,
+                        dir=str(stanza_dir),
+                        use_gpu=use_gpu,
+                        logging_level="WARNING",
+                    )
         return cls._pretok_pipelines[key]
 
     @classmethod
     def get_full_ner_pipeline(cls, lang: str, use_gpu: bool = False) -> Any:
         """Get or create a full Stanza pipeline for NER."""
+        if _is_custom_stanza(lang):
+            raise ValueError(
+                f"NER is not available for custom Stanza language '{lang}'. "
+                "No NER model has been trained for this language yet."
+            )
         key = (lang, use_gpu)
         if key not in cls._full_ner_pipelines:
             stanza = _require_stanza()
@@ -226,6 +345,11 @@ class _StanzaManager:
     @classmethod
     def get_pretokenized_ner_pipeline(cls, lang: str, use_gpu: bool = False) -> Any:
         """Get or create a pretokenized Stanza pipeline for NER."""
+        if _is_custom_stanza(lang):
+            raise ValueError(
+                f"NER is not available for custom Stanza language '{lang}'. "
+                "No NER model has been trained for this language yet."
+            )
         key = (lang, use_gpu)
         if key not in cls._pretok_ner_pipelines:
             stanza = _require_stanza()

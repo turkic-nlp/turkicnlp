@@ -472,6 +472,64 @@
           },
           "default": "apertium"
         },
+        "tokenize": {
+          "backends": {
+            "stanza": {
+              "type": "stanza_custom",
+              "license": "Apache-2.0",
+              "source": "https://github.com/turkic-nlp/trained-stanza-models",
+              "url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.0/uz_uzudt_nocharlm_tokenizer.pt",
+              "sha256": "77f5709fb4ddf614030ade491d87f5498be6ec4b9f540eebd75704763ccacce5",
+              "filename": "tokenizer.pt"
+            }
+          },
+          "default": "stanza"
+        },
+        "pos": {
+          "backends": {
+            "stanza": {
+              "type": "stanza_custom",
+              "license": "Apache-2.0",
+              "source": "https://github.com/turkic-nlp/trained-stanza-models",
+              "url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.0/uz_uzudt_nocharlm_tagger.pt",
+              "sha256": "b90c22d04642a7fd8b6843e7c86980ff4bce8bcc2888718139d62c71c11eb2ba",
+              "filename": "tagger.pt",
+              "pretrain_url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.0/uz_uzudt.pretrain.pt",
+              "pretrain_sha256": "ddc0b856d3546e818c76999ae6b7102027bb05381d9a17bf349e71705b214999",
+              "pretrain_filename": "pretrain.pt"
+            }
+          },
+          "default": "stanza"
+        },
+        "lemma": {
+          "backends": {
+            "stanza": {
+              "type": "stanza_custom",
+              "license": "Apache-2.0",
+              "source": "https://github.com/turkic-nlp/trained-stanza-models",
+              "url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.0/uz_uzudt_nocharlm_lemmatizer.pt",
+              "sha256": "564f8b802ba19846a9f7241032b4ebe352746309dfb77ca58efc9b3333762659",
+              "filename": "lemmatizer.pt"
+            }
+          },
+          "default": "stanza"
+        },
+        "depparse": {
+          "backends": {
+            "stanza": {
+              "type": "stanza_custom",
+              "license": "Apache-2.0",
+              "source": "https://github.com/turkic-nlp/trained-stanza-models",
+              "url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.0/uz_uzudt_nocharlm_parser.pt",
+              "sha256": "5095ee9fdac704eb08502373c8fea852b45f640ee4b1ddbb5337238e8007035b",
+              "filename": "parser.pt",
+              "pretrain_url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.0/uz_uzudt.pretrain.pt",
+              "pretrain_sha256": "ddc0b856d3546e818c76999ae6b7102027bb05381d9a17bf349e71705b214999",
+              "pretrain_filename": "pretrain.pt"
+            }
+          },
+          "default": "stanza"
+        },
         "embeddings": {
           "backends": {
             "nllb": {

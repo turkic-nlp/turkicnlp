@@ -180,6 +180,16 @@ class Pipeline:
                     shared_exists = (shared_dir / "config.json").exists()
                 if not shared_exists:
                     download(self.lang, processors=[proc_name], script=str(self._model_script))
+            elif backend_type == "stanza_custom":
+                # Custom-trained Stanza models: ensure files are downloaded
+                custom_dir = ModelRegistry.default_dir() / "stanza_custom" / self.lang
+                filename = backend_info.get("filename", f"{proc_name}.pt")
+                pretrain_filename = backend_info.get("pretrain_filename")
+                needs_download = not (custom_dir / filename).exists()
+                if not needs_download and pretrain_filename:
+                    needs_download = not (custom_dir / pretrain_filename).exists()
+                if needs_download:
+                    download(self.lang, processors=[proc_name], script=str(self._model_script))
             elif backend_type in ("apertium_fst", "neural_model"):
                 try:
                     model_path = ModelRegistry.get_model_path(
