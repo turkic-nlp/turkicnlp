@@ -305,7 +305,7 @@ The table below shows all supported languages with their available scripts and p
 | [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ■ ● | ◆ | ● | ● | ● | ● | ★ | ★ |
 | [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ■ | ◆ | ○ | ○ | ○ | — | ★ | ★ |
 | [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | ○ | — | — | — | — | — | ★ | ★ |
-| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ■ | ◆ | ○ | ○ | ○ | — | ★ | ★ |
+| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ■ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
 | [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ■ | ◆ | — | — | — | — | — | — |
 
 ### Kipchak Branch

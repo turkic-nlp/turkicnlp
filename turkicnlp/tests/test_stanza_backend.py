@@ -42,6 +42,7 @@ class TestLangMapping:
         assert "kir" in STANZA_SUPPORTED_LANGUAGES
         assert "ota" in STANZA_SUPPORTED_LANGUAGES
         assert "uzb" in STANZA_SUPPORTED_LANGUAGES
+        assert "tuk" in STANZA_SUPPORTED_LANGUAGES
 
     def test_get_stanza_lang(self):
         assert _get_stanza_lang("tur") == "tr"
@@ -50,6 +51,7 @@ class TestLangMapping:
         assert _get_stanza_lang("kir") == "ky"
         assert _get_stanza_lang("ota") == "ota"
         assert _get_stanza_lang("uzb") == "uz"
+        assert _get_stanza_lang("tuk") == "tk"
 
     def test_get_stanza_lang_unsupported(self):
         with pytest.raises(ValueError, match="not supported"):
@@ -64,12 +66,14 @@ class TestCustomStanzaUnit:
 
     def test_custom_stanza_langs(self):
         assert "uzb" in _CUSTOM_STANZA_LANGS
+        assert "tuk" in _CUSTOM_STANZA_LANGS
         assert "tur" not in _CUSTOM_STANZA_LANGS
         assert "kaz" not in _CUSTOM_STANZA_LANGS
         assert "kir" not in _CUSTOM_STANZA_LANGS
 
     def test_is_custom_stanza(self):
         assert _is_custom_stanza("uzb") is True
+        assert _is_custom_stanza("tuk") is True
         assert _is_custom_stanza("tur") is False
         assert _is_custom_stanza("kaz") is False
         assert _is_custom_stanza("kir") is False
@@ -300,6 +304,36 @@ class TestStanzaTokenizerUnit:
         assert result.sentences[0].words[1].text == "ketdim"
         assert result.sentences[0].words[2].text == "."
 
+    def test_process_maps_sentences_turkmen(self):
+        """Test tokenizer with Turkmen Latin text."""
+        tokenizer = StanzaTokenizer(lang="tuk")
+        tokenizer._use_gpu = False
+        tokenizer._loaded = True
+
+        mock_w1 = SimpleNamespace(text="Men")
+        mock_w2 = SimpleNamespace(text="gitdim")
+        mock_w3 = SimpleNamespace(text=".")
+        mock_t1 = SimpleNamespace(words=[mock_w1], start_char=0, end_char=3)
+        mock_t2 = SimpleNamespace(words=[mock_w2], start_char=4, end_char=10)
+        mock_t3 = SimpleNamespace(words=[mock_w3], start_char=10, end_char=11)
+        mock_sent = SimpleNamespace(
+            text="Men gitdim.",
+            tokens=[mock_t1, mock_t2, mock_t3],
+        )
+        mock_stanza_doc = SimpleNamespace(sentences=[mock_sent])
+
+        doc = Document(text="Men gitdim.", lang="tuk")
+        with patch.object(
+            _StanzaManager, "run_full", return_value=mock_stanza_doc
+        ):
+            result = tokenizer.process(doc)
+
+        assert len(result.sentences) == 1
+        assert len(result.sentences[0].words) == 3
+        assert result.sentences[0].words[0].text == "Men"
+        assert result.sentences[0].words[1].text == "gitdim"
+        assert result.sentences[0].words[2].text == "."
+
     def test_process_maps_mwt(self):
         """Test MWT handling: one token with multiple words."""
         tokenizer = StanzaTokenizer(lang="tur")
@@ -412,6 +446,35 @@ class TestStanzaPOSTaggerUnit:
         w3 = Word(id=3, text="ketdim")
         sent = Sentence(text="Men maktabga ketdim", tokens=[], words=[w1, w2, w3])
         doc = Document(text="Men maktabga ketdim", lang="uzb", sentences=[sent])
+        doc._processor_log.append("tokenize:stanza")
+
+        mock_w1 = SimpleNamespace(upos="PRON", xpos=None, feats="Case=Nom|Number=Sing|Person=1|PronType=Prs")
+        mock_w2 = SimpleNamespace(upos="NOUN", xpos=None, feats="Case=Dat|Number=Sing")
+        mock_w3 = SimpleNamespace(upos="VERB", xpos=None, feats="Mood=Ind|Number=Sing|Person=1|Tense=Past|VerbForm=Fin")
+        mock_sent = SimpleNamespace(words=[mock_w1, mock_w2, mock_w3])
+        mock_stanza_doc = SimpleNamespace(sentences=[mock_sent])
+
+        with patch.object(
+            _StanzaManager, "run_full", return_value=mock_stanza_doc
+        ):
+            result = tagger.process(doc)
+
+        assert result.sentences[0].words[0].upos == "PRON"
+        assert result.sentences[0].words[1].upos == "NOUN"
+        assert result.sentences[0].words[2].upos == "VERB"
+        assert "pos:stanza" in result._processor_log
+
+    def test_process_full_mode_turkmen(self):
+        """Test POS tagger with Turkmen text (custom stanza model)."""
+        tagger = StanzaPOSTagger(lang="tuk")
+        tagger._use_gpu = False
+        tagger._loaded = True
+
+        w1 = Word(id=1, text="Men")
+        w2 = Word(id=2, text="mekdebe")
+        w3 = Word(id=3, text="gitdim")
+        sent = Sentence(text="Men mekdebe gitdim", tokens=[], words=[w1, w2, w3])
+        doc = Document(text="Men mekdebe gitdim", lang="tuk", sentences=[sent])
         doc._processor_log.append("tokenize:stanza")
 
         mock_w1 = SimpleNamespace(upos="PRON", xpos=None, feats="Case=Nom|Number=Sing|Person=1|PronType=Prs")
@@ -543,6 +606,27 @@ class TestStanzaLemmatizerUnit:
 
         assert result.sentences[0].words[0].lemma == "maktab"
 
+    def test_process_turkmen(self):
+        lemmatizer = StanzaLemmatizer(lang="tuk")
+        lemmatizer._use_gpu = False
+        lemmatizer._loaded = True
+
+        w1 = Word(id=1, text="mekdebe", upos="NOUN")
+        sent = Sentence(text="mekdebe", tokens=[], words=[w1])
+        doc = Document(text="mekdebe", lang="tuk", sentences=[sent])
+        doc._processor_log.append("tokenize:stanza")
+
+        mock_w1 = SimpleNamespace(lemma="mekdep")
+        mock_sent = SimpleNamespace(words=[mock_w1])
+        mock_stanza_doc = SimpleNamespace(sentences=[mock_sent])
+
+        with patch.object(
+            _StanzaManager, "run_full", return_value=mock_stanza_doc
+        ):
+            result = lemmatizer.process(doc)
+
+        assert result.sentences[0].words[0].lemma == "mekdep"
+
 
 class TestStanzaDepParserUnit:
     def test_class_attributes(self):
@@ -616,6 +700,40 @@ class TestStanzaDepParserUnit:
         )
         doc = Document(
             text="Men maktabga ketdim", lang="uzb", sentences=[sent]
+        )
+        doc._processor_log.append("tokenize:stanza")
+
+        mock_w1 = SimpleNamespace(head=3, deprel="nsubj")
+        mock_w2 = SimpleNamespace(head=3, deprel="obl")
+        mock_w3 = SimpleNamespace(head=0, deprel="root")
+        mock_sent = SimpleNamespace(words=[mock_w1, mock_w2, mock_w3])
+        mock_stanza_doc = SimpleNamespace(sentences=[mock_sent])
+
+        with patch.object(
+            _StanzaManager, "run_full", return_value=mock_stanza_doc
+        ):
+            result = parser.process(doc)
+
+        assert result.sentences[0].words[0].deprel == "nsubj"
+        assert result.sentences[0].words[1].deprel == "obl"
+        assert result.sentences[0].words[2].deprel == "root"
+        assert result.sentences[0].words[2].head == 0
+        assert "depparse:stanza" in result._processor_log
+
+    def test_process_turkmen(self):
+        """Test depparse with Turkmen (custom stanza model)."""
+        parser = StanzaDepParser(lang="tuk")
+        parser._use_gpu = False
+        parser._loaded = True
+
+        w1 = Word(id=1, text="Men", upos="PRON")
+        w2 = Word(id=2, text="mekdebe", upos="NOUN")
+        w3 = Word(id=3, text="gitdim", upos="VERB")
+        sent = Sentence(
+            text="Men mekdebe gitdim", tokens=[], words=[w1, w2, w3]
+        )
+        doc = Document(
+            text="Men mekdebe gitdim", lang="tuk", sentences=[sent]
         )
         doc._processor_log.append("tokenize:stanza")
 
@@ -732,6 +850,30 @@ class TestCatalogIntegration:
         uzb_procs = catalog["uzb"]["processors"]["Latn"]
         for proc_name in ("tokenize", "pos", "lemma", "depparse"):
             backend_info = uzb_procs[proc_name]["backends"]["stanza"]
+            assert backend_info["type"] == "stanza_custom"
+            assert "url" in backend_info
+            assert "sha256" in backend_info
+
+    def test_turkmen_stanza_in_catalog(self):
+        from turkicnlp.resources.downloader import list_processors
+
+        procs = list_processors("tuk")
+        assert "tokenize" in procs
+        assert "stanza" in procs["tokenize"]
+        assert "pos" in procs
+        assert "stanza" in procs["pos"]
+        assert "lemma" in procs
+        assert "stanza" in procs["lemma"]
+        assert "depparse" in procs
+        assert "stanza" in procs["depparse"]
+
+    def test_turkmen_stanza_custom_type_in_catalog(self):
+        from turkicnlp.resources.registry import ModelRegistry
+
+        catalog = ModelRegistry.load_catalog()
+        tuk_procs = catalog["tuk"]["processors"]["Latn"]
+        for proc_name in ("tokenize", "pos", "lemma", "depparse"):
+            backend_info = tuk_procs[proc_name]["backends"]["stanza"]
             assert backend_info["type"] == "stanza_custom"
             assert "url" in backend_info
             assert "sha256" in backend_info
@@ -947,6 +1089,57 @@ class TestStanzaIntegration:
             StanzaDepParser,
         ]:
             proc = ProcessorClass(lang="uzb")
+            proc.load()
+            doc = proc.process(doc)
+
+        conllu = doc.to_conllu()
+        assert "# text = " in conllu
+        assert "VERB" in conllu or "NOUN" in conllu
+
+    def test_full_pipeline_turkmen(self):
+        """End-to-end test with Turkmen Latin text (custom Stanza model)."""
+        stanza = pytest.importorskip("stanza")
+
+        # Ensure custom models are downloaded
+        from turkicnlp.resources.downloader import download
+
+        download("tuk", processors=["tokenize", "pos", "lemma", "depparse"])
+
+        doc = Document(text="Men mekdebe gitdim.", lang="tuk")
+
+        for ProcessorClass in [
+            StanzaTokenizer,
+            StanzaPOSTagger,
+            StanzaLemmatizer,
+            StanzaDepParser,
+        ]:
+            proc = ProcessorClass(lang="tuk")
+            proc.load()
+            doc = proc.process(doc)
+
+        assert len(doc.sentences) >= 1
+        assert len(doc.words) >= 3
+        assert all(w.upos is not None for w in doc.words)
+        assert all(w.lemma is not None for w in doc.words)
+        assert all(w.head is not None for w in doc.words)
+        assert all(w.deprel is not None for w in doc.words)
+
+    def test_conllu_export_after_stanza_turkmen(self):
+        """Test CoNLL-U export after custom Stanza processing for Turkmen."""
+        stanza = pytest.importorskip("stanza")
+        from turkicnlp.resources.downloader import download
+
+        download("tuk", processors=["tokenize", "pos", "lemma", "depparse"])
+
+        doc = Document(text="Men mekdebe gitdim.", lang="tuk")
+
+        for ProcessorClass in [
+            StanzaTokenizer,
+            StanzaPOSTagger,
+            StanzaLemmatizer,
+            StanzaDepParser,
+        ]:
+            proc = ProcessorClass(lang="tuk")
             proc.load()
             doc = proc.process(doc)
 
