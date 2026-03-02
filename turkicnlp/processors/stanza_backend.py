@@ -30,13 +30,14 @@ _LANG_MAP: dict[str, str] = {
     "uig": "ug",   # UD treebank: UDT
     "kir": "ky",   # UD treebank: KTMU
     "ota": "ota",  # UD treebank: BOUN
+    "aze": "az",   # Custom-trained on TuECL (turkic-nlp/trained-stanza-models)
     "uzb": "uz",   # Custom-trained on UzUDT (turkic-nlp/trained-stanza-models)
     "tuk": "tk",   # Custom-trained on TuECL (turkic-nlp/trained-stanza-models)
 }
 
 # Languages with custom-trained Stanza models (not from official Stanza hub).
 # These require explicit model paths and allow_unknown_language=True.
-_CUSTOM_STANZA_LANGS: set[str] = {"uzb", "tuk"}
+_CUSTOM_STANZA_LANGS: set[str] = {"aze", "uzb", "tuk"}
 
 # Mapping from processor name to model path kwarg name used by stanza.Pipeline
 _CUSTOM_MODEL_PATH_KWARGS: dict[str, tuple[str, str]] = {

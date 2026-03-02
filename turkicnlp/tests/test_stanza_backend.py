@@ -41,6 +41,7 @@ class TestLangMapping:
         assert "uig" in STANZA_SUPPORTED_LANGUAGES
         assert "kir" in STANZA_SUPPORTED_LANGUAGES
         assert "ota" in STANZA_SUPPORTED_LANGUAGES
+        assert "aze" in STANZA_SUPPORTED_LANGUAGES
         assert "uzb" in STANZA_SUPPORTED_LANGUAGES
         assert "tuk" in STANZA_SUPPORTED_LANGUAGES
 
@@ -50,6 +51,7 @@ class TestLangMapping:
         assert _get_stanza_lang("uig") == "ug"
         assert _get_stanza_lang("kir") == "ky"
         assert _get_stanza_lang("ota") == "ota"
+        assert _get_stanza_lang("aze") == "az"
         assert _get_stanza_lang("uzb") == "uz"
         assert _get_stanza_lang("tuk") == "tk"
 
@@ -67,6 +69,7 @@ class TestCustomStanzaUnit:
     def test_custom_stanza_langs(self):
         assert "uzb" in _CUSTOM_STANZA_LANGS
         assert "tuk" in _CUSTOM_STANZA_LANGS
+        assert "aze" in _CUSTOM_STANZA_LANGS
         assert "tur" not in _CUSTOM_STANZA_LANGS
         assert "kaz" not in _CUSTOM_STANZA_LANGS
         assert "kir" not in _CUSTOM_STANZA_LANGS
@@ -74,6 +77,7 @@ class TestCustomStanzaUnit:
     def test_is_custom_stanza(self):
         assert _is_custom_stanza("uzb") is True
         assert _is_custom_stanza("tuk") is True
+        assert _is_custom_stanza("aze") is True
         assert _is_custom_stanza("tur") is False
         assert _is_custom_stanza("kaz") is False
         assert _is_custom_stanza("kir") is False
@@ -118,6 +122,34 @@ class TestCustomStanzaUnit:
             )
 
         assert kwargs["lang"] == "uz"
+        assert kwargs["allow_unknown_language"] is True
+        assert kwargs["processors"] == "tokenize,pos,lemma,depparse"
+        assert kwargs["tokenize_model_path"] == str(model_dir / "tokenizer.pt")
+        assert kwargs["pos_model_path"] == str(model_dir / "tagger.pt")
+        assert kwargs["lemma_model_path"] == str(model_dir / "lemmatizer.pt")
+        assert kwargs["depparse_model_path"] == str(model_dir / "parser.pt")
+        assert kwargs["pos_pretrain_path"] == str(model_dir / "pretrain.pt")
+        assert kwargs["depparse_pretrain_path"] == str(model_dir / "pretrain.pt")
+
+    def test_build_custom_kwargs_with_files_aze(self, tmp_path):
+        """Test _build_custom_kwargs works for Azerbaijani custom models."""
+        model_dir = tmp_path / "stanza_custom" / "aze"
+        model_dir.mkdir(parents=True)
+        (model_dir / "tokenizer.pt").write_bytes(b"fake")
+        (model_dir / "tagger.pt").write_bytes(b"fake")
+        (model_dir / "lemmatizer.pt").write_bytes(b"fake")
+        (model_dir / "parser.pt").write_bytes(b"fake")
+        (model_dir / "pretrain.pt").write_bytes(b"fake")
+
+        with patch(
+            "turkicnlp.processors.stanza_backend.ModelRegistry"
+        ) as mock_reg:
+            mock_reg.default_dir.return_value = tmp_path
+            kwargs = _build_custom_kwargs(
+                "aze", ["tokenize", "pos", "lemma", "depparse"]
+            )
+
+        assert kwargs["lang"] == "az"
         assert kwargs["allow_unknown_language"] is True
         assert kwargs["processors"] == "tokenize,pos,lemma,depparse"
         assert kwargs["tokenize_model_path"] == str(model_dir / "tokenizer.pt")

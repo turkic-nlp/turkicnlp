@@ -397,8 +397,51 @@ def _download_stanza_custom_model(
                 )
 
     # Download pretrain file if specified (shared across pos/depparse)
+    pretrain_parts = backend_info.get("pretrain_parts")
     pretrain_url = backend_info.get("pretrain_url")
-    if pretrain_url:
+    if pretrain_parts:
+        pretrain_filename = backend_info.get("pretrain_filename", "pretrain.pt")
+        pretrain_file = dest_dir / pretrain_filename
+        if not pretrain_file.exists() or force:
+            part_paths: list[Path] = []
+            for part in pretrain_parts:
+                part_url = part.get("url")
+                if not part_url:
+                    raise ValueError(
+                        f"Missing pretrain part URL for custom Stanza model {lang}."
+                    )
+                part_name = part.get("filename") or Path(part_url).name
+                part_file = dest_dir / part_name
+                if not part_file.exists() or force:
+                    print(f"    ↓ {part_name}")
+                    urllib.request.urlretrieve(
+                        part_url, part_file, reporthook=_progress_hook
+                    )
+                    expected_sha = part.get("sha256")
+                    if expected_sha:
+                        actual_sha = _sha256(part_file)
+                        if actual_sha != expected_sha:
+                            part_file.unlink()
+                            raise ValueError(
+                                f"SHA-256 mismatch for {part_file}: "
+                                f"expected {expected_sha}, got {actual_sha}"
+                            )
+                part_paths.append(part_file)
+            print(f"    → Merging {len(part_paths)} parts into {pretrain_filename}")
+            _merge_files(part_paths, pretrain_file)
+            for part_path in part_paths:
+                if part_path.exists():
+                    part_path.unlink()
+            pretrain_sha = backend_info.get("pretrain_sha256")
+            if pretrain_sha:
+                actual_sha = _sha256(pretrain_file)
+                if actual_sha != pretrain_sha:
+                    pretrain_file.unlink()
+                    raise ValueError(
+                        f"SHA-256 mismatch for {pretrain_file}: "
+                        f"expected {pretrain_sha}, got {actual_sha}"
+                    )
+    elif pretrain_url:
         pretrain_filename = backend_info.get("pretrain_filename", "pretrain.pt")
         pretrain_file = dest_dir / pretrain_filename
         if not pretrain_file.exists() or force:
@@ -459,6 +502,21 @@ def _sha256(path: Path) -> str:
         for chunk in iter(lambda: f.read(8192), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def _merge_files(parts: list[Path], output_path: Path) -> None:
+    """Merge binary file parts into a single output file."""
+    tmp_path = output_path.with_name(f"{output_path.name}.tmp")
+    try:
+        with tmp_path.open("wb") as out_f:
+            for part in parts:
+                with part.open("rb") as in_f:
+                    for chunk in iter(lambda: in_f.read(1024 * 1024), b""):
+                        out_f.write(chunk)
+        tmp_path.replace(output_path)
+    finally:
+        if tmp_path.exists():
+            tmp_path.unlink()
 
 
 def _progress_hook(count: int, block_size: int, total_size: int) -> None:
