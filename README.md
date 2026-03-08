@@ -303,9 +303,9 @@ The table below shows all supported languages with their available scripts and p
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
 | [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ■ ● | ◆ | ● | ● | ● | ● | ★ | ★ |
-| [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ■ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
+| [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ■▲ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
 | [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | ○ | — | — | — | — | — | ★ | ★ |
-| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ■ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
+| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ■▲ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
 | [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ■ | ◆ | — | — | — | — | — | — |
 
 ### Kipchak Branch
@@ -314,7 +314,7 @@ The table below shows all supported languages with their available scripts and p
 |---|---|---|---|---|---|---|---|---|---|---|
 | [Kazakh](https://en.wikipedia.org/wiki/Kazakh_language) | `kaz` | Cyrl, Latn | ■ ● | ◆ | ● | ● | ● | ● | ★ | ★ |
 | [Kyrgyz](https://en.wikipedia.org/wiki/Kyrgyz_language) | `kir` | Cyrl | ■ ● | ◆ | ● | ● | ● | — | ★ | ★ |
-| [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ■ | ◆ | ○ | ○ | ○ | — | ★ | ★ |
+| [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ■▲ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
 | [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ■ | ◆ | — | — | — | — | ★ | ★ |
 | [Crimean Tatar](https://en.wikipedia.org/wiki/Crimean_Tatar_language) | `crh` | Latn, Cyrl | ■ | ◆ | — | — | — | — | ★ | ★ |
 | [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ■ | ◆ | — | — | — | — | — | — |
