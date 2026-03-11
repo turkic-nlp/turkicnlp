@@ -315,7 +315,7 @@ The table below shows all supported languages with their available scripts and p
 | [Kazakh](https://en.wikipedia.org/wiki/Kazakh_language) | `kaz` | Cyrl, Latn | ■ ● | ◆ | ● | ● | ● | ● | ★ | ★ |
 | [Kyrgyz](https://en.wikipedia.org/wiki/Kyrgyz_language) | `kir` | Cyrl | ■ ● | ◆ | ● | ● | ● | — | ★ | ★ |
 | [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ■▲ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
-| [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ■ | ◆ | — | — | — | — | ★ | ★ |
+| [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ■▲ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
 | [Crimean Tatar](https://en.wikipedia.org/wiki/Crimean_Tatar_language) | `crh` | Latn, Cyrl | ■ | ◆ | — | — | — | — | ★ | ★ |
 | [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ■ | ◆ | — | — | — | — | — | — |
 | [Nogai](https://en.wikipedia.org/wiki/Nogai_language) | `nog` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
@@ -368,7 +368,11 @@ The Stanza backend provides neural models trained on [Universal Dependencies](ht
 | Uyghur | `ug` | ● | UDT | tokenize, pos, lemma, depparse | — |
 | Kyrgyz | `ky` | ● | KTMU | tokenize, pos, lemma, depparse | — |
 | Uzbek | `uz` | ▲ | UzUDT | tokenize, pos, lemma, depparse | — |
-| Ottoman Turkish | `ota` | ● | BOUN | tokenize, mwt, pos, lemma, depparse | — |
+| Uzbek | `uz` | ▲ | UzUDT | tokenize, pos, lemma, depparse | — |
+| Turkmen | `tk` | ▲ | [Tk-TUD](https://github.com/turkic-nlp/generated-ud-data/tree/main/tuk) | tokenize, pos, lemma, depparse | — |
+| Azerbaijani | `az` | ▲ | [Az-TUD](https://github.com/turkic-nlp/generated-ud-data/tree/main/aze) | tokenize, pos, lemma, depparse | — |
+| Tatar | `ta` | ▲ | [Ta-TUD](https://github.com/turkic-nlp/generated-ud-data/tree/main/tat) | tokenize, pos, lemma, depparse | — |
+| Bashkir | `ba` | ▲ | [Ba-TUD](https://github.com/turkic-nlp/generated-ud-data/tree/main/bak) | tokenize, pos, lemma, depparse | — |
 
 ### Transliteration Support
 

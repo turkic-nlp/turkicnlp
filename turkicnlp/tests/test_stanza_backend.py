@@ -934,6 +934,30 @@ class TestCatalogIntegration:
             assert "url" in backend_info
             assert "sha256" in backend_info
 
+    def test_bashkir_stanza_in_catalog(self):
+        from turkicnlp.resources.downloader import list_processors
+
+        procs = list_processors("bak")
+        assert "tokenize" in procs
+        assert "stanza" in procs["tokenize"]
+        assert "pos" in procs
+        assert "stanza" in procs["pos"]
+        assert "lemma" in procs
+        assert "stanza" in procs["lemma"]
+        assert "depparse" in procs
+        assert "stanza" in procs["depparse"]
+
+    def test_bashkir_stanza_custom_type_in_catalog(self):
+        from turkicnlp.resources.registry import ModelRegistry
+
+        catalog = ModelRegistry.load_catalog()
+        bak_procs = catalog["bak"]["processors"]["Cyrl"]
+        for proc_name in ("tokenize", "pos", "lemma", "depparse"):
+            backend_info = bak_procs[proc_name]["backends"]["stanza"]
+            assert backend_info["type"] == "stanza_custom"
+            assert "url" in backend_info
+            assert "sha256" in backend_info
+
     def test_turkish_stanza_standard_type(self):
         from turkicnlp.resources.registry import ModelRegistry
 
