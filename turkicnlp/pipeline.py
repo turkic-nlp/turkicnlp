@@ -190,6 +190,9 @@ class Pipeline:
                     needs_download = not (custom_dir / pretrain_filename).exists()
                 if needs_download:
                     download(self.lang, processors=[proc_name], script=str(self._model_script))
+            elif backend_type == "multilingual_glot500_model":
+                # Shared model — download handled inside the processor's load()
+                pass
             elif backend_type in ("apertium_fst", "neural_model"):
                 try:
                     model_path = ModelRegistry.get_model_path(

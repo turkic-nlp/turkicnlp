@@ -127,6 +127,13 @@ def download(
                         continue
                     _download_stanza_model(lang)
                     stanza_checked.add(lang)
+                elif backend_type == "multilingual_glot500_model":
+                    # Shared model: checkpoint + backbone downloaded once centrally.
+                    from turkicnlp.processors.multilingual_backend import (
+                        _MultilingualParserManager,
+                    )
+                    _MultilingualParserManager.ensure_downloaded()
+                    continue
                 elif backend_type in ("rule", "builtin", "regex"):
                     # Built-in processors (e.g. rule tokenizers) have no external assets.
                     continue

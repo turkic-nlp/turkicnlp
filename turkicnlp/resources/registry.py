@@ -216,7 +216,6 @@ def _register_builtins() -> None:
         StanzaDepParser,
         StanzaNERProcessor,
     )
-
     ProcessorRegistry.register("tokenize", "rule", RegexTokenizer)
     ProcessorRegistry.register("tokenize", "rule_arabic", ArabicScriptTokenizer)
     ProcessorRegistry.register("tokenize", "neural", NeuralTokenizer)
@@ -235,6 +234,17 @@ def _register_builtins() -> None:
     ProcessorRegistry.register("ner", "stanza", StanzaNERProcessor)
     ProcessorRegistry.register("ner", "neural", NERProcessor)
     ProcessorRegistry.register("sentiment", "neural", SentimentProcessor)
+
+    # Multilingual Glot500 backend (requires torch + transformers)
+    try:
+        from turkicnlp.processors.multilingual_backend import (
+            MultilingualPOSTagger,
+            MultilingualDepParser,
+        )
+        ProcessorRegistry.register("pos", "multilingual_glot500_model", MultilingualPOSTagger)
+        ProcessorRegistry.register("depparse", "multilingual_glot500_model", MultilingualDepParser)
+    except ImportError:
+        pass  # torch/transformers not installed; multilingual backend unavailable
     ProcessorRegistry.register("embeddings", "nllb", NLLBEmbeddingsProcessor)
     ProcessorRegistry.register("translate", "nllb", NLLBTranslateProcessor)
 
