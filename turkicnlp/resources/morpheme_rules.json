@@ -908,15 +908,52 @@
             {
               "context": "VSNDT",
               "forms": {
-                "BR": "makta",
-                "BU": "makta",
-                "FR": "mekte",
-                "FU": "mekte"
+                "BU": "ıyor",
+                "FU": "iyor",
+                "BR": "uyor",
+                "FR": "üyor"
               }
             }
           ],
-          "source": "wiktionary",
-          "n_observations": 1840
+          "source": "manual-compound"
+        },
+        "neg_aor": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "maz",
+                "F": "mez"
+              }
+            }
+          ],
+          "source": "manual-compound"
+        },
+        "neg_prog": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "BU": "mıyor",
+                "FU": "miyor",
+                "BR": "muyor",
+                "FR": "müyor"
+              }
+            }
+          ],
+          "source": "manual-compound"
+        },
+        "prc_pres": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "yan",
+                "F": "yen"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -1503,53 +1540,16 @@
         "evid": {
           "conditions": [
             {
-              "context": "S",
+              "context": "VSNDT",
               "forms": {
-                "BR": "ubmuş",
-                "BU": "ırmış",
-                "FR": "übmüş",
-                "FU": "ibmiş"
-              }
-            },
-            {
-              "context": "N",
-              "forms": {
-                "BR": "ubmuş",
-                "BU": "ıbmış",
-                "FR": "übmüş",
-                "FU": "ibmiş"
-              }
-            },
-            {
-              "context": "T",
-              "forms": {
-                "BR": "ubmuş",
-                "BU": "ıbmış",
-                "FR": "ürmüş",
-                "FU": "ibmiş"
-              }
-            },
-            {
-              "context": "V",
-              "forms": {
-                "BR": "yurmuş",
-                "BU": "yıbmış",
-                "FR": "yürmüş",
-                "FU": "yirmiş"
-              }
-            },
-            {
-              "context": "D",
-              "forms": {
-                "BR": "urmuş",
-                "BU": "ırmış",
-                "FR": "übmüş",
-                "FU": "irmiş"
+                "BU": "mış",
+                "FU": "miş",
+                "BR": "muş",
+                "FR": "müş"
               }
             }
           ],
-          "source": "wiktionary",
-          "n_observations": 1079
+          "source": "manual"
         },
         "opt": {
           "conditions": [
@@ -1602,6 +1602,15 @@
         },
         "p1sg": {
           "conditions": [
+            {
+              "context": "SNDT",
+              "forms": {
+                "BU": "am",
+                "FU": "əm",
+                "BR": "am",
+                "FR": "əm"
+              }
+            },
             {
               "context": "SDT",
               "forms": {
@@ -1856,6 +1865,51 @@
             }
           ],
           "source": "manual"
+        },
+        "prog": {
+          "conditions": [
+            {
+              "context": "V",
+              "forms": {
+                "B": "yur",
+                "F": "yur"
+              }
+            },
+            {
+              "context": "SNDT",
+              "forms": {
+                "BU": "ır",
+                "FU": "ir",
+                "BR": "ur",
+                "FR": "ür"
+              }
+            }
+          ],
+          "source": "manual-compound"
+        },
+        "neg_prog": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "mır",
+                "F": "mir"
+              }
+            }
+          ],
+          "source": "manual-compound"
+        },
+        "neg_aor": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "maz",
+                "F": "məz"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -1868,7 +1922,12 @@
       "code": "tuk",
       "script": "Latn",
       "harmony_type": "4way",
-      "stem_alternations": {},
+      "stem_alternations": {
+        "p": "b",
+        "ç": "c",
+        "t": "d",
+        "k": "g"
+      },
       "noun_suffixes": {
         "pl": {
           "conditions": [
@@ -2384,42 +2443,14 @@
         "pres": {
           "conditions": [
             {
-              "context": "ST",
+              "context": "VSNDT",
               "forms": {
-                "BR": "ýār",
-                "BU": "ýān",
-                "FR": "ýǟr",
-                "FU": "ýǟn"
-              }
-            },
-            {
-              "context": "N",
-              "forms": {
-                "BU": "ýār",
-                "FR": "ýǟn",
-                "FU": "ýǟr",
-                "BR": "ýār"
-              }
-            },
-            {
-              "context": "D",
-              "forms": {
-                "BU": "ýār",
-                "BR": "ýār"
-              }
-            },
-            {
-              "context": "V",
-              "forms": {
-                "BU": "ýār",
-                "FU": "ýǟr",
-                "BR": "ýār",
-                "FR": "ýǟr"
+                "B": "ýar",
+                "F": "ýär"
               }
             }
           ],
-          "source": "wiktionary",
-          "n_observations": 73
+          "source": "manual-compound"
         },
         "fut": {
           "conditions": [
@@ -2586,6 +2617,15 @@
         },
         "p1sg": {
           "conditions": [
+            {
+              "context": "SNDT",
+              "forms": {
+                "BU": "yn",
+                "FU": "in",
+                "BR": "un",
+                "FR": "ün"
+              }
+            },
             {
               "context": "V",
               "forms": {
@@ -2858,6 +2898,18 @@
             }
           ],
           "source": "manual"
+        },
+        "neg_pres": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "meýar",
+                "F": "meýär"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -2878,19 +2930,18 @@
               "context": "VSDT",
               "forms": {
                 "B": "lar",
-                "F": "lär"
+                "F": "ler"
               }
             },
             {
               "context": "N",
               "forms": {
                 "B": "nar",
-                "F": "när"
+                "F": "ner"
               }
             }
           ],
-          "source": "wiktionary",
-          "n_observations": 550
+          "source": "manual"
         },
         "px1sg": {
           "conditions": [
@@ -3348,14 +3399,12 @@
             {
               "context": "VSNDT",
               "forms": {
-                "BU": "ȇr",
-                "FU": "ȇr",
-                "BR": "ȇr",
-                "FR": "ȇr"
+                "B": "êr",
+                "F": "êr"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-compound"
         },
         "fut": {
           "conditions": [
@@ -3649,6 +3698,18 @@
             }
           ],
           "source": "manual"
+        },
+        "neg_pres": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "meer",
+                "F": "meer"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -4327,6 +4388,13 @@
             {
               "context": "V",
               "forms": {
+                "B": "мын",
+                "F": "мін"
+              }
+            },
+            {
+              "context": "V",
+              "forms": {
                 "B": "м",
                 "F": "м"
               }
@@ -4337,6 +4405,13 @@
         },
         "p2sg": {
           "conditions": [
+            {
+              "context": "V",
+              "forms": {
+                "B": "сың",
+                "F": "сің"
+              }
+            },
             {
               "context": "SN",
               "forms": {
@@ -4608,6 +4683,70 @@
           ],
           "source": "wiktionary",
           "n_observations": 157
+        },
+        "neg_aor": {
+          "conditions": [
+            {
+              "context": "VSND",
+              "forms": {
+                "B": "бай",
+                "F": "бей"
+              }
+            },
+            {
+              "context": "T",
+              "forms": {
+                "B": "пай",
+                "F": "пей"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "май",
+                "F": "мей"
+              }
+            }
+          ],
+          "source": "manual-compound"
+        },
+        "neg_pres": {
+          "conditions": [
+            {
+              "context": "VSND",
+              "forms": {
+                "B": "бай",
+                "F": "бей"
+              }
+            },
+            {
+              "context": "T",
+              "forms": {
+                "B": "пай",
+                "F": "пей"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "май",
+                "F": "мей"
+              }
+            }
+          ],
+          "source": "manual-compound"
+        },
+        "p3sg": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ды",
+                "F": "ді"
+              }
+            }
+          ],
+          "source": "manual"
         }
       },
       "stats": {
@@ -4672,7 +4811,7 @@
               "context": "SNDT",
               "forms": {
                 "B": "ым",
-                "F": "ім"
+                "F": "им"
               }
             }
           ],
@@ -5353,6 +5492,13 @@
         "p1sg": {
           "conditions": [
             {
+              "context": "V",
+              "forms": {
+                "B": "мын",
+                "F": "мүн"
+              }
+            },
+            {
               "context": "VST",
               "forms": {
                 "B": "м",
@@ -5365,6 +5511,27 @@
         },
         "p2sg": {
           "conditions": [
+            {
+              "context": "SNDT",
+              "forms": {
+                "B": "сың",
+                "F": "сүң"
+              }
+            },
+            {
+              "context": "SNDT",
+              "forms": {
+                "B": "сыз",
+                "F": "сиң"
+              }
+            },
+            {
+              "context": "V",
+              "forms": {
+                "B": "сың",
+                "F": "сүң"
+              }
+            },
             {
               "context": "VT",
               "forms": {
@@ -5556,6 +5723,56 @@
               "forms": {
                 "B": "у",
                 "F": "ү"
+              }
+            }
+          ],
+          "source": "manual"
+        },
+        "neg_aor": {
+          "conditions": [
+            {
+              "context": "VSND",
+              "forms": {
+                "B": "бай",
+                "F": "бей"
+              }
+            },
+            {
+              "context": "T",
+              "forms": {
+                "B": "пай",
+                "F": "пей"
+              }
+            }
+          ],
+          "source": "manual-compound"
+        },
+        "neg_pres": {
+          "conditions": [
+            {
+              "context": "VSND",
+              "forms": {
+                "B": "бай",
+                "F": "бей"
+              }
+            },
+            {
+              "context": "T",
+              "forms": {
+                "B": "пай",
+                "F": "пей"
+              }
+            }
+          ],
+          "source": "manual-compound"
+        },
+        "p3sg": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "т",
+                "F": "т"
               }
             }
           ],
@@ -6200,8 +6417,22 @@
             {
               "context": "V",
               "forms": {
+                "B": "мын",
+                "F": "мен"
+              }
+            },
+            {
+              "context": "V",
+              "forms": {
                 "B": "м",
                 "F": "м"
+              }
+            },
+            {
+              "context": "SNDT",
+              "forms": {
+                "B": "ым",
+                "F": "ем"
               }
             }
           ],
@@ -6296,8 +6527,8 @@
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ған",
-                "F": "ген"
+                "B": "ган",
+                "F": "гән"
               }
             }
           ],
@@ -6399,6 +6630,30 @@
           ],
           "source": "wiktionary",
           "n_observations": 40
+        },
+        "neg_pres": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ма",
+                "F": "ми"
+              }
+            }
+          ],
+          "source": "manual-compound"
+        },
+        "neg_aor": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "мый",
+                "F": "ми"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -7090,6 +7345,13 @@
             {
               "context": "V",
               "forms": {
+                "B": "мын",
+                "F": "мін"
+              }
+            },
+            {
+              "context": "V",
+              "forms": {
                 "B": "м",
                 "F": "м"
               }
@@ -7098,7 +7360,7 @@
               "context": "SNDT",
               "forms": {
                 "B": "ым",
-                "F": "ім"
+                "F": "ем"
               }
             }
           ],
@@ -7191,7 +7453,7 @@
               "context": "VSNDT",
               "forms": {
                 "B": "ған",
-                "F": "ген"
+                "F": "гән"
               }
             }
           ],
@@ -7280,6 +7542,25 @@
             }
           ],
           "source": "manual"
+        },
+        "neg_aor": {
+          "conditions": [
+            {
+              "context": "VSND",
+              "forms": {
+                "B": "май",
+                "F": "мәй"
+              }
+            },
+            {
+              "context": "T",
+              "forms": {
+                "B": "пай",
+                "F": "пәй"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -7956,6 +8237,13 @@
         "p1sg": {
           "conditions": [
             {
+              "context": "SNDT",
+              "forms": {
+                "B": "ım",
+                "F": "im"
+              }
+            },
+            {
               "context": "V",
               "forms": {
                 "BU": "m",
@@ -8220,6 +8508,18 @@
             }
           ],
           "source": "manual"
+        },
+        "neg_aor": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "may",
+                "F": "mey"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -9558,6 +9858,20 @@
         "p1sg": {
           "conditions": [
             {
+              "context": "SNDT",
+              "forms": {
+                "B": "ман",
+                "F": "мен"
+              }
+            },
+            {
+              "context": "V",
+              "forms": {
+                "B": "ман",
+                "F": "мен"
+              }
+            },
+            {
               "context": "V",
               "forms": {
                 "B": "м",
@@ -9750,6 +10064,18 @@
             }
           ],
           "source": "manual"
+        },
+        "neg_aor": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "май",
+                "F": "мей"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -10176,10 +10502,10 @@
               }
             },
             {
-              "context": "N",
+              "context": "VSNDT",
               "forms": {
-                "B": "gan",
-                "F": "gan"
+                "B": "a",
+                "F": "a"
               }
             }
           ],
@@ -10284,6 +10610,13 @@
         },
         "p1sg": {
           "conditions": [
+            {
+              "context": "V",
+              "forms": {
+                "B": "man",
+                "F": "men"
+              }
+            },
             {
               "context": "V",
               "forms": {
@@ -10500,6 +10833,18 @@
           ],
           "source": "wiktionary",
           "n_observations": 160
+        },
+        "neg_pres": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "may",
+                "F": "mey"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -11566,8 +11911,8 @@
             {
               "context": "V",
               "forms": {
-                "B": "ттан",
-                "F": "ттэн"
+                "B": "дон",
+                "F": "дөн"
               }
             },
             {
@@ -11587,15 +11932,15 @@
             {
               "context": "D",
               "forms": {
-                "F": "ттн",
-                "B": "ттн"
+                "B": "тан",
+                "F": "тэн"
               }
             },
             {
               "context": "N",
               "forms": {
-                "B": "тан",
-                "F": "тан"
+                "B": "нан",
+                "F": "нэн"
               }
             }
           ],
@@ -11905,12 +12250,12 @@
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ыпты",
-                "F": "іпті"
+                "B": "быт",
+                "F": "бит"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-compound"
         },
         "opt": {
           "conditions": [
@@ -11938,6 +12283,20 @@
         },
         "p1sg": {
           "conditions": [
+            {
+              "context": "SNDT",
+              "forms": {
+                "B": "бын",
+                "F": "бін"
+              }
+            },
+            {
+              "context": "V",
+              "forms": {
+                "B": "бын",
+                "F": "бін"
+              }
+            },
             {
               "context": "V",
               "forms": {
@@ -12131,6 +12490,18 @@
             }
           ],
           "source": "manual"
+        },
+        "neg_pres": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "бат",
+                "F": "бэт"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -12148,7 +12519,14 @@
         "pl": {
           "conditions": [
             {
-              "context": "VS",
+              "context": "V",
+              "forms": {
+                "B": "алар",
+                "F": "елер"
+              }
+            },
+            {
+              "context": "S",
               "forms": {
                 "B": "лар",
                 "F": "лер"
@@ -12165,7 +12543,7 @@
               "context": "D",
               "forms": {
                 "B": "лар",
-                "F": "лар"
+                "F": "лер"
               }
             },
             {
@@ -12176,8 +12554,7 @@
               }
             }
           ],
-          "source": "wiktionary",
-          "n_observations": 96
+          "source": "manual"
         },
         "px1sg": {
           "conditions": [
@@ -12431,34 +12808,33 @@
             {
               "context": "VS",
               "forms": {
-                "B": "даң",
-                "F": "дең"
+                "B": "дан",
+                "F": "ден"
               }
             },
             {
               "context": "T",
               "forms": {
-                "B": "таң",
-                "F": "тең"
+                "B": "тан",
+                "F": "тен"
               }
             },
             {
               "context": "D",
               "forms": {
-                "B": "даң",
-                "F": "даң"
+                "B": "дан",
+                "F": "ден"
               }
             },
             {
               "context": "N",
               "forms": {
-                "B": "наң",
-                "F": "нең"
+                "B": "нан",
+                "F": "нен"
               }
             }
           ],
-          "source": "wiktionary",
-          "n_observations": 98
+          "source": "manual"
         },
         "gen": {
           "conditions": [
@@ -12777,6 +13153,20 @@
         "p1sg": {
           "conditions": [
             {
+              "context": "SNDT",
+              "forms": {
+                "B": "бын",
+                "F": "бін"
+              }
+            },
+            {
+              "context": "V",
+              "forms": {
+                "B": "бын",
+                "F": "бін"
+              }
+            },
+            {
               "context": "V",
               "forms": {
                 "B": "м",
@@ -12969,6 +13359,25 @@
             }
           ],
           "source": "manual"
+        },
+        "neg_pres": {
+          "conditions": [
+            {
+              "context": "VSND",
+              "forms": {
+                "B": "бан",
+                "F": "бін"
+              }
+            },
+            {
+              "context": "T",
+              "forms": {
+                "B": "пан",
+                "F": "пін"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -13808,6 +14217,25 @@
             }
           ],
           "source": "manual"
+        },
+        "neg_aor": {
+          "conditions": [
+            {
+              "context": "VSND",
+              "forms": {
+                "B": "бас",
+                "F": "бес"
+              }
+            },
+            {
+              "context": "T",
+              "forms": {
+                "B": "пас",
+                "F": "пес"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -14100,68 +14528,66 @@
             {
               "context": "VS",
               "forms": {
-                "B": "даҥ",
-                "F": "деҥ"
+                "B": "дан",
+                "F": "ден"
               }
             },
             {
               "context": "T",
               "forms": {
-                "B": "таҥ",
-                "F": "теҥ"
+                "B": "тан",
+                "F": "тен"
               }
             },
             {
               "context": "N",
               "forms": {
-                "B": "наҥ",
-                "F": "неҥ"
+                "B": "нан",
+                "F": "нен"
               }
             },
             {
               "context": "D",
               "forms": {
-                "B": "таҥ",
-                "F": "таҥ"
+                "B": "дан",
+                "F": "ден"
               }
             }
           ],
-          "source": "wiktionary",
-          "n_observations": 913
+          "source": "manual"
         },
         "gen": {
           "conditions": [
             {
               "context": "VN",
               "forms": {
-                "B": "ныҥ",
-                "F": "ниҥ"
+                "B": "ның",
+                "F": "нің"
               }
             },
             {
               "context": "S",
               "forms": {
-                "B": "дыҥ",
-                "F": "диҥ"
+                "B": "дың",
+                "F": "дең"
               }
             },
             {
               "context": "T",
               "forms": {
-                "B": "тыҥ",
-                "F": "тиҥ"
+                "B": "тың",
+                "F": "тің"
               }
             },
             {
               "context": "D",
               "forms": {
-                "B": "тыҥ",
-                "F": "тыҥ"
+                "B": "дың",
+                "F": "дең"
               }
             }
           ],
-          "source": "wiktionary",
-          "n_observations": 913
+          "source": "manual"
         },
         "ins": {
           "conditions": [
@@ -14456,6 +14882,13 @@
             {
               "context": "V",
               "forms": {
+                "B": "ым",
+                "F": "ім"
+              }
+            },
+            {
+              "context": "V",
+              "forms": {
                 "B": "м",
                 "F": "м"
               }
@@ -14465,6 +14898,13 @@
               "forms": {
                 "B": "м",
                 "F": "м"
+              }
+            },
+            {
+              "context": "SNDT",
+              "forms": {
+                "B": "ым",
+                "F": "ім"
               }
             }
           ],
@@ -14661,6 +15101,25 @@
           ],
           "source": "wiktionary",
           "n_observations": 22
+        },
+        "neg_aor": {
+          "conditions": [
+            {
+              "context": "VSND",
+              "forms": {
+                "B": "бас",
+                "F": "бес"
+              }
+            },
+            {
+              "context": "T",
+              "forms": {
+                "B": "пас",
+                "F": "пес"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
@@ -14677,6 +15136,20 @@
       "noun_suffixes": {
         "pl": {
           "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "сем",
+                "F": "сем"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ĕсем",
+                "F": "ĕсем"
+              }
+            },
             {
               "context": "VSNT",
               "forms": {
@@ -14883,88 +15356,74 @@
         "dat": {
           "conditions": [
             {
-              "context": "VSND",
+              "context": "V",
               "forms": {
-                "B": "ға",
-                "F": "ге"
+                "B": "на",
+                "F": "не"
               }
             },
             {
-              "context": "T",
+              "context": "SNDT",
               "forms": {
-                "B": "қа",
-                "F": "ке"
+                "B": "а",
+                "F": "е"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "loc": {
           "conditions": [
-            {
-              "context": "VSND",
-              "forms": {
-                "B": "да",
-                "F": "де"
-              }
-            },
             {
               "context": "T",
               "forms": {
                 "B": "та",
                 "F": "те"
               }
+            },
+            {
+              "context": "VSND",
+              "forms": {
+                "B": "ра",
+                "F": "ре"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "abl": {
           "conditions": [
-            {
-              "context": "N",
-              "forms": {
-                "B": "нан",
-                "F": "нен"
-              }
-            },
-            {
-              "context": "VSD",
-              "forms": {
-                "B": "дан",
-                "F": "ден"
-              }
-            },
             {
               "context": "T",
               "forms": {
                 "B": "тан",
                 "F": "тен"
               }
+            },
+            {
+              "context": "VSND",
+              "forms": {
+                "B": "ран",
+                "F": "рен"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "gen": {
           "conditions": [
             {
               "context": "V",
               "forms": {
-                "B": "ның",
-                "F": "нің"
+                "B": "н",
+                "F": "н"
               }
             },
             {
-              "context": "SND",
+              "context": "SNDT",
               "forms": {
-                "B": "дың",
-                "F": "дің"
-              }
-            },
-            {
-              "context": "T",
-              "forms": {
-                "B": "тың",
-                "F": "тің"
+                "B": "сен",
+                "F": "сен"
               }
             }
           ],
@@ -14973,154 +15432,112 @@
         "ins": {
           "conditions": [
             {
-              "context": "VN",
-              "forms": {
-                "B": "мен",
-                "F": "мен"
-              }
-            },
-            {
-              "context": "SD",
-              "forms": {
-                "B": "бен",
-                "F": "бен"
-              }
-            },
-            {
-              "context": "T",
-              "forms": {
-                "B": "пен",
-                "F": "пен"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "equ": {
-          "conditions": [
-            {
               "context": "VSNDT",
-              "forms": {
-                "B": "дай",
-                "F": "дей"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "subst": {
-          "conditions": [
-            {
-              "context": "VSND",
-              "forms": {
-                "B": "ғы",
-                "F": "гі"
-              }
-            },
-            {
-              "context": "T",
-              "forms": {
-                "B": "қы",
-                "F": "кі"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "attr": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "ғы",
-                "F": "гі"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "ly": {
-          "conditions": [
-            {
-              "context": "VSND",
-              "forms": {
-                "B": "лы",
-                "F": "лі"
-              }
-            },
-            {
-              "context": "T",
-              "forms": {
-                "B": "ты",
-                "F": "ті"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "siz": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "сыз",
-                "F": "сіз"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "lyk": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "лық",
-                "F": "лік"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "shi": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "шы",
-                "F": "ші"
-              }
-            }
-          ],
-          "source": "manual"
-        }
-      },
-      "verb_suffixes": {
-        "neg": {
-          "conditions": [
-            {
-              "context": "VS",
-              "forms": {
-                "B": "ма",
-                "F": "ме"
-              }
-            },
-            {
-              "context": "ND",
-              "forms": {
-                "B": "ба",
-                "F": "бе"
-              }
-            },
-            {
-              "context": "T",
               "forms": {
                 "B": "па",
                 "F": "пе"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
+        },
+        "equ": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ла",
+                "F": "ле"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "subst": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "хи",
+                "F": "хи"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "attr": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "хи",
+                "F": "хи"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "ly": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "лӑ",
+                "F": "лĕ"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "siz": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "сӑр",
+                "F": "сĕр"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "lyk": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "лӑх",
+                "F": "лĕх"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "shi": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "çӑ",
+                "F": "çĕ"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        }
+      },
+      "verb_suffixes": {
+        "neg": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ма",
+                "F": "ме"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
         },
         "pass": {
           "conditions": [
@@ -15134,124 +15551,212 @@
             {
               "context": "SNDT",
               "forms": {
-                "B": "ыл",
-                "F": "іл"
+                "B": "ӑн",
+                "F": "ĕн"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "caus": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "дыр",
-                "F": "дір"
+                "B": "тар",
+                "F": "тер"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "coop": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ыс",
-                "F": "іс"
+                "B": "ӑш",
+                "F": "ĕш"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "past": {
           "conditions": [
             {
-              "context": "VSND",
+              "context": "V",
               "forms": {
-                "B": "ды",
-                "F": "ді"
+                "B": "нӑ",
+                "F": "нĕ"
               }
             },
             {
-              "context": "T",
+              "context": "SN",
               "forms": {
-                "B": "ты",
-                "F": "ті"
+                "B": "нӑ",
+                "F": "нĕ"
+              }
+            },
+            {
+              "context": "DT",
+              "forms": {
+                "B": "рӑ",
+                "F": "рĕ"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "pres": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "а",
-                "F": "е"
+                "B": "ат",
+                "F": "ет"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "fut": {
           "conditions": [
             {
-              "context": "V",
+              "context": "VSNDT",
               "forms": {
-                "B": "йды",
-                "F": "йді"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ады",
-                "F": "еді"
+                "B": "ӑ",
+                "F": "ĕ"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "aor": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ар",
-                "F": "ер"
+                "B": "ать",
+                "F": "еть"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "evid": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ыпты",
-                "F": "іпті"
+                "B": "нӑ",
+                "F": "нĕ"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "opt": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "айын",
-                "F": "ейін"
+                "B": "ӑп",
+                "F": "ĕп"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "cond": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "сан",
+                "F": "сен"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "p1sg": {
+          "conditions": [
+            {
+              "context": "V",
+              "forms": {
+                "B": "п",
+                "F": "п"
+              }
+            },
+            {
+              "context": "SNDT",
+              "forms": {
+                "B": "ӑп",
+                "F": "ĕп"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "p2sg": {
+          "conditions": [
+            {
+              "context": "V",
+              "forms": {
+                "B": "н",
+                "F": "н"
+              }
+            },
+            {
+              "context": "SNDT",
+              "forms": {
+                "B": "ӑн",
+                "F": "ĕн"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "p1pl": {
+          "conditions": [
+            {
+              "context": "V",
+              "forms": {
+                "B": "пӑр",
+                "F": "пĕр"
+              }
+            },
+            {
+              "context": "SNDT",
+              "forms": {
+                "B": "ӑпӑр",
+                "F": "ĕпĕр"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "p2pl": {
+          "conditions": [
+            {
+              "context": "V",
+              "forms": {
+                "B": "р",
+                "F": "р"
+              }
+            },
+            {
+              "context": "SNDT",
+              "forms": {
+                "B": "ӑр",
+                "F": "ĕр"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "gna_perf": {
           "conditions": [
             {
               "context": "VSNDT",
@@ -15261,95 +15766,7 @@
               }
             }
           ],
-          "source": "manual"
-        },
-        "p1sg": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "м",
-                "F": "м"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ым",
-                "F": "ім"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "p2sg": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "ң",
-                "F": "ң"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ың",
-                "F": "ің"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "p1pl": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "мыз",
-                "F": "міз"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ымыз",
-                "F": "іміз"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "p2pl": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "ңыз",
-                "F": "ңіз"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ыңыз",
-                "F": "іңіз"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "gna_perf": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "ып",
-                "F": "іп"
-              }
-            }
-          ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "gna_impf": {
           "conditions": [
@@ -15361,93 +15778,45 @@
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "prc_perf": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ған",
-                "F": "ген"
+                "B": "нӑ",
+                "F": "нĕ"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "prc_impf": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "атын",
-                "F": "етін"
+                "B": "акан",
+                "F": "екен"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "prc_fut": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ар",
-                "F": "ер"
+                "B": "ас",
+                "F": "ес"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
         },
         "inf": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "у",
-                "F": "у"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "ger": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "у",
-                "F": "у"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "ger_past": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "ғаны",
-                "F": "гені"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "cop": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "мын",
-                "F": "мін"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "qst": {
           "conditions": [
             {
               "context": "VSNDT",
@@ -15457,7 +15826,67 @@
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-chuvash"
+        },
+        "ger": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ни",
+                "F": "ни"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "ger_past": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "нӑ",
+                "F": "нĕ"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "cop": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ӑп",
+                "F": "ĕп"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "qst": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "и",
+                "F": "и"
+              }
+            }
+          ],
+          "source": "manual-chuvash"
+        },
+        "neg_pres": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "маст",
+                "F": "мест"
+              }
+            }
+          ],
+          "source": "manual-compound"
         }
       },
       "stats": {
