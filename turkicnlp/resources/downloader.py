@@ -134,6 +134,19 @@ def download(
                     )
                     _MultilingualParserManager.ensure_downloaded()
                     continue
+                elif backend_type == "multilingual_glot500_morph":
+                    # Shared morph model: checkpoint + backbone downloaded once centrally.
+                    try:
+                        from turkicnlp.processors.multilingual_morph_backend import (
+                            _MorphAnalyzerManager,
+                        )
+                        _MorphAnalyzerManager.ensure_downloaded()
+                    except (ImportError, OSError, ValueError) as exc:
+                        import logging
+                        logging.getLogger(__name__).warning(
+                            "Morph analyzer checkpoint not available: %s", exc
+                        )
+                    continue
                 elif backend_type in ("rule", "builtin", "regex"):
                     # Built-in processors (e.g. rule tokenizers) have no external assets.
                     continue

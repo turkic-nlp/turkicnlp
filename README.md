@@ -47,7 +47,8 @@ If you use TurkicNLP in your research, please cite:
 - **[Apertium FST morphology](https://wiki.apertium.org/wiki/Turkic_languages)** for ~20 Turkic languages via Python-native `hfst` bindings (no system install)
 - **Stanza/UD integration** — pretrained tokenization, POS tagging, lemmatization, dependency parsing, and NER via [Stanza](https://stanfordnlp.github.io/stanza/) models trained on [Universal Dependencies](https://universaldependencies.org/) treebanks
 - **NLLB embeddings + translation backend** — sentence/document vectors and MT via [NLLB-200](https://huggingface.co/facebook/nllb-200-distilled-600M)
-- **Multiple backends** — choose between rule-based, Apertium FST, or Stanza neural backends per processor
+- **Multilingual Glot500 neural models** — POS tagging & dependency parsing (13 languages), morphological analysis & lemmatization (21 languages) via shared [Glot500](https://github.com/cisnlp/Glot500) backbone
+- **Multiple backends** — choose between rule-based, Apertium FST, Stanza, or Glot500 neural backends per processor
 - **License isolation** — library is Apache-2.0; Apertium GPL-3.0 data downloaded separately
 - **Stanza-compatible API** — `Pipeline`, `Document`, `Sentence`, `Word`
 
@@ -60,6 +61,7 @@ pip install turkicnlp                    # core — tokenization, rule-based pro
 pip install "turkicnlp[hfst]"           # + Apertium FST morphology (Linux and macOS only)
 pip install "turkicnlp[stanza]"         # + Stanza neural models (tokenize, POS, lemma, depparse, NER)
 pip install "turkicnlp[translation]"    # + NLLB embeddings and machine translation
+pip install "turkicnlp[transformers]"    # + Glot500 multilingual POS/DepParse/Morph models
 pip install "turkicnlp[all]"            # everything above (Linux and macOS only)
 pip install "turkicnlp[dev]"            # development tools (pytest, black, ruff, mypy)
 ```
@@ -73,6 +75,7 @@ Installation tests run nightly across all combinations of OS, Python version, an
 | base | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
 | `[hfst]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ❌ not available |
 | `[stanza]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
+| `[transformers]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
 | `[translation]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
 | `[all]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ❌ not available |
 
@@ -276,6 +279,74 @@ print(t.transliterate("\U00010C34\U00010C07\U00010C2F\U00010C19"))
 # back vs. front vowel contexts).
 ```
 
+### Neural POS Tagger & Dependency Parser (Glot500)
+
+The multilingual Glot500-based model provides UPOS tagging and dependency parsing for 13 Turkic languages (10 trained + 3 zero-shot). Requires `pip install "turkicnlp[transformers]"`.
+
+```python
+import turkicnlp
+
+# Download tokenizer + multilingual Glot500 POS/DepParse model
+turkicnlp.download("kaz", processors=["tokenize", "pos", "depparse"])
+
+nlp = turkicnlp.Pipeline(
+    "kaz",
+    processors=["tokenize", "pos", "depparse"],
+    pos_backend="multilingual_glot500",
+    depparse_backend="multilingual_glot500",
+)
+
+doc = nlp("Мен мектепке бардым.")
+
+for sentence in doc.sentences:
+    for word in sentence.words:
+        print(f"{word.text:12} {word.upos:6} head={word.head} {word.deprel}")
+```
+
+### Neural Morphological Analyzer & Lemmatizer (Glot500)
+
+The multilingual Glot500-based morph model provides UPOS tagging, UD morphological features, and lemmatization for 21 Turkic languages. Requires `pip install "turkicnlp[transformers]"`.
+
+```python
+import turkicnlp
+
+# Download tokenizer + multilingual Glot500 morph model
+turkicnlp.download("tur", processors=["tokenize", "morph_neural"])
+
+nlp = turkicnlp.Pipeline(
+    "tur",
+    processors=["tokenize", "morph_neural"],
+)
+
+doc = nlp("Çocuklar okula gidiyorlar.")
+
+for sentence in doc.sentences:
+    for word in sentence.words:
+        print(f"{word.text:20} {word.upos:6} {word.lemma:15} {word.feats}")
+```
+
+Output:
+```
+Çocuklar             NOUN   çocuk           Case=Nom|Number=Plur
+okula                NOUN   okul            Case=Dat|Number=Sing
+gidiyorlar           VERB   gitmek          Aspect=Prog|Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin
+.                    PUNCT  .               _
+```
+
+The morph analyzer also works for low-resource languages:
+
+```python
+# Sakha (Yakut) — directly trained
+turkicnlp.download("sah", processors=["tokenize", "morph_neural"])
+nlp = turkicnlp.Pipeline("sah", processors=["tokenize", "morph_neural"])
+doc = nlp("Мин оскуолаҕа бардым.")
+
+# Karakalpak — zero-shot via Uzbek proxy embedding
+turkicnlp.download("kaa", processors=["tokenize", "morph_neural"])
+nlp = turkicnlp.Pipeline("kaa", processors=["tokenize", "morph_neural"])
+doc = nlp("Men mektepke bardım.")
+```
+
 ## Supported Languages and Components
 
 <p align="center">
@@ -294,6 +365,8 @@ The table below shows all supported languages with their available scripts and p
 | ◆ | [Apertium](https://apertium.org/) FST | Finite-state morphology via `hfst` ([GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html), downloaded separately) |
 | ● | [Stanza/UD](https://stanfordnlp.github.io/stanza/) | Neural models trained on [Universal Dependencies](https://universaldependencies.org/) treebanks |
 | ▲ | Custom Stanza | Custom-trained Stanza models hosted by [turkic-nlp](https://github.com/turkic-nlp/trained-stanza-models) |
+| ◇ | [Glot500](https://github.com/cisnlp/Glot500) Neural | Multilingual POS tagger & dependency parser (Glot500 backbone, 13 languages) |
+| ◈ | [Glot500](https://github.com/cisnlp/Glot500) Neural Morph | Multilingual morphological analyzer & lemmatizer (Glot500 backbone, 21 languages) |
 | ★ | [NLLB](https://huggingface.co/facebook/nllb-200-distilled-600M) | Embeddings and machine translation via NLLB-200 |
 | ○ | Planned | Implementation planned |
 | — | | Not available yet |
@@ -302,59 +375,59 @@ The table below shows all supported languages with their available scripts and p
 
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
-| [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ■ ● | ◆ | ● | ● | ● | ● | ★ | ★ |
-| [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ■▲ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
+| [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | ● | ★ | ★ |
+| [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
 | [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | ○ | — | — | — | — | — | ★ | ★ |
-| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ■▲ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
-| [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ■ | ◆ | — | — | — | — | — | — |
+| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
+| [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
 
 ### Kipchak Branch
 
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
-| [Kazakh](https://en.wikipedia.org/wiki/Kazakh_language) | `kaz` | Cyrl, Latn | ■ ● | ◆ | ● | ● | ● | ● | ★ | ★ |
-| [Kyrgyz](https://en.wikipedia.org/wiki/Kyrgyz_language) | `kir` | Cyrl | ■ ● | ◆ | ● | ● | ● | — | ★ | ★ |
-| [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ■▲ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
-| [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ■▲ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
-| [Crimean Tatar](https://en.wikipedia.org/wiki/Crimean_Tatar_language) | `crh` | Latn, Cyrl | ■ | ◆ | — | — | — | — | ★ | ★ |
-| [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ■ | ◆ | — | — | — | — | — | — |
+| [Kazakh](https://en.wikipedia.org/wiki/Kazakh_language) | `kaz` | Cyrl, Latn | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | ● | ★ | ★ |
+| [Kyrgyz](https://en.wikipedia.org/wiki/Kyrgyz_language) | `kir` | Cyrl | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | — | ★ | ★ |
+| [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
+| [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
+| [Crimean Tatar](https://en.wikipedia.org/wiki/Crimean_Tatar_language) | `crh` | Latn, Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | ★ | ★ |
+| [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ■ | ◆ ◈ | ◇ | ◈ | ◇ | — | — | — |
 | [Nogai](https://en.wikipedia.org/wiki/Nogai_language) | `nog` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
-| [Kumyk](https://en.wikipedia.org/wiki/Kumyk_language) | `kum` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
+| [Kumyk](https://en.wikipedia.org/wiki/Kumyk_language) | `kum` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
 | [Karachay-Balkar](https://en.wikipedia.org/wiki/Karachay-Balkar_language) | `krc` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
 
 ### Karluk Branch
 
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
-| [Uzbek](https://en.wikipedia.org/wiki/Uzbek_language) | `uzb` | Latn, Cyrl | ■ ▲ | ◆ | ▲ | ▲ | ▲ | — | ★ | ★ |
-| [Uyghur](https://en.wikipedia.org/wiki/Uyghur_language) | `uig` | Arab, Latn | ○ ● | ◆ | ● | ● | ● | — | ★ | ★ |
+| [Uzbek](https://en.wikipedia.org/wiki/Uzbek_language) | `uzb` | Latn, Cyrl | ■ ▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
+| [Uyghur](https://en.wikipedia.org/wiki/Uyghur_language) | `uig` | Arab, Latn | ○ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | — | ★ | ★ |
 
 ### Siberian Branch
 
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
-| [Sakha (Yakut)](https://en.wikipedia.org/wiki/Sakha_language) | `sah` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
-| [Altai](https://en.wikipedia.org/wiki/Altai_language) | `alt` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
-| [Tuvan](https://en.wikipedia.org/wiki/Tuvan_language) | `tyv` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
-| [Khakas](https://en.wikipedia.org/wiki/Khakas_language) | `kjh` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
+| [Sakha (Yakut)](https://en.wikipedia.org/wiki/Sakha_language) | `sah` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
+| [Altai](https://en.wikipedia.org/wiki/Altai_language) | `alt` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
+| [Tuvan](https://en.wikipedia.org/wiki/Tuvan_language) | `tyv` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
+| [Khakas](https://en.wikipedia.org/wiki/Khakas_language) | `kjh` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
 
 ### Oghur Branch
 
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
-| [Chuvash](https://en.wikipedia.org/wiki/Chuvash_language) | `chv` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
+| [Chuvash](https://en.wikipedia.org/wiki/Chuvash_language) | `chv` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
 
 ### Arghu Branch
 
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
-| [Khalaj](https://en.wikipedia.org/wiki/Khalaj_language) | `klj` | Arab | — | — | — | — | — | — | — | — |
+| [Khalaj](https://en.wikipedia.org/wiki/Khalaj_language) | `klj` | Latn | ■ | ◈ | ◈ | ◈ | — | — | — | — |
 
 ### Historical Languages
 
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
-| [Ottoman Turkish](https://en.wikipedia.org/wiki/Ottoman_Turkish_language) | `ota` | Arab, Latn | — | — | — | — | — | — | — | — |
+| [Ottoman Turkish](https://en.wikipedia.org/wiki/Ottoman_Turkish_language) | `ota` | Arab, Latn | ■ | ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
 | [Old Turkish](https://en.wikipedia.org/wiki/Old_Turkic_language) | `otk` | Orkh, Latn | ○ | — | — | — | — | — | — | — |
 
 ### Stanza/UD Model Details
@@ -373,6 +446,19 @@ The Stanza backend provides neural models trained on [Universal Dependencies](ht
 | Azerbaijani | `az` | ▲ | [Az-TUD](https://github.com/turkic-nlp/generated-ud-data/tree/main/aze) | tokenize, pos, lemma, depparse | — |
 | Tatar | `ta` | ▲ | [Ta-TUD](https://github.com/turkic-nlp/generated-ud-data/tree/main/tat) | tokenize, pos, lemma, depparse | — |
 | Bashkir | `ba` | ▲ | [Ba-TUD](https://github.com/turkic-nlp/generated-ud-data/tree/main/bak) | tokenize, pos, lemma, depparse | — |
+
+### Multilingual Glot500 Neural Models
+
+TurkicNLP provides two multilingual neural models built on a frozen [Glot500](https://github.com/cisnlp/Glot500) backbone with script adapters, language embeddings, and shared BiLSTM layers. Both models are hosted at [turkic-nlp/trained-stanza-models](https://github.com/turkic-nlp/trained-stanza-models/releases) and downloaded automatically.
+
+| Model | Symbol | Tasks | Languages | Architecture |
+|---|:---:|---|---|---|
+| POS & DepParser | ◇ | UPOS, dependency parsing | 10 trained + 3 zero-shot (13 total) | Glot500 → ScriptAdapter → LangEmbed → BiLSTM → POS Head + Biaffine Parser |
+| Morph Analyzer | ◈ | UPOS, UD morph features, lemmatization | 20 trained + 1 zero-shot (21 total) | Glot500 → ScriptAdapter → LangEmbed → BiLSTM → POS Head + MorphFeat Head + CharCNN LemmaHead |
+
+**POS & DepParser supported languages:** Turkish, Azerbaijani, Uzbek, Turkmen, Kazakh, Kyrgyz, Bashkir, Tatar, Uyghur, Ottoman Turkish + zero-shot: Karakalpak, Kumyk, Sakha
+
+**Morph Analyzer supported languages:** Turkish, Azerbaijani, Uzbek, Turkmen, Kazakh, Kyrgyz, Bashkir, Tatar, Uyghur, Ottoman Turkish, Crimean Tatar, Khakas, Sakha, Tuvan, Chuvash, Gagauz, Kumyk, Southern Altai, Khalaj, Northern Altai + zero-shot: Karakalpak
 
 ### Transliteration Support
 
@@ -435,6 +521,20 @@ Pipeline("tur", processors=["tokenize", "morph", "pos", "ner", "depparse"])
 ```
 
 ```
+Pipeline("sah", processors=["tokenize", "morph_neural"])
+    │
+    ▼
+  Document ─── text: "Мин оскуолаҕа бардым"
+    │
+    ├── script_detect          → script = "Cyrl"
+    ├── tokenize               → sentences, tokens, words
+    └── morph_neural (Glot500) → upos, feats, lemma
+    │
+    ▼
+  Document ─── annotated with morphological analysis
+```
+
+```
 Pipeline("azb", processors=["embeddings", "translate"], translate_tgt_lang="eng")
     │
     ▼
@@ -455,7 +555,7 @@ Pipeline("azb", processors=["embeddings", "translate"], translate_tgt_lang="eng"
 - **Document** → Sentence → Token → Word hierarchy (maps to CoNLL-U)
 - **Processor** ABC with `PROVIDES`, `REQUIRES`, `NAME` class attributes
 - **Pipeline** orchestrator with dependency resolution and script-aware model loading
-- **ProcessorRegistry** for pluggable backends (rule, Apertium, Stanza, NLLB)
+- **ProcessorRegistry** for pluggable backends (rule, Apertium, Stanza, Glot500, NLLB)
 - **ModelRegistry** with remote catalog and local caching at `~/.turkicnlp/models/`
 - **NLLB FLORES language map** for ISO-3 to NLLB code resolution in translation (e.g. `tuk` -> `tuk_Latn`)
 
@@ -477,7 +577,14 @@ Pipeline("azb", processors=["embeddings", "translate"], translate_tgt_lang="eng"
 ├── tur/
 │   └── Latn/
 │       └── ...
+├── multilingual/
+│   ├── multilingual_glot500.pt           ← POS/DepParse checkpoint
+│   └── multilingual_morph_glot500.pt     ← Morph analyzer checkpoint
 ├── huggingface/
+│   ├── cis-lmu--glot500-base/            ← Shared Glot500 backbone
+│   │   ├── config.json
+│   │   ├── model.safetensors
+│   │   └── ...
 │   └── facebook--nllb-200-distilled-600M/
 │       ├── config.json
 │       ├── model.safetensors (or pytorch_model.bin)
@@ -491,7 +598,8 @@ Pipeline("azb", processors=["embeddings", "translate"], translate_tgt_lang="eng"
 Notes:
 - NLLB embeddings and translation use a shared Hugging Face model under `~/.turkicnlp/models/huggingface/`.
 - The NLLB model is downloaded once and reused across supported Turkic languages.
-- Unlike Apertium/Stanza components, NLLB artifacts are not duplicated per language/script directory.
+- The Glot500 backbone is shared between the POS/DepParse and Morph analyzer models under `~/.turkicnlp/models/huggingface/`.
+- Unlike Apertium/Stanza components, NLLB and Glot500 artifacts are not duplicated per language/script directory.
 
 ## License
 
@@ -564,6 +672,24 @@ The Stanza models are trained on [Universal Dependencies](https://universaldepen
 
 **Kazakh NER (KazNERD)**
 > Rustem Yeshpanov, Yerbolat Khassanov, and Huseyin Atakan Varol (ISSAI, Nazarbayev University). *KazNERD: Kazakh Named Entity Recognition Dataset*. LREC 2022. [[paper]](https://aclanthology.org/2022.lrec-1.44)
+
+### Glot500
+
+The multilingual Glot500 model serves as the frozen backbone for TurkicNLP's neural POS/DepParse and Morph analyzer models.
+
+> ImaniGooghari, Ayyoob, Peiqin Lin, Amir Hossein Kargaran, Silvia Severini, Masoud Jalili Sabet, Nora Kassner, Chunlan Ma, Helmut Schmid, André Martins, François Yvon, and Hinrich Schütze. 2023. *Glot500: Scaling Multilingual Corpora and Language Technology to 500 Languages*. In Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). [[paper]](https://aclanthology.org/2023.acl-long.61/)
+
+### Wiktextract / Kaikki.org
+
+Morphological training data for extended Turkic languages was extracted from Wiktionary using Wiktextract. The structured data is available at [kaikki.org](https://kaikki.org/).
+
+> Tatu Ylonen. 2022. *Wiktextract: Wiktionary as Machine-Readable Structured Data*. In Proceedings of the 13th Conference on Language Resources and Evaluation (LREC 2022). [[paper]](https://aclanthology.org/2022.lrec-1.140/)
+
+### UniMorph
+
+The [Universal Morphology (UniMorph)](https://unimorph.github.io/) project provides morphological paradigms used for training and evaluating the multilingual morph analyzer across Turkic languages.
+
+> John Sylak-Glassman. 2016. *The Composition and Use of the Universal Morphological Feature Schema (UniMorph Schema)*. Johns Hopkins University. [[paper]](https://unimorph.github.io/doc/unimorph-schema.pdf)
 
 ### NLLB Embeddings & Machine Translation
 

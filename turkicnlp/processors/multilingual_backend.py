@@ -36,11 +36,10 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 CHECKPOINT_URL = (
-    "https://github.com/turkic-nlp/trained-stanza-models/releases/"
-    "download/v0.1.5/glot500_pos_depparse_model.pt"
+    "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.5/multilingual_pos_depparse_glot500.pt"
 )
 CHECKPOINT_SHA256 = "aef71dbc01dd68c81e672fea1d38f4509e343f8bc72714f68ed0f458ec29853d"
-CHECKPOINT_FILENAME = "glot500_pos_depparse_model.pt"
+CHECKPOINT_FILENAME = "multilingual_pos_depparse_glot500.pt"
 BACKBONE_HF_NAME = "cis-lmu/glot500-base"
 
 

@@ -51,6 +51,10 @@
             "stanza": {
               "type": "stanza",
               "license": "Apache-2.0"
+            },
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
             }
           },
           "default": "stanza"
@@ -102,6 +106,24 @@
             }
           },
           "default": "nllb"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -159,6 +181,10 @@
             "stanza": {
               "type": "stanza",
               "license": "Apache-2.0"
+            },
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
             }
           },
           "default": "stanza"
@@ -210,6 +236,24 @@
             }
           },
           "default": "nllb"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -287,6 +331,10 @@
               "url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.3/tt_nmctt_nocharlm_lemmatizer.pt",
               "sha256": "af2e09f7decf90fed04e22b76c245525aec4c9461517a949a48e50ac2694192a",
               "filename": "lemmatizer.pt"
+            },
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
             }
           },
           "default": "stanza"
@@ -341,6 +389,24 @@
             }
           },
           "default": "nllb"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -423,6 +489,10 @@
               "url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.2/az_tuecl_nocharlm_lemmatizer.pt",
               "sha256": "ffb8b3d7db4d1d6383a5166bcdcf1e6e22e3373de377b21941c7913b7d4f659d",
               "filename": "lemmatizer.pt"
+            },
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
             }
           },
           "default": "stanza"
@@ -482,6 +552,24 @@
             }
           },
           "default": "nllb"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -586,6 +674,10 @@
             "stanza": {
               "type": "stanza",
               "license": "Apache-2.0"
+            },
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
             }
           },
           "default": "stanza"
@@ -628,6 +720,24 @@
             }
           },
           "default": "nllb"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -700,6 +810,10 @@
               "url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.0/uz_uzudt_nocharlm_lemmatizer.pt",
               "sha256": "564f8b802ba19846a9f7241032b4ebe352746309dfb77ca58efc9b3333762659",
               "filename": "lemmatizer.pt"
+            },
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
             }
           },
           "default": "stanza"
@@ -749,6 +863,24 @@
             }
           },
           "default": "nllb"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -820,6 +952,10 @@
               "url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.1/tk_tuecl_nocharlm_lemmatizer.pt",
               "sha256": "c6cb4f2160f498398b9e22f283bbc17afe38a603ee0f5016777ec6c046cb394d",
               "filename": "lemmatizer.pt"
+            },
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
             }
           },
           "default": "stanza"
@@ -869,6 +1005,24 @@
             }
           },
           "default": "nllb"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -945,6 +1099,10 @@
               "url": "https://github.com/turkic-nlp/trained-stanza-models/releases/download/v0.1.4/ba_tud_nocharlm_lemmatizer.pt",
               "sha256": "86e5646a82a524e199be2f04f94b21142516a8c1e527311bce5bd9c13dc0c559",
               "filename": "lemmatizer.pt"
+            },
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
             }
           },
           "default": "stanza"
@@ -999,6 +1157,24 @@
             }
           },
           "default": "nllb"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1056,6 +1232,10 @@
             "stanza": {
               "type": "stanza",
               "license": "Apache-2.0"
+            },
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
             }
           },
           "default": "stanza"
@@ -1098,6 +1278,24 @@
             }
           },
           "default": "nllb"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1153,6 +1351,33 @@
             }
           },
           "default": "nllb"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1181,6 +1406,33 @@
             }
           },
           "default": "apertium"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1209,6 +1461,33 @@
             }
           },
           "default": "apertium"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1264,6 +1543,33 @@
             }
           },
           "default": "multilingual_glot500_model"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1320,6 +1626,33 @@
             }
           },
           "default": "multilingual_glot500_model"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1403,6 +1736,33 @@
             }
           },
           "default": "multilingual_glot500_model"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1459,6 +1819,33 @@
             }
           },
           "default": "apertium"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1487,6 +1874,33 @@
             }
           },
           "default": "apertium"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1515,6 +1929,33 @@
             }
           },
           "default": "apertium"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1555,6 +1996,73 @@
             }
           },
           "default": "multilingual_glot500_model"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        }
+      }
+    }
+  },
+  "klj": {
+    "name": "Khalaj",
+    "scripts": {
+      "available": [
+        "Latn"
+      ],
+      "primary": "Latn"
+    },
+    "processors": {
+      "Latn": {
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }

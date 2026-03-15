@@ -250,13 +250,34 @@ class TurkicParser(nn.Module):
     def __init__(self, hf_cache_dir: str):
         super().__init__()
         from transformers import AutoTokenizer, AutoModel
+        import io, sys, logging as _logging
+        _loggers = [
+            _logging.getLogger(name)
+            for name in ("transformers.modeling_utils", "transformers.configuration_utils")
+        ]
+        _prev_levels = [lg.level for lg in _loggers]
+        for lg in _loggers:
+            lg.setLevel(_logging.ERROR)
 
         self.tokenizer = AutoTokenizer.from_pretrained(
             BACKBONE_NAME, cache_dir=hf_cache_dir
         )
-        self.backbone = AutoModel.from_pretrained(
-            BACKBONE_NAME, cache_dir=hf_cache_dir
-        )
+        # Suppress "not sharded" stderr spam from safetensors
+        import os
+        _devnull = os.open(os.devnull, os.O_WRONLY)
+        _saved_stderr = os.dup(2)
+        os.dup2(_devnull, 2)
+        try:
+            self.backbone = AutoModel.from_pretrained(
+                BACKBONE_NAME, cache_dir=hf_cache_dir
+            )
+        finally:
+            os.dup2(_saved_stderr, 2)
+            os.close(_saved_stderr)
+            os.close(_devnull)
+
+        for lg, lvl in zip(_loggers, _prev_levels):
+            lg.setLevel(lvl)
         # Freeze backbone entirely (inference only)
         for param in self.backbone.parameters():
             param.requires_grad = False

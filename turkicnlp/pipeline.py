@@ -23,7 +23,9 @@ PROCESSOR_ORDER: list[str] = [
     "tokenize",
     "mwt",
     "morph",
+    "morph_neural",
     "pos",
+    "feats",
     "lemma",
     "depparse",
     "ner",
@@ -192,6 +194,9 @@ class Pipeline:
                     download(self.lang, processors=[proc_name], script=str(self._model_script))
             elif backend_type == "multilingual_glot500_model":
                 # Shared model — download handled inside the processor's load()
+                pass
+            elif backend_type == "multilingual_glot500_morph":
+                # Shared morph model — download handled inside the processor's load()
                 pass
             elif backend_type in ("apertium_fst", "neural_model"):
                 try:

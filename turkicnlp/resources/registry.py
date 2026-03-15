@@ -245,6 +245,19 @@ def _register_builtins() -> None:
         ProcessorRegistry.register("depparse", "multilingual_glot500_model", MultilingualDepParser)
     except ImportError:
         pass  # torch/transformers not installed; multilingual backend unavailable
+
+    # Multilingual Glot500 morph analyzer backend (requires torch + transformers)
+    try:
+        from turkicnlp.processors.multilingual_morph_backend import (
+            MultilingualMorphAnalyzer,
+            MultilingualMorphFeats,
+            MultilingualMorphLemmatizer,
+        )
+        ProcessorRegistry.register("morph_neural", "multilingual_glot500_morph", MultilingualMorphAnalyzer)
+        ProcessorRegistry.register("feats", "multilingual_glot500_morph", MultilingualMorphFeats)
+        ProcessorRegistry.register("lemma", "multilingual_glot500_morph", MultilingualMorphLemmatizer)
+    except ImportError:
+        pass  # torch/transformers not installed; multilingual morph backend unavailable
     ProcessorRegistry.register("embeddings", "nllb", NLLBEmbeddingsProcessor)
     ProcessorRegistry.register("translate", "nllb", NLLBTranslateProcessor)
 
