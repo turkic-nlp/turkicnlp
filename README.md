@@ -37,7 +37,7 @@ If you use TurkicNLP in your research, please cite:
 ```
 
 ## Arxiv preprint
-[PDF](https://arxiv.org/pdf/2602.19174)
+[Read it here](https://arxiv.org/pdf/2602.19174)
 
 ## Features
 
