@@ -303,6 +303,60 @@ for sentence in doc.sentences:
         print(f"{word.text:12} {word.upos:6} head={word.head} {word.deprel}")
 ```
 
+### Morpheme Tokenizer (Hybrid Neural + FST)
+
+The `MorphemeTokenizer` segments inflected Turkic words into labeled surface morphemes. It uses the neural morph model (Glot500) as its primary analyzer, enriched by Apertium HFST transducers and language-specific suffix allomorph tables with phonological rules (vowel harmony, consonant context). Requires `pip install "turkicnlp[transformers]"`.
+
+```python
+from turkicnlp.processors.morpheme_tokenizer import MorphemeTokenizer
+
+# --- Kazakh ---
+tok = MorphemeTokenizer(lang="kaz")
+tok.load()
+
+result = tok.segment("бармадым")
+print(result.segments)
+# ['бар', 'ма', 'ды', 'м']
+
+print(result.labeled)
+# [('бар', 'STEM'), ('ма', 'NEG'), ('ды', 'PST'), ('м', '1SG')]
+
+result = tok.segment("оқығандар")
+print(result.labeled)
+# [('оқы', 'STEM'), ('ған', 'PTCP.PST'), ('дар', 'PLUR')]
+
+# --- Turkish ---
+tok = MorphemeTokenizer(lang="tur")
+tok.load()
+
+result = tok.segment("evlerinden")
+print(result.labeled)
+# [('ev', 'STEM'), ('ler', 'PLUR'), ('in', 'POSS.2SG'), ('den', 'ABL')]
+
+result = tok.segment("gidiyorlar")
+print(result.labeled)
+# [('gid', 'STEM'), ('iyor', 'PROG'), ('lar', '3PL')]
+
+# Apostrophe boundaries are handled for proper nouns
+result = tok.segment("İstanbul'da")
+print(result.labeled)
+# [('İstanbul', 'STEM'), ("'da", 'LOC')]
+
+# --- Uzbek ---
+tok = MorphemeTokenizer(lang="uzb")
+tok.load()
+
+result = tok.segment("kitobimdan")
+print(result.labeled)
+# [('kitob', 'STEM'), ('im', 'POSS.1SG'), ('dan', 'ABL')]
+
+result = tok.segment("bolalarning")
+print(result.labeled)
+# [('bola', 'STEM'), ('lar', 'PLUR'), ('ning', 'GEN')]
+```
+
+The tokenizer supports all 16 languages with suffix allomorph tables: Turkish, Azerbaijani, Kazakh, Uzbek, Kyrgyz, Tatar, Bashkir, Turkmen, Crimean Tatar, Sakha, Khakas, Tuvan, Altai, Chuvash, Gagauz, and Kumyk.
+
 ### Neural Morphological Analyzer & Lemmatizer (Glot500)
 
 The multilingual Glot500-based morph model provides UPOS tagging, UD morphological features, and lemmatization for 21 Turkic languages. Requires `pip install "turkicnlp[transformers]"`.
