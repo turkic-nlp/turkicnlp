@@ -1378,6 +1378,15 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
         }
       }
     }
@@ -1433,6 +1442,15 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
         }
       }
     }
@@ -1488,6 +1506,15 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
         }
       }
     }
@@ -1681,6 +1708,60 @@
             }
           },
           "default": "apertium"
+        },
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
+        },
+        "pos": {
+          "backends": {
+            "multilingual_glot500_model": {
+              "type": "multilingual_glot500_model",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_model"
+        },
+        "depparse": {
+          "backends": {
+            "multilingual_glot500_model": {
+              "type": "multilingual_glot500_model",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_model"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1791,6 +1872,60 @@
             }
           },
           "default": "apertium"
+        },
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
+        },
+        "pos": {
+          "backends": {
+            "multilingual_glot500_model": {
+              "type": "multilingual_glot500_model",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_model"
+        },
+        "depparse": {
+          "backends": {
+            "multilingual_glot500_model": {
+              "type": "multilingual_glot500_model",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_model"
+        },
+        "morph_neural": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "feats": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
+        },
+        "lemma": {
+          "backends": {
+            "multilingual_glot500_morph": {
+              "type": "multilingual_glot500_morph",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "multilingual_glot500_morph"
         }
       }
     }
@@ -1846,6 +1981,15 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
         }
       }
     }
@@ -1901,6 +2045,15 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
         }
       }
     }
@@ -1956,6 +2109,15 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
         }
       }
     }
@@ -2063,6 +2225,15 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
         }
       }
     }

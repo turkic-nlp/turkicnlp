@@ -47,7 +47,7 @@ If you use TurkicNLP in your research, please cite:
 - **[Apertium FST morphology](https://wiki.apertium.org/wiki/Turkic_languages)** for ~20 Turkic languages via Python-native `hfst` bindings (no system install)
 - **Stanza/UD integration** — pretrained tokenization, POS tagging, lemmatization, dependency parsing, and NER via [Stanza](https://stanfordnlp.github.io/stanza/) models trained on [Universal Dependencies](https://universaldependencies.org/) treebanks
 - **NLLB embeddings + translation backend** — sentence/document vectors and MT via [NLLB-200](https://huggingface.co/facebook/nllb-200-distilled-600M)
-- **Multilingual Glot500 neural models** — POS tagging & dependency parsing (13 languages), morphological analysis & lemmatization (21 languages) via shared [Glot500](https://github.com/cisnlp/Glot500) backbone
+- **Multilingual Glot500 neural models** — POS tagging & dependency parsing (15 languages), morphological analysis & lemmatization (23 languages) via shared [Glot500](https://github.com/cisnlp/Glot500) backbone
 - **Multiple backends** — choose between rule-based, Apertium FST, Stanza, or Glot500 neural backends per processor
 - **License isolation** — library is Apache-2.0; Apertium GPL-3.0 data downloaded separately
 - **Stanza-compatible API** — `Pipeline`, `Document`, `Sentence`, `Word`
@@ -281,7 +281,7 @@ print(t.transliterate("\U00010C34\U00010C07\U00010C2F\U00010C19"))
 
 ### Neural POS Tagger & Dependency Parser (Glot500)
 
-The multilingual Glot500-based model provides UPOS tagging and dependency parsing for 13 Turkic languages (10 trained + 3 zero-shot). Requires `pip install "turkicnlp[transformers]"`.
+The multilingual Glot500-based model provides UPOS tagging and dependency parsing for 15 Turkic languages (10 trained + 5 zero-shot). Requires `pip install "turkicnlp[transformers]"`.
 
 ```python
 import turkicnlp
@@ -359,7 +359,7 @@ The tokenizer supports all 16 languages with suffix allomorph tables: Turkish, A
 
 ### Neural Morphological Analyzer & Lemmatizer (Glot500)
 
-The multilingual Glot500-based morph model provides UPOS tagging, UD morphological features, and lemmatization for 21 Turkic languages. Requires `pip install "turkicnlp[transformers]"`.
+The multilingual Glot500-based morph model provides UPOS tagging, UD morphological features, and lemmatization for 23 Turkic languages. Requires `pip install "turkicnlp[transformers]"`.
 
 ```python
 import turkicnlp
@@ -419,8 +419,8 @@ The table below shows all supported languages with their available scripts and p
 | ◆ | [Apertium](https://apertium.org/) FST | Finite-state morphology via `hfst` ([GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html), downloaded separately) |
 | ● | [Stanza/UD](https://stanfordnlp.github.io/stanza/) | Neural models trained on [Universal Dependencies](https://universaldependencies.org/) treebanks |
 | ▲ | Custom Stanza | Custom-trained Stanza models hosted by [turkic-nlp](https://github.com/turkic-nlp/trained-stanza-models) |
-| ◇ | [Glot500](https://github.com/cisnlp/Glot500) Neural | Multilingual POS tagger & dependency parser (Glot500 backbone, 13 languages) |
-| ◈ | [Glot500](https://github.com/cisnlp/Glot500) Neural Morph | Multilingual morphological analyzer & lemmatizer (Glot500 backbone, 21 languages) |
+| ◇ | [Glot500](https://github.com/cisnlp/Glot500) Neural | Multilingual POS tagger & dependency parser (Glot500 backbone, 15 languages) |
+| ◈ | [Glot500](https://github.com/cisnlp/Glot500) Neural Morph | Multilingual morphological analyzer & lemmatizer (Glot500 backbone, 23 languages) |
 | ★ | [NLLB](https://huggingface.co/facebook/nllb-200-distilled-600M) | Embeddings and machine translation via NLLB-200 |
 | ○ | Planned | Implementation planned |
 | — | | Not available yet |
@@ -431,7 +431,7 @@ The table below shows all supported languages with their available scripts and p
 |---|---|---|---|---|---|---|---|---|---|---|
 | [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | ● | ★ | ★ |
 | [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
-| [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | ○ | — | — | — | — | — | ★ | ★ |
+| [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | ■ | — | — | — | — | — | ★ | ★ |
 | [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
 | [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
 
@@ -444,17 +444,17 @@ The table below shows all supported languages with their available scripts and p
 | [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
 | [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
 | [Crimean Tatar](https://en.wikipedia.org/wiki/Crimean_Tatar_language) | `crh` | Latn, Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | ★ | ★ |
-| [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ■ | ◆ ◈ | ◇ | ◈ | ◇ | — | — | — |
-| [Nogai](https://en.wikipedia.org/wiki/Nogai_language) | `nog` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
+| [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
+| [Nogai](https://en.wikipedia.org/wiki/Nogai_language) | `nog` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇  | — | — | — |
 | [Kumyk](https://en.wikipedia.org/wiki/Kumyk_language) | `kum` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
-| [Karachay-Balkar](https://en.wikipedia.org/wiki/Karachay-Balkar_language) | `krc` | Cyrl | ■ | ◆ | — | — | — | — | — | — |
+| [Karachay-Balkar](https://en.wikipedia.org/wiki/Karachay-Balkar_language) | `krc` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
 
 ### Karluk Branch
 
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
 | [Uzbek](https://en.wikipedia.org/wiki/Uzbek_language) | `uzb` | Latn, Cyrl | ■ ▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
-| [Uyghur](https://en.wikipedia.org/wiki/Uyghur_language) | `uig` | Arab, Latn | ○ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | — | ★ | ★ |
+| [Uyghur](https://en.wikipedia.org/wiki/Uyghur_language) | `uig` | Arab, Latn | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | — | ★ | ★ |
 
 ### Siberian Branch
 
@@ -495,7 +495,6 @@ The Stanza backend provides neural models trained on [Universal Dependencies](ht
 | Uyghur | `ug` | ● | UDT | tokenize, pos, lemma, depparse | — |
 | Kyrgyz | `ky` | ● | KTMU | tokenize, pos, lemma, depparse | — |
 | Uzbek | `uz` | ▲ | UzUDT | tokenize, pos, lemma, depparse | — |
-| Uzbek | `uz` | ▲ | UzUDT | tokenize, pos, lemma, depparse | — |
 | Turkmen | `tk` | ▲ | [Tk-TUD](https://github.com/turkic-nlp/generated-ud-data/tree/main/tuk) | tokenize, pos, lemma, depparse | — |
 | Azerbaijani | `az` | ▲ | [Az-TUD](https://github.com/turkic-nlp/generated-ud-data/tree/main/aze) | tokenize, pos, lemma, depparse | — |
 | Tatar | `ta` | ▲ | [Ta-TUD](https://github.com/turkic-nlp/generated-ud-data/tree/main/tat) | tokenize, pos, lemma, depparse | — |
@@ -507,12 +506,12 @@ TurkicNLP provides two multilingual neural models built on a frozen [Glot500](ht
 
 | Model | Symbol | Tasks | Languages | Architecture |
 |---|:---:|---|---|---|
-| POS & DepParser | ◇ | UPOS, dependency parsing | 10 trained + 3 zero-shot (13 total) | Glot500 → ScriptAdapter → LangEmbed → BiLSTM → POS Head + Biaffine Parser |
-| Morph Analyzer | ◈ | UPOS, UD morph features, lemmatization | 20 trained + 1 zero-shot (21 total) | Glot500 → ScriptAdapter → LangEmbed → BiLSTM → POS Head + MorphFeat Head + CharCNN LemmaHead |
+| POS & DepParser | ◇ | UPOS, dependency parsing | 10 trained + 5 zero-shot (15 total) | Glot500 → ScriptAdapter → LangEmbed → BiLSTM → POS Head + Biaffine Parser |
+| Morph Analyzer | ◈ | UPOS, UD morph features, lemmatization | 20 trained + 3 zero-shot (23 total) | Glot500 → ScriptAdapter → LangEmbed → BiLSTM → POS Head + MorphFeat Head + CharCNN LemmaHead |
 
-**POS & DepParser supported languages:** Turkish, Azerbaijani, Uzbek, Turkmen, Kazakh, Kyrgyz, Bashkir, Tatar, Uyghur, Ottoman Turkish + zero-shot: Karakalpak, Kumyk, Sakha
+**POS & DepParser supported languages:** Turkish, Azerbaijani, Uzbek, Turkmen, Kazakh, Kyrgyz, Bashkir, Tatar, Uyghur, Ottoman Turkish + zero-shot: Karakalpak, Kumyk, Sakha, Karachay-Balkar, Nogai
 
-**Morph Analyzer supported languages:** Turkish, Azerbaijani, Uzbek, Turkmen, Kazakh, Kyrgyz, Bashkir, Tatar, Uyghur, Ottoman Turkish, Crimean Tatar, Khakas, Sakha, Tuvan, Chuvash, Gagauz, Kumyk, Southern Altai, Khalaj, Northern Altai + zero-shot: Karakalpak
+**Morph Analyzer supported languages:** Turkish, Azerbaijani, Uzbek, Turkmen, Kazakh, Kyrgyz, Bashkir, Tatar, Uyghur, Ottoman Turkish, Crimean Tatar, Khakas, Sakha, Tuvan, Chuvash, Gagauz, Kumyk, Southern Altai, Khalaj, Northern Altai + zero-shot: Karakalpak, Karachay-Balkar, Nogai
 
 ### Transliteration Support
 

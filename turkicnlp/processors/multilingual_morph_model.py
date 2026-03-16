@@ -50,7 +50,7 @@ from turkicnlp.processors.multilingual_model import (
 )
 
 # ---------------------------------------------------------------------------
-# Morph-specific language maps (21 languages)
+# Morph-specific language maps (23 languages)
 #
 # The morph model was trained on 10 base UD languages plus 10 additional
 # languages from UniMorph/Wiktionary data. The additional languages share
@@ -74,6 +74,8 @@ LANG_TO_SCRIPT = {
     "klj": "Latn",   # Khalaj
     # Zero-shot via proxy embedding
     "kaa": "Latn",   # Karakalpak → Uzbek proxy
+    "krc": "Cyrl",   # Karachay-Balkar → Tatar proxy
+    "nog": "Cyrl",   # Nogai → Tatar proxy
 }
 
 LANG_ID_MAP = {
@@ -90,10 +92,12 @@ LANG_ID_MAP = {
     "atv": _BASE_LANG_ID_MAP["ba"],    # N. Altai → Bashkir
     "klj": _BASE_LANG_ID_MAP["tr"],    # Khalaj → Turkish
     "kaa": _BASE_LANG_ID_MAP["uz"],    # Karakalpak → Uzbek
+    "krc": _BASE_LANG_ID_MAP["tt"],    # Karachay-Balkar → Tatar
+    "nog": _BASE_LANG_ID_MAP["tt"],    # Nogai → Tatar
 }
 NUM_LANGS = len(_BASE_LANG_ID_MAP)  # Embedding table size = 10 (base languages)
 
-# ISO 639-3 → short code for all 21 morph-supported languages
+# ISO 639-3 → short code for all 23 morph-supported languages
 ISO3_TO_SHORT = {
     **_BASE_ISO3_TO_SHORT,
     "crh": "crh",
@@ -107,6 +111,8 @@ ISO3_TO_SHORT = {
     "kaa": "kaa",
     "atv": "atv",
     "klj": "klj",
+    "krc": "krc",
+    "nog": "nog",
 }
 
 SUPPORTED_LANGS = set(ISO3_TO_SHORT.keys())
@@ -115,7 +121,7 @@ SUPPORTED_LANGS = set(ISO3_TO_SHORT.keys())
 def resolve_morph_lang(iso3: str) -> tuple[str, str]:
     """Resolve ISO 639-3 code to (short_code, script) for the morph model.
 
-    The morph model supports 21 languages: 10 base + 10 trained with proxy
+    The morph model supports 23 languages: 10 base + 12 trained with proxy
     embeddings + Karakalpak via zero-shot Uzbek proxy.
 
     Returns:

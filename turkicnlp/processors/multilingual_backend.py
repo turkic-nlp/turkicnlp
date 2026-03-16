@@ -7,7 +7,7 @@ joint POS tagging and dependency parsing.
 
 Supports:
   - All 10 trained languages (tur, aze, uzb, tuk, kaz, kir, bak, tat, uig, ota)
-  - Zero-shot inference on unseen languages (kaa, kum, sah) via proxy embeddings
+  - Zero-shot inference on unseen languages (kaa, kum, sah, krc, nog) via proxy embeddings
 
 The checkpoint and Glot500 backbone are downloaded once and shared
 across all languages.
@@ -270,7 +270,7 @@ class MultilingualPOSTagger(Processor):
     """POS tagger using the multilingual Glot500 TurkicParser.
 
     Supports 10 trained Turkic languages and zero-shot inference on
-    Karakalpak, Kumyk, and Sakha via proxy language embeddings.
+    Karakalpak, Kumyk, Sakha, Karachay-Balkar, and Nogai via proxy language embeddings.
     """
 
     NAME = "pos"
@@ -299,7 +299,7 @@ class MultilingualDepParser(Processor):
     """Dependency parser using the multilingual Glot500 TurkicParser.
 
     Supports 10 trained Turkic languages and zero-shot inference on
-    Karakalpak, Kumyk, and Sakha via proxy language embeddings.
+    Karakalpak, Kumyk, Sakha, Karachay-Balkar, and Nogai via proxy language embeddings.
     """
 
     NAME = "depparse"

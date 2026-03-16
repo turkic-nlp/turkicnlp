@@ -21,7 +21,7 @@ class TestMorphModelImports:
         )
         assert NUM_MORPH_FEATS == 69
         assert len(UD_MORPH_FEATS) == 69
-        assert len(SUPPORTED_LANGS) == 21
+        assert len(SUPPORTED_LANGS) == 23
 
     def test_import_morph_backend(self):
         from turkicnlp.processors.multilingual_morph_backend import (

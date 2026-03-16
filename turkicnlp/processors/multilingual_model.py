@@ -71,9 +71,11 @@ ISO3_TO_SHORT = {
 
 # Zero-shot language configuration: ISO 639-3 -> proxy info
 ZEROSHOT_LANGS = {
-    "kaa": {"name": "Karakalpak", "script": "Latn", "proxy_lang": "uz"},
-    "kum": {"name": "Kumyk",      "script": "Cyrl", "proxy_lang": "tt"},
-    "sah": {"name": "Sakha",      "script": "Cyrl", "proxy_lang": "ba"},
+    "kaa": {"name": "Karakalpak",     "script": "Latn", "proxy_lang": "uz"},
+    "kum": {"name": "Kumyk",          "script": "Cyrl", "proxy_lang": "tt"},
+    "sah": {"name": "Sakha",          "script": "Cyrl", "proxy_lang": "ba"},
+    "krc": {"name": "Karachay-Balkar","script": "Cyrl", "proxy_lang": "tt"},
+    "nog": {"name": "Nogai",          "script": "Cyrl", "proxy_lang": "tt"},
 }
 
 # All supported languages (trained + zero-shot)

@@ -9,7 +9,7 @@ shared BiLSTM over a frozen Glot500 backbone) for joint:
 
 Supports:
   - All 10 trained languages (tur, aze, uzb, tuk, kaz, kir, bak, tat, uig, ota)
-  - Zero-shot inference on unseen languages (kaa, kum, sah) via proxy embeddings
+  - Zero-shot inference on unseen languages (kaa, kum, sah, krc, nog) via proxy embeddings
 
 The checkpoint and Glot500 backbone are downloaded once and shared
 across all languages.
@@ -338,7 +338,7 @@ class MultilingualMorphAnalyzer(Processor):
 
     Provides UPOS, morphological features, and lemmas in a single forward pass.
     Supports 10 trained Turkic languages and zero-shot inference on
-    Karakalpak, Kumyk, and Sakha via proxy language embeddings.
+    Karakalpak, Kumyk, Sakha, Karachay-Balkar, and Nogai via proxy language embeddings.
     """
 
     NAME = "morph_neural"
