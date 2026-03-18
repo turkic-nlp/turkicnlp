@@ -485,7 +485,7 @@ The table below shows all supported languages with their available scripts and p
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
 | [Ottoman Turkish](https://en.wikipedia.org/wiki/Ottoman_Turkish_language) | `ota` | Arab, Latn | ■ | ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
-| [Old Turkish](https://en.wikipedia.org/wiki/Old_Turkic_language) | `otk` | Orkh, Latn | ○ | — | — | — | — | — | — | — |
+| [Old Turkic](https://en.wikipedia.org/wiki/Old_Turkic_language) | `otk` | Orkh, Latn | ○ | — | — | — | — | — | — | — |
 
 ### Stanza/UD Model Details
 
