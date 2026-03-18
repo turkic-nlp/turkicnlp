@@ -39,6 +39,9 @@ If you use TurkicNLP in your research, please cite:
 ## Arxiv preprint
 [Read it here](https://arxiv.org/pdf/2602.19174)
 
+## Code samples
+[Jupter notebooks are here](https://github.com/turkic-nlp/turkic-nlp-code-samples)
+
 ## Features
 
 - **24 Turkic languages** from Turkish to Sakha, Kazakh to Uyghur
