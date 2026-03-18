@@ -764,3 +764,4 @@ Reference:
 - [Universal Dependencies](https://universaldependencies.org/) — the framework and community behind Turkic treebanks
 - [Turkic Interlingua](https://github.com/turkic-interlingua) — resources for machine translation for Turkic languages
 - [Turkic UD](https://github.com/ud-turkic) - group working on harmonizing Turkic UD treebanks
+- [TurkLang](https://web.archive.org/web/20260117063647/https://turklang.ieees.org/) - Conference on Computer Processing of Turkic Languages (2013-present)
