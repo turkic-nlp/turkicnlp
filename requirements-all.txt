@@ -1,5 +1,7 @@
 numpy>=1.24
 hfst>=3.16
+fasttext-wheel>=0.9
+huggingface_hub>=0.20
 torch>=2.0
 transformers>=4.30
 tokenizers>=0.13

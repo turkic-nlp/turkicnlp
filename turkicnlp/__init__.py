@@ -28,6 +28,7 @@ except PackageNotFoundError:
     __version__ = "unknown"
 
 from turkicnlp.pipeline import Pipeline
+from turkicnlp.language_id import LanguageDetection
 from turkicnlp.resources.downloader import download, list_languages, list_processors
 
-__all__ = ["Pipeline", "download", "list_languages", "list_processors"]
+__all__ = ["Pipeline", "LanguageDetection", "download", "list_languages", "list_processors"]

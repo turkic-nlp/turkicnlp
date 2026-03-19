@@ -43,6 +43,10 @@ hfst = [
 stanza = [
     "stanza>=1.8",
 ]
+lid = [
+    "fasttext-wheel>=0.9",
+    "huggingface_hub>=0.20",
+]
 translation = [
     "torch>=2.0",
     "transformers>=4.30",
@@ -56,6 +60,8 @@ transformers = [
 all = [
     "hfst>=3.12.0.2b0",
     "stanza>=1.8",
+    "fasttext-wheel>=0.9",
+    "huggingface_hub>=0.20",
     "torch>=2.0",
     "transformers>=4.30",
     "tokenizers>=0.13",

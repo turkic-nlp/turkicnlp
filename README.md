@@ -40,7 +40,7 @@ If you use TurkicNLP in your research, please cite:
 [Read it here](https://arxiv.org/pdf/2602.19174)
 
 ## Code samples
-[Jupter notebooks are here](https://github.com/turkic-nlp/turkic-nlp-code-samples)
+[Jupyter notebooks are here](https://github.com/turkic-nlp/turkic-nlp-code-samples)
 
 ## Features
 
@@ -50,6 +50,7 @@ If you use TurkicNLP in your research, please cite:
 - **[Apertium FST morphology](https://wiki.apertium.org/wiki/Turkic_languages)** for ~20 Turkic languages via Python-native `hfst` bindings (no system install)
 - **Stanza/UD integration** — pretrained tokenization, POS tagging, lemmatization, dependency parsing, and NER via [Stanza](https://stanfordnlp.github.io/stanza/) models trained on [Universal Dependencies](https://universaldependencies.org/) treebanks
 - **NLLB embeddings + translation backend** — sentence/document vectors and MT via [NLLB-200](https://huggingface.co/facebook/nllb-200-distilled-600M)
+- **Language identification (`LanguageDetection`, GlotLID model)** — FastText-based LID with 1,000+ Glottolog language labels
 - **Multilingual Glot500 neural models** — POS tagging & dependency parsing (15 languages), morphological analysis & lemmatization (23 languages) via shared [Glot500](https://github.com/cisnlp/Glot500) backbone
 - **Multiple backends** — choose between rule-based, Apertium FST, Stanza, or Glot500 neural backends per processor
 - **License isolation** — library is Apache-2.0; Apertium GPL-3.0 data downloaded separately
@@ -63,6 +64,7 @@ If you use TurkicNLP in your research, please cite:
 pip install turkicnlp                    # core — tokenization, rule-based processing, CoNLL-U I/O
 pip install "turkicnlp[hfst]"           # + Apertium FST morphology (Linux and macOS only)
 pip install "turkicnlp[stanza]"         # + Stanza neural models (tokenize, POS, lemma, depparse, NER)
+pip install "turkicnlp[lid]"            # + Language detection (GlotLID model; FastText + HF weights)
 pip install "turkicnlp[translation]"    # + NLLB embeddings and machine translation
 pip install "turkicnlp[transformers]"    # + Glot500 multilingual POS/DepParse/Morph models
 pip install "turkicnlp[all]"            # everything above (Linux and macOS only)
@@ -78,6 +80,7 @@ Installation tests run nightly across all combinations of OS, Python version, an
 | base | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
 | `[hfst]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ❌ not available |
 | `[stanza]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
+| `[lid]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
 | `[transformers]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
 | `[translation]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
 | `[all]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ❌ not available |
@@ -128,6 +131,26 @@ def cosine_similarity(a, b):
 print(len(doc1.embedding), len(doc2.embedding))
 print(f"cosine = {cosine_similarity(doc1.embedding, doc2.embedding):.4f}")
 print(doc1._processor_log)  # ['embeddings:nllb']
+```
+
+### Language ID (`LanguageDetection`, GlotLID model)
+
+```python
+import turkicnlp
+
+lid = turkicnlp.LanguageDetection()  # defaults to all Turkic languages supported by TurkicNLP
+labels, probs = lid.predict("salam, hemmelere!", k=3)
+print(labels, probs)
+
+# Limit to specific labels
+limited = turkicnlp.LanguageDetection(
+    languages=[
+        "__label__eng_Latn",
+        "__label__tur_Latn",
+        "__label__kaz_Cyrl",
+    ]
+)
+print(limited.predict("Merhaba dünya!", k=1))
 ```
 
 ### Machine Translation (NLLB)
@@ -734,6 +757,13 @@ The Stanza models are trained on [Universal Dependencies](https://universaldepen
 The multilingual Glot500 model serves as the frozen backbone for TurkicNLP's neural POS/DepParse and Morph analyzer models.
 
 > ImaniGooghari, Ayyoob, Peiqin Lin, Amir Hossein Kargaran, Silvia Severini, Masoud Jalili Sabet, Nora Kassner, Chunlan Ma, Helmut Schmid, André Martins, François Yvon, and Hinrich Schütze. 2023. *Glot500: Scaling Multilingual Corpora and Language Technology to 500 Languages*. In Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). [[paper]](https://aclanthology.org/2023.acl-long.61/)
+
+### GlotLID
+
+The language detection model
+
+> Amir Hossein Kargaran, Ayyoob Imani, François Yvon, Hinrich Schütze (2023). GlotLID: Language Identification for Low-Resource Languages. The 2023 Conference on Empirical Methods in Natural Language Processing. [Model](https://huggingface.co/cis-lmu/glotlid)
+
 
 ### Wiktextract / Kaikki.org
 
