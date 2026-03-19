@@ -2189,6 +2189,58 @@
       }
     }
   },
+  "otk": {
+    "name": "Old Turkic",
+    "scripts": {
+      "available": [
+        "Orkh",
+        "Latn"
+      ],
+      "primary": "Latn"
+    },
+    "processors": {
+      "Latn": {
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
+        },
+        "mwt": {
+          "backends": {
+            "neural": {
+              "type": "builtin",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "neural"
+        }
+      },
+      "Orkh": {
+        "tokenize": {
+          "backends": {
+            "rule": {
+              "type": "rule",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "rule"
+        },
+        "mwt": {
+          "backends": {
+            "neural": {
+              "type": "builtin",
+              "license": "Apache-2.0"
+            }
+          },
+          "default": "neural"
+        }
+      }
+    }
+  },
   "klj": {
     "name": "Khalaj",
     "scripts": {

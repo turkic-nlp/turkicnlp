@@ -485,7 +485,7 @@ The table below shows all supported languages with their available scripts and p
 | Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
 |---|---|---|---|---|---|---|---|---|---|---|
 | [Ottoman Turkish](https://en.wikipedia.org/wiki/Ottoman_Turkish_language) | `ota` | Arab, Latn | ■ | ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
-| [Old Turkic](https://en.wikipedia.org/wiki/Old_Turkic_language) | `otk` | Orkh, Latn | ○ | — | — | — | — | — | — | — |
+| [Old Turkic](https://en.wikipedia.org/wiki/Old_Turkic_language) | `otk` | Orkh, Latn | ■ | — | — | — | — | — | — | — |
 
 ### Stanza/UD Model Details
 
@@ -493,8 +493,8 @@ The Stanza backend provides neural models trained on [Universal Dependencies](ht
 
 | Language | Stanza Code | Type | UD Treebank(s) | Stanza Processors | NER Dataset |
 |---|---|---|---|---|---|
-| Turkish | `tr` | ● | IMST (default), BOUN, FrameNet, KeNet, ATIS, Penn, Tourism | tokenize, mwt, pos, lemma, depparse, ner | Starlang NER |
-| Kazakh | `kk` | ● | KTB | tokenize, mwt, pos, lemma, depparse, ner | KazNERD |
+| Turkish | `tr` | ● | IMST (default), BOUN, FrameNet, KeNet, ATIS, Penn, Tourism | tokenize, pos, lemma, depparse, ner | Starlang NER |
+| Kazakh | `kk` | ● | KTB | tokenize, pos, lemma, depparse, ner | KazNERD |
 | Uyghur | `ug` | ● | UDT | tokenize, pos, lemma, depparse | — |
 | Kyrgyz | `ky` | ● | KTMU | tokenize, pos, lemma, depparse | — |
 | Uzbek | `uz` | ▲ | UzUDT | tokenize, pos, lemma, depparse | — |

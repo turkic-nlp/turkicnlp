@@ -48,6 +48,11 @@ translation = [
     "transformers>=4.30",
     "tokenizers>=0.13",
 ]
+transformers = [
+    "torch>=2.0",
+    "transformers>=4.30",
+    "tokenizers>=0.13",
+]
 all = [
     "hfst>=3.12.0.2b0",
     "stanza>=1.8",

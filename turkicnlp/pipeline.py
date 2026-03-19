@@ -93,7 +93,11 @@ class Pipeline:
             source_script = self._script or self._script_config.primary
             if target_script != source_script:
                 self._transliterator = Transliterator(lang, source_script, target_script)
-                self._transliterate_back_enabled = True
+                try:
+                    Transliterator(lang, target_script, source_script)
+                    self._transliterate_back_enabled = True
+                except ValueError:
+                    self._transliterate_back_enabled = False
                 self._model_script = target_script
             else:
                 self._model_script = source_script
@@ -111,9 +115,6 @@ class Pipeline:
         from turkicnlp.resources.registry import ProcessorRegistry, ModelRegistry
         from turkicnlp.resources.downloader import download
 
-        requested = self._requested_processors or PROCESSOR_ORDER
-        resolved = self._resolve_dependencies(requested)
-
         catalog = ModelRegistry.load_catalog()
         lang_info = catalog.get(self.lang, {})
         processors_section = lang_info.get("processors", {})
@@ -125,6 +126,12 @@ class Pipeline:
             proc_catalog = processors_section.get(primary, next(iter(processors_section.values())))
         else:
             proc_catalog = {}
+
+        requested = self._requested_processors
+        if requested is None:
+            requested = list(proc_catalog.keys())
+
+        resolved = self._resolve_dependencies(requested)
 
         for proc_name in resolved:
             if proc_name in ("script_detect", "transliterate", "transliterate_back"):

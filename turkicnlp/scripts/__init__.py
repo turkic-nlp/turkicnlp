@@ -182,6 +182,10 @@ LANGUAGE_SCRIPTS: dict[str, ScriptConfig] = {
         primary=Script.LATIN,
         can_transliterate={Script.OLD_TURKIC_RUNIC: Script.LATIN},
     ),
+    "klj": ScriptConfig(
+        available=[Script.LATIN],
+        primary=Script.LATIN,
+    ),
 }
 
 
