@@ -28,7 +28,7 @@ class TestLanguageScripts:
     def test_turkish_latin_only(self) -> None:
         cfg = get_script_config("tur")
         assert cfg.primary == Script.LATIN
-        assert cfg.available == [Script.LATIN]
+        assert Script.LATIN in cfg.available
 
     def test_kazakh_dual_script(self) -> None:
         cfg = get_script_config("kaz")

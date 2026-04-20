@@ -371,8 +371,519 @@ class TestAllTablesPresent:
         missing = []
         for lang, config in LANGUAGE_SCRIPTS.items():
             if config.can_transliterate:
-                for src, tgt in config.can_transliterate.items():
+                for src, tgt in config.can_transliterate:
                     key = f"{lang}_{src.value}_to_{tgt.value}"
                     if key not in TRANSLITERATION_TABLES:
                         missing.append(key)
         assert missing == [], f"Missing transliteration tables: {missing}"
+
+
+class TestUyghurMultiScript:
+    """Uyghur multi-script transliteration tests.
+
+    Test data sourced from the Uyghur Multi-Script Converter:
+    https://github.com/neouyghur/ScriptConverter4Uyghur (Apache-2.0)
+
+    Note: cases involving inter-vowel hamza (ئ) apostrophe preservation
+    are intentionally excluded — that nuance is not part of our implementation.
+    """
+
+    # ------------------------------------------------------------------
+    # Arabic (UAS) ↔ Latin (ULS)
+    # ------------------------------------------------------------------
+
+    @pytest.mark.parametrize("arab,latn", [
+        ("قول", "qol"),
+        ("باش", "bash"),
+        ("پۇت", "put"),
+        ("كۆز", "köz"),
+        ("جەڭچى", "jengchi"),
+        ("جۇدې", "judé"),
+        ("سان", "san"),
+        ("شىر", "shir"),
+        ("شاڭخەي", "shangxey"),
+        ("كىتاب", "kitab"),
+        ("ۋەتەن", "weten"),
+        ("تومۇر", "tomur"),
+        ("كۆمۈر", "kömür"),
+        ("ئېلىكتىر", "éliktir"),
+        ("شىنجاڭ", "shinjang"),
+        ("ئانار", "anar"),
+        ("ئەنجۈر", "enjür"),
+        ("ئوردا", "orda"),
+        ("ئۇرۇش", "urush"),
+        ("ئۆردەك", "ördek"),
+        ("ئۈزۈم", "üzüm"),
+        ("ئېلان", "élan"),
+        ("ئىنكاس", "inkas"),
+        ("ئۆزخان", "özxan"),
+        ("پاسخا", "pasxa"),
+        ("بايرىمى", "bayrimi"),
+        ("گاڭگىراپ", "ganggirap"),
+        ("جۇڭخۇا", "jungxua"),
+        ("ئەدەب-ئەخلاق", "edeb-exlaq"),
+        # inter-vowel ئ → apostrophe in Latin output
+        ("ئىنىكئانا", "inik'ana"),
+        ("ئەسئەت", "es'et"),
+        ("رادىئو", "radi'o"),
+        ("مەسئۇل", "mes'ul"),
+        ("قارىئۆرۈك", "qari'örük"),
+        ("نائۈمىد", "na'ümid"),
+        ("ئىتئېيىق", "it'éyiq"),
+        ("جەمئىي", "jem'iy"),
+        ("مائارىپ", "ma'arip"),
+        ("مۇئەللىم", "mu'ellim"),
+        ("دائىرە", "da'ire"),
+        ("مۇئەييەن", "mu'eyyen"),
+        ("تەبىئىي", "tebi'iy"),
+        ("پائالىيەت", "pa'aliyet"),
+        ("جەمئىيەت", "jem'iyet"),
+    ])
+    def test_arab_to_latn(self, arab: str, latn: str) -> None:
+        t = Transliterator("uig", Script.PERSO_ARABIC, Script.LATIN)
+        assert t.transliterate(arab) == latn
+
+    @pytest.mark.parametrize("latn,arab", [
+        ("qol", "قول"),
+        ("bash", "باش"),
+        ("put", "پۇت"),
+        ("köz", "كۆز"),
+        ("jengchi", "جەڭچى"),
+        ("judé", "جۇدې"),
+        ("san", "سان"),
+        ("shir", "شىر"),
+        ("shangxey", "شاڭخەي"),
+        ("kitab", "كىتاب"),
+        ("weten", "ۋەتەن"),
+        ("tomur", "تومۇر"),
+        ("kömür", "كۆمۈر"),
+        ("éliktir", "ئېلىكتىر"),
+        ("shinjang", "شىنجاڭ"),
+        ("anar", "ئانار"),
+        ("enjür", "ئەنجۈر"),
+        ("orda", "ئوردا"),
+        ("urush", "ئۇرۇش"),
+        ("ördek", "ئۆردەك"),
+        ("üzüm", "ئۈزۈم"),
+        ("élan", "ئېلان"),
+        ("inkas", "ئىنكاس"),
+        ("özxan", "ئۆزخان"),
+        ("pasxa", "پاسخا"),
+        ("bayrimi", "بايرىمى"),
+        ("ganggirap", "گاڭگىراپ"),
+        # vowel-after-vowel needs ئ in Arabic output
+        ("radio", "رادىئو"),
+        ("qariörük", "قارىئۆرۈك"),
+        ("naümid", "نائۈمىد"),
+        ("maarip", "مائارىپ"),
+        ("muellim", "مۇئەللىم"),
+        ("daire", "دائىرە"),
+        ("mueyyen", "مۇئەييەن"),
+        ("tebiiy", "تەبىئىي"),
+        ("paaliyet", "پائالىيەت"),
+        # apostrophe in input marks syllable boundary → stripped in Arabic output
+        ("inik'ana", "ئىنىكئانا"),
+        ("es'et", "ئەسئەت"),
+        ("mes'ul", "مەسئۇل"),
+        ("it'éyiq", "ئىتئېيىق"),
+        ("cem'iy", "جەمئىي"),
+        ("cem'iyet", "جەمئىيەت"),
+    ])
+    def test_latn_to_arab(self, latn: str, arab: str) -> None:
+        t = Transliterator("uig", Script.LATIN, Script.PERSO_ARABIC)
+        assert t.transliterate(latn) == arab
+
+    # ------------------------------------------------------------------
+    # Arabic (UAS) ↔ Cyrillic (UCS)
+    # ------------------------------------------------------------------
+
+    @pytest.mark.parametrize("arab,cyrl", [
+        ("قول", "қол"),
+        ("باش", "баш"),
+        ("پۇت", "пут"),
+        ("كۆز", "көз"),
+        ("جەڭچى", "җәңчи"),
+        ("جۇدې", "җуде"),
+        ("سان", "сан"),
+        ("شىر", "шир"),
+        ("شاڭخەي", "шаңхәй"),
+        ("كىتاب", "китаб"),
+        ("ۋەتەن", "вәтән"),
+        ("تومۇر", "томур"),
+        ("كۆمۈر", "көмүр"),
+        ("ئېلىكتىر", "еликтир"),
+        ("شىنجاڭ", "шинҗаң"),
+        ("ئانار", "анар"),
+        ("ئەنجۈر", "әнҗүр"),
+        ("ئوردا", "орда"),
+        ("ئۇرۇش", "уруш"),
+        ("ئۆردەك", "өрдәк"),
+        ("ئۈزۈم", "үзүм"),
+        ("ئېلان", "елан"),
+        ("ئىنكاس", "инкас"),
+        ("ئۆزخان", "өзхан"),
+        ("پاسخا", "пасха"),
+        ("بايرىمى", "байрими"),
+        ("ئىسھاق", "исһақ"),
+        ("ئۆزبېكىستانغا", "өзбекистанға"),
+        ("ھىنگان", "һинган"),
+        ("چەكلەنگەن", "чәкләнгән"),
+        ("گاڭگىراپ", "гаңгирап"),
+        ("باشلانغۇچ", "башланғуч"),
+        # inter-vowel ئ → apostrophe in Cyrillic output
+        ("ئىنىكئانا", "иник'ана"),
+        ("ئەسئەت", "әс'әт"),
+        ("رادىئو", "ради'о"),
+        ("مەسئۇل", "мәс'ул"),
+        ("قارىئۆرۈك", "қари'өрүк"),
+        ("نائۈمىد", "на'үмид"),
+        ("ئىتئېيىق", "ит'ейиқ"),
+        ("جەمئىي", "җәм'ий"),
+        ("جەمئىيەت", "җәм'ийәт"),
+    ])
+    def test_arab_to_cyrl(self, arab: str, cyrl: str) -> None:
+        t = Transliterator("uig", Script.PERSO_ARABIC, Script.CYRILLIC)
+        assert t.transliterate(arab) == cyrl
+
+    @pytest.mark.parametrize("cyrl,arab", [
+        ("қол", "قول"),
+        ("баш", "باش"),
+        ("пут", "پۇت"),
+        ("көз", "كۆز"),
+        ("җәңчи", "جەڭچى"),
+        ("сан", "سان"),
+        ("шир", "شىر"),
+        ("шаңхәй", "شاڭخەي"),
+        ("китаб", "كىتاب"),
+        ("вәтән", "ۋەتەن"),
+        ("томур", "تومۇر"),
+        ("көмүр", "كۆمۈر"),
+        ("еликтир", "ئېلىكتىر"),
+        ("шинҗаң", "شىنجاڭ"),
+        ("анар", "ئانار"),
+        ("әнҗүр", "ئەنجۈر"),
+        ("орда", "ئوردا"),
+        ("уруш", "ئۇرۇش"),
+        ("өрдәк", "ئۆردەك"),
+        ("үзүм", "ئۈزۈم"),
+        ("елан", "ئېلان"),
+        ("инкас", "ئىنكاس"),
+        ("өзхан", "ئۆزخان"),
+        ("пасха", "پاسخا"),
+        ("байрими", "بايرىمى"),
+        ("исһақ", "ئىسھاق"),
+        ("өзбекистанға", "ئۆزبېكىستانغا"),
+        ("һинган", "ھىنگان"),
+        ("чәкләнгән", "چەكلەنگەن"),
+        ("гаңгирап", "گاڭگىراپ"),
+        ("башланғуч", "باشلانغۇچ"),
+    ])
+    def test_cyrl_to_arab(self, cyrl: str, arab: str) -> None:
+        t = Transliterator("uig", Script.CYRILLIC, Script.PERSO_ARABIC)
+        assert t.transliterate(cyrl) == arab
+
+    # ------------------------------------------------------------------
+    # Latin (ULS) ↔ Cyrillic (UCS)
+    # ------------------------------------------------------------------
+
+    @pytest.mark.parametrize("latn,cyrl", [
+        ("qol", "қол"),
+        ("bash", "баш"),
+        ("put", "пут"),
+        ("köz", "көз"),
+        ("jengchi", "җәңчи"),
+        ("san", "сан"),
+        ("sey", "сәй"),
+        ("shir", "шир"),
+        ("kitab", "китаб"),
+        ("weten", "вәтән"),
+        ("tomur", "томур"),
+        ("kömür", "көмүр"),
+        ("éliktir", "еликтир"),
+        ("shinjang", "шинҗаң"),
+        ("anar", "анар"),
+        ("enjür", "әнҗүр"),
+        ("orda", "орда"),
+        ("urush", "уруш"),
+        ("ördek", "өрдәк"),
+        ("üzüm", "үзүм"),
+        ("élan", "елан"),
+        ("inkas", "инкас"),
+        ("özxan", "өзхан"),
+        ("pasxa", "пасха"),
+        ("bayrimi", "байрими"),
+    ])
+    def test_latn_to_cyrl(self, latn: str, cyrl: str) -> None:
+        t = Transliterator("uig", Script.LATIN, Script.CYRILLIC)
+        assert t.transliterate(latn) == cyrl
+
+    @pytest.mark.parametrize("cyrl,latn", [
+        ("қол", "qol"),
+        ("баш", "bash"),
+        ("пут", "put"),
+        ("көз", "köz"),
+        ("җәңчи", "jengchi"),
+        ("сан", "san"),
+        ("сәй", "sey"),
+        ("шир", "shir"),
+        ("китаб", "kitab"),
+        ("вәтән", "weten"),
+        ("томур", "tomur"),
+        ("көмүр", "kömür"),
+        ("еликтир", "éliktir"),
+        ("шинҗаң", "shinjang"),
+        ("анар", "anar"),
+        ("әнҗүр", "enjür"),
+        ("орда", "orda"),
+        ("уруш", "urush"),
+        ("өрдәк", "ördek"),
+        ("үзүм", "üzüm"),
+        ("елан", "élan"),
+        ("инкас", "inkas"),
+        ("өзхан", "özxan"),
+        ("пасха", "pasxa"),
+        ("байрими", "bayrimi"),
+    ])
+    def test_cyrl_to_latn(self, cyrl: str, latn: str) -> None:
+        t = Transliterator("uig", Script.CYRILLIC, Script.LATIN)
+        assert t.transliterate(cyrl) == latn
+
+    # ------------------------------------------------------------------
+    # Arabic (UAS) ↔ CTS
+    # ------------------------------------------------------------------
+
+    @pytest.mark.parametrize("arab,cts", [
+        ("قول", "qol"),
+        ("باش", "baş"),
+        ("پۇت", "put"),
+        ("كۆز", "köz"),
+        ("جەڭچى", "ceñçi"),
+        ("جۇدې", "cudé"),
+        ("سان", "san"),
+        ("سەي", "sey"),
+        ("ئې", "é"),
+        ("شىر", "şir"),
+        ("شاڭخەي", "şañxey"),
+        ("كىتاب", "kitab"),
+        ("ۋەتەن", "veten"),
+        ("تومۇر", "tomur"),
+        ("كۆمۈر", "kömür"),
+        ("ئېلىكتىر", "éliktir"),
+        ("ۋيېتنام", "vyétnam"),
+        ("شىنجاڭ", "şincañ"),
+        ("ئانار", "anar"),
+        ("ئەنجۈر", "encür"),
+        ("ئوردا", "orda"),
+        ("ئۇرۇش", "uruş"),
+        ("ئۆردەك", "ördek"),
+        ("ئۈزۈم", "üzüm"),
+        ("ئېلان", "élan"),
+        ("ئىنكاس", "inkas"),
+        ("نەمەنگان", "nemengan"),
+        ("ئۆزخان", "özxan"),
+        ("پاسخا", "pasxa"),
+        ("بايرىمى", "bayrimi"),
+        ("مائارىپ", "maarip"),
+        ("مۇئەللىم", "muellim"),
+        ("دائىرە", "daire"),
+        ("مۇئەييەن", "mueyyen"),
+        ("تەبىئىي", "tebiiy"),
+        ("پائالىيەت", "paaliyet"),
+        ("ئىسھاق", "ishaq"),
+        ("ئۆزبېكىستانغا", "özbékistanğa"),
+        ("ھىنگان", "hingan"),
+        ("چەكلەنگەن", "çeklengen"),
+        ("گاڭگىراپ", "gañgirap"),
+        ("باشلانغۇچ", "başlanğuç"),
+    ])
+    def test_arab_to_cts(self, arab: str, cts: str) -> None:
+        t = Transliterator("uig", Script.PERSO_ARABIC, Script.COMMON_TURKIC)
+        assert t.transliterate(arab) == cts
+
+    @pytest.mark.parametrize("cts,arab", [
+        ("qol", "قول"),
+        ("baş", "باش"),
+        ("put", "پۇت"),
+        ("köz", "كۆز"),
+        ("ceñçi", "جەڭچى"),
+        ("cudé", "جۇدې"),
+        ("san", "سان"),
+        ("sey", "سەي"),
+        ("é", "ئې"),
+        ("şir", "شىر"),
+        ("şañxey", "شاڭخەي"),
+        ("kitab", "كىتاب"),
+        ("veten", "ۋەتەن"),
+        ("tomur", "تومۇر"),
+        ("kömür", "كۆمۈر"),
+        ("éliktir", "ئېلىكتىر"),
+        ("vyétnam", "ۋيېتنام"),
+        ("şincañ", "شىنجاڭ"),
+        ("anar", "ئانار"),
+        ("encür", "ئەنجۈر"),
+        ("orda", "ئوردا"),
+        ("uruş", "ئۇرۇش"),
+        ("ördek", "ئۆردەك"),
+        ("üzüm", "ئۈزۈم"),
+        ("élan", "ئېلان"),
+        ("inkas", "ئىنكاس"),
+        ("nemengan", "نەمەنگان"),
+        ("özxan", "ئۆزخان"),
+        ("pasxa", "پاسخا"),
+        ("bayrimi", "بايرىمى"),
+        ("maarip", "مائارىپ"),
+        ("muellim", "مۇئەللىم"),
+        ("daire", "دائىرە"),
+        ("mueyyen", "مۇئەييەن"),
+        ("tebiiy", "تەبىئىي"),
+        ("paaliyet", "پائالىيەت"),
+        ("ishaq", "ئىسھاق"),
+        ("özbékistanğa", "ئۆزبېكىستانغا"),
+        ("hingan", "ھىنگان"),
+        ("çeklengen", "چەكلەنگەن"),
+        ("gañgirap", "گاڭگىراپ"),
+        ("başlanğuç", "باشلانغۇچ"),
+    ])
+    def test_cts_to_arab(self, cts: str, arab: str) -> None:
+        t = Transliterator("uig", Script.COMMON_TURKIC, Script.PERSO_ARABIC)
+        assert t.transliterate(cts) == arab
+
+    # ------------------------------------------------------------------
+    # Latin (ULS) ↔ CTS
+    # ------------------------------------------------------------------
+
+    @pytest.mark.parametrize("latn,cts", [
+        ("qol", "qol"),
+        ("bash", "baş"),
+        ("put", "put"),
+        ("köz", "köz"),
+        ("jengchi", "ceñçi"),
+        ("san", "san"),
+        ("sey", "sey"),
+        ("shir", "şir"),
+        ("kitab", "kitab"),
+        ("weten", "veten"),
+        ("tomur", "tomur"),
+        ("kömür", "kömür"),
+        ("éliktir", "éliktir"),
+        ("shinjang", "şincañ"),
+        ("anar", "anar"),
+        ("enjür", "encür"),
+        ("orda", "orda"),
+        ("urush", "uruş"),
+        ("ördek", "ördek"),
+        ("üzüm", "üzüm"),
+        ("élan", "élan"),
+        ("inkas", "inkas"),
+        ("özxan", "özxan"),
+        ("pasxa", "pasxa"),
+        ("bayrimi", "bayrimi"),
+    ])
+    def test_latn_to_cts(self, latn: str, cts: str) -> None:
+        t = Transliterator("uig", Script.LATIN, Script.COMMON_TURKIC)
+        assert t.transliterate(latn) == cts
+
+    @pytest.mark.parametrize("cts,latn", [
+        ("qol", "qol"),
+        ("baş", "bash"),
+        ("put", "put"),
+        ("köz", "köz"),
+        ("ceñçi", "jengchi"),
+        ("san", "san"),
+        ("sey", "sey"),
+        ("şir", "shir"),
+        ("kitab", "kitab"),
+        ("veten", "weten"),
+        ("tomur", "tomur"),
+        ("kömür", "kömür"),
+        ("éliktir", "éliktir"),
+        ("şincañ", "shinjang"),
+        ("anar", "anar"),
+        ("encür", "enjür"),
+        ("orda", "orda"),
+        ("uruş", "urush"),
+        ("ördek", "ördek"),
+        ("üzüm", "üzüm"),
+        ("élan", "élan"),
+        ("inkas", "inkas"),
+        ("özxan", "özxan"),
+        ("pasxa", "pasxa"),
+        ("bayrimi", "bayrimi"),
+    ])
+    def test_cts_to_latn(self, cts: str, latn: str) -> None:
+        t = Transliterator("uig", Script.COMMON_TURKIC, Script.LATIN)
+        assert t.transliterate(cts) == latn
+
+    # ------------------------------------------------------------------
+    # Cyrillic (UCS) ↔ CTS
+    # ------------------------------------------------------------------
+
+    @pytest.mark.parametrize("cyrl,cts", [
+        ("қол", "qol"),
+        ("баш", "baş"),
+        ("пут", "put"),
+        ("көз", "köz"),
+        ("җәңчи", "ceñçi"),
+        ("сан", "san"),
+        ("сәй", "sey"),
+        ("шир", "şir"),
+        ("китаб", "kitab"),
+        ("вәтән", "veten"),
+        ("томур", "tomur"),
+        ("көмүр", "kömür"),
+        ("еликтир", "éliktir"),
+        ("шинҗаң", "şincañ"),
+        ("анар", "anar"),
+        ("әнҗүр", "encür"),
+        ("орда", "orda"),
+        ("уруш", "uruş"),
+        ("өрдәк", "ördek"),
+        ("үзүм", "üzüm"),
+        ("елан", "élan"),
+        ("инкас", "inkas"),
+        ("нәмәнган", "nemengan"),
+        ("өзхан", "özxan"),
+        ("пасха", "pasxa"),
+        ("байрими", "bayrimi"),
+        ("һинган", "hingan"),
+        ("чәкләнгән", "çeklengen"),
+        ("башланғуч", "başlanğuç"),
+    ])
+    def test_cyrl_to_cts(self, cyrl: str, cts: str) -> None:
+        t = Transliterator("uig", Script.CYRILLIC, Script.COMMON_TURKIC)
+        assert t.transliterate(cyrl) == cts
+
+    @pytest.mark.parametrize("cts,cyrl", [
+        ("qol", "қол"),
+        ("baş", "баш"),
+        ("put", "пут"),
+        ("köz", "көз"),
+        ("ceñçi", "җәңчи"),
+        ("san", "сан"),
+        ("sey", "сәй"),
+        ("şir", "шир"),
+        ("kitab", "китаб"),
+        ("veten", "вәтән"),
+        ("tomur", "томур"),
+        ("kömür", "көмүр"),
+        ("éliktir", "еликтир"),
+        ("şincañ", "шинҗаң"),
+        ("anar", "анар"),
+        ("encür", "әнҗүр"),
+        ("orda", "орда"),
+        ("uruş", "уруш"),
+        ("ördek", "өрдәк"),
+        ("üzüm", "үзүм"),
+        ("élan", "елан"),
+        ("inkas", "инкас"),
+        ("nemengan", "нәмәнган"),
+        ("özxan", "өзхан"),
+        ("pasxa", "пасха"),
+        ("bayrimi", "байрими"),
+        ("hingan", "һинган"),
+        ("çeklengen", "чәкләнгән"),
+        ("başlanğuç", "башланғуч"),
+    ])
+    def test_cts_to_cyrl(self, cts: str, cyrl: str) -> None:
+        t = Transliterator("uig", Script.COMMON_TURKIC, Script.CYRILLIC)
+        assert t.transliterate(cts) == cyrl

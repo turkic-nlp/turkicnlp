@@ -70,6 +70,26 @@ class Transliterator:
             and self.target == Script.PERSO_ARABIC
         ):
             return self._transliterate_uig_latn_to_arab(text)
+        if self.lang == "uig":
+            src, tgt = self.source, self.target
+            if src == Script.PERSO_ARABIC and tgt == Script.LATIN:
+                return self._transliterate_uig_arab_to_latn(text)
+            if src == Script.PERSO_ARABIC and tgt == Script.CYRILLIC:
+                return self._transliterate_uig_arab_to_cyrl(text)
+            if src == Script.CYRILLIC and tgt == Script.PERSO_ARABIC:
+                return self._transliterate_uig_cyrl_to_arab(text)
+            if src == Script.CYRILLIC and tgt == Script.LATIN:
+                return self._transliterate_uig_cyrl_to_latn(text)
+            if src == Script.LATIN and tgt == Script.CYRILLIC:
+                return self._transliterate_uig_latn_to_cyrl(text)
+            if src == Script.PERSO_ARABIC and tgt == Script.COMMON_TURKIC:
+                return self._transliterate_uig_arab_to_cts(text)
+            if src == Script.COMMON_TURKIC and tgt == Script.PERSO_ARABIC:
+                return self._transliterate_uig_cts_to_arab(text)
+            if src == Script.LATIN and tgt == Script.COMMON_TURKIC:
+                return self._transliterate_uig_latn_to_cts(text)
+            if src == Script.COMMON_TURKIC and tgt == Script.LATIN:
+                return self._transliterate_uig_cts_to_latn(text)
 
         result: list[str] = []
         i = 0
@@ -274,52 +294,182 @@ class Transliterator:
         )
 
     def _transliterate_uig_latn_to_arab(self, text: str) -> str:
-        """Uyghur Latin -> Arabic with initial-hamza vowel handling."""
-        result: list[str] = []
-        i = 0
-        initial_vowel_map = {
-            "a": "ئا",
-            "e": "ئە",
-            "o": "ئو",
-            "u": "ئۇ",
-            "ö": "ئۆ",
-            "ü": "ئۈ",
-            "é": "ئې",
-            "i": "ئى",
-            "A": "ئا",
-            "E": "ئە",
-            "O": "ئو",
-            "U": "ئۇ",
-            "Ö": "ئۆ",
-            "Ü": "ئۈ",
-            "É": "ئې",
-            "I": "ئى",
-        }
-        while i < len(text):
-            word_initial = i == 0 or not text[i - 1].isalpha()
-            if word_initial and text[i : i + 1] in initial_vowel_map:
-                result.append(initial_vowel_map[text[i : i + 1]])
-                i += 1
-                continue
+        """Uyghur Latin (ULS) → Arabic via CTS pivot with full ئ insertion.
 
-            matched = False
-            for length in range(min(4, len(text) - i), 0, -1):
-                chunk = text[i : i + length]
-                if chunk in self._forward_map:
-                    result.append(self._forward_map[chunk])
-                    i += length
-                    matched = True
-                    break
-                if chunk.lower() in self._forward_map:
-                    mapped = self._forward_map[chunk.lower()]
-                    result.append(mapped)
-                    i += length
-                    matched = True
-                    break
-            if not matched:
-                result.append(text[i])
-                i += 1
-        return "".join(result)
+        Follows UMSC ULS2UAS logic: ULS→CTS chain, insert ئ before any vowel
+        not preceded by a consonant, replace CTS→UAS, strip apostrophes, revise.
+        This handles both word-initial vowels AND vowel-after-vowel sequences
+        (e.g. 'radio' → رادىئو) and apostrophe syllable markers (e.g. "inik'ana").
+        """
+        import regex as re
+        text = text.lower()
+        text = self._uig_uls_to_cts(text)
+        consonants = "bptcçxdrzjsşfñlmhvyqkgnğ"
+        text = re.sub(
+            rf"(?<=[^{consonants}]|^)[aeéiouöü]",
+            lambda m: "\u0626" + m.group(),
+            text,
+        )
+        text = self._uig_replace(text, self._UIG_CTS, self._UIG_UAS)
+        text = text.replace("'", "")
+        return self._uig_revise_uas(text)
+
+    # ------------------------------------------------------------------
+    # Uyghur multi-script helpers
+    # Conversion tables and chain logic adapted from:
+    # https://github.com/neouyghur/ScriptConverter4Uyghur (Apache-2.0)
+    # ------------------------------------------------------------------
+
+    # Positional tables: UAS / UCS / CTS share the same index positions.
+    _UIG_UAS: list[str] = [
+        "ا", "ە", "ب", "پ", "ت", "ج", "چ", "خ", "د", "ر",
+        "ز", "ژ", "س", "ش", "ف", "ڭ", "لا", "ل", "م", "ھ",
+        "و", "ۇ", "ۆ", "ۈ", "ۋ", "ې", "ى", "ي", "ق", "ك",
+        "گ", "ن", "غ",
+    ]
+    _UIG_CTS: list[str] = [
+        "a", "e", "b", "p", "t", "c", "ç", "x", "d", "r",
+        "z", "j", "s", "ş", "f", "ñ", "la", "l", "m", "h",
+        "o", "u", "ö", "ü", "v", "é", "i", "y", "q", "k",
+        "g", "n", "ğ",
+    ]
+    _UIG_UCS: list[str] = [
+        "а", "ә", "б", "п", "т", "җ", "ч", "х", "д", "р",
+        "з", "ж", "с", "ш", "ф", "ң", "ла", "л", "м", "һ",
+        "о", "у", "ө", "ү", "в", "е", "и", "й", "қ", "к",
+        "г", "н", "ғ",
+    ]
+    _UIG_CTS_CONSONANTS: str = "bptcçxdrzjsşfñlmhvyqkgnğ"
+
+    @staticmethod
+    def _uig_replace(text: str, src: list[str], tgt: list[str]) -> str:
+        for s, t in zip(src, tgt):
+            text = text.replace(s, t)
+        return text
+
+    @staticmethod
+    def _uig_revise_cts(text: str) -> str:
+        """Remove word-initial ئ; remove post-vowel ئ; replace remaining ئ with apostrophe."""
+        import regex as re
+        text = re.sub(r"(?<=[^aeuoöübptcçxdrzjsşfñlmhvéiyqkgnğ]|^)\u0626", "", text)
+        text = re.sub(r"(([aeéiouöü])\u0626)", lambda m: m.group()[0], text)
+        text = text.replace("\u0626", "'")
+        return text
+
+    @staticmethod
+    def _uig_revise_cts_keep_apos(text: str) -> str:
+        """Remove word-initial ئ; keep post-vowel ئ as apostrophe (for Latin/Cyrillic output)."""
+        import regex as re
+        text = re.sub(r"(?<=[^aeuoöübptcçxdrzjsşfñlmhvéiyqkgnğ]|^)\u0626", "", text)
+        # Unlike _uig_revise_cts, we do NOT strip vowel+ئ here — it becomes an apostrophe
+        text = text.replace("\u0626", "'")
+        return text
+
+    @staticmethod
+    def _uig_revise_uas(text: str) -> str:
+        """Fix consecutive Arabic vowels by inserting ئ between them."""
+        import regex as re
+        return re.sub(
+            r"(^|-|\s|[اەېىوۇۆۈ])([اەېىوۇۆۈ])",
+            lambda m: m.group(1) + "ئ" + m.group(2),
+            text,
+        )
+
+    @staticmethod
+    def _uig_uls_to_cts(text: str) -> str:
+        """ULS (Latin) → CTS chain."""
+        return (
+            text.replace("j", "c")
+            .replace("ng", "ñ")
+            .replace("n'g", "ng")
+            .replace("'ng", "ñ")
+            .replace("ch", "ç")
+            .replace("zh", "j")
+            .replace("sh", "ş")
+            .replace("'gh", "ğ")
+            .replace("gh", "ğ")
+            .replace("w", "v")
+        )
+
+    @staticmethod
+    def _uig_cts_to_uls(text: str) -> str:
+        """CTS → ULS (Latin) chain."""
+        return (
+            text.replace("ng", "n'g")
+            .replace("sh", "s'h")
+            .replace("ch", "c'h")
+            .replace("zh", "z'h")
+            .replace("gh", "g'h")
+            .replace("nğ", "n'gh")
+            .replace("ñ", "ng")
+            .replace("j", "zh")
+            .replace("c", "j")
+            .replace("ç", "ch")
+            .replace("ş", "sh")
+            .replace("ğ", "gh")
+            .replace("v", "w")
+        )
+
+    def _transliterate_uig_arab_to_cts(self, text: str) -> str:
+        text = self._uig_replace(text, self._UIG_UAS, self._UIG_CTS)
+        return self._uig_revise_cts(text)
+
+    def _transliterate_uig_arab_to_latn(self, text: str) -> str:
+        """Arab → CTS (preserving inter-vowel ئ as apostrophe) → ULS chain."""
+        text = self._uig_replace(text, self._UIG_UAS, self._UIG_CTS)
+        text = self._uig_revise_cts_keep_apos(text)
+        return self._uig_cts_to_uls(text.lower())
+
+    def _transliterate_uig_cts_to_arab(self, text: str) -> str:
+        import regex as re
+        vowels = "aeéiouöü"
+        text = re.sub(
+            rf"(?<=[^{self._UIG_CTS_CONSONANTS}]|^)[{vowels}]",
+            lambda m: "\u0626" + m.group(),
+            text,
+        )
+        text = self._uig_replace(text, self._UIG_CTS, self._UIG_UAS)
+        text = text.replace("'", "")
+        return self._uig_revise_uas(text)
+
+    def _transliterate_uig_arab_to_cyrl(self, text: str) -> str:
+        text = self._uig_replace(text, self._UIG_UAS, self._UIG_CTS)
+        text = self._uig_revise_cts_keep_apos(text)
+        text = text.replace("ya", "я").replace("yu", "ю")
+        text = self._uig_replace(text, self._UIG_CTS, self._UIG_UCS)
+        return text
+
+    def _transliterate_uig_cyrl_to_arab(self, text: str) -> str:
+        import regex as re
+        text = self._uig_replace(text, self._UIG_UCS, self._UIG_CTS)
+        text = text.replace("я", "ya").replace("ю", "yu")
+        vowels = "aeéiouöü"
+        text = re.sub(
+            rf"(?<=[^{self._UIG_CTS_CONSONANTS}]|^)[{vowels}]",
+            lambda m: "\u0626" + m.group(),
+            text,
+        )
+        text = self._uig_replace(text, self._UIG_CTS, self._UIG_UAS)
+        text = text.replace("'", "")
+        return self._uig_revise_uas(text)
+
+    def _transliterate_uig_cyrl_to_latn(self, text: str) -> str:
+        text = self._uig_replace(text, self._UIG_UCS, self._UIG_CTS)
+        text = text.replace("я", "ya").replace("ю", "yu")
+        return self._uig_cts_to_uls(text)
+
+    def _transliterate_uig_latn_to_cyrl(self, text: str) -> str:
+        text = text.lower()
+        text = self._uig_uls_to_cts(text)
+        text = text.replace("ya", "я").replace("yu", "ю")
+        text = self._uig_replace(text, self._UIG_CTS, self._UIG_UCS)
+        return text
+
+    def _transliterate_uig_latn_to_cts(self, text: str) -> str:
+        return self._uig_uls_to_cts(text.lower())
+
+    def _transliterate_uig_cts_to_latn(self, text: str) -> str:
+        return self._uig_cts_to_uls(text.lower())
 
     @staticmethod
     def _load_mapping(
@@ -761,5 +911,617 @@ TRANSLITERATION_TABLES: dict[str, dict[str, str]] = {
         "\U00010C3F": "ch",  # ORKHON ECH
         "\U00010C40": "bash", # ORKHON BASH (head mark / punctuation)
         "\U00010C48": ":",   # OLD TURKIC WORD SEPARATOR
+    },
+
+    # ---------------------------------------------------------------------------
+    # Common Turkic Script (CTS) tables
+    # Based on the Common Turkic Alphabet: https://en.wikipedia.org/wiki/Common_Turkic_alphabet
+    # ---------------------------------------------------------------------------
+
+    # Turkish Latin → CTS (near-identical; Turkish already uses CTS-compatible letters)
+    "tur_Latn_to_CTS": {
+        "a": "a", "A": "A", "b": "b", "B": "B", "c": "c", "C": "C",
+        "ç": "ç", "Ç": "Ç", "d": "d", "D": "D", "e": "e", "E": "E",
+        "f": "f", "F": "F", "g": "g", "G": "G", "ğ": "ğ", "Ğ": "Ğ",
+        "h": "h", "H": "H", "ı": "ı", "I": "I", "i": "i", "İ": "İ",
+        "j": "j", "J": "J", "k": "k", "K": "K", "l": "l", "L": "L",
+        "m": "m", "M": "M", "n": "n", "N": "N", "o": "o", "O": "O",
+        "ö": "ö", "Ö": "Ö", "p": "p", "P": "P", "r": "r", "R": "R",
+        "s": "s", "S": "S", "ş": "ş", "Ş": "Ş", "t": "t", "T": "T",
+        "u": "u", "U": "U", "ü": "ü", "Ü": "Ü", "v": "v", "V": "V",
+        "y": "y", "Y": "Y", "z": "z", "Z": "Z",
+    },
+
+    # Azerbaijani Latin → CTS (ə → ä is the only non-trivial mapping)
+    "aze_Latn_to_CTS": {
+        "ə": "ä", "Ə": "Ä",
+        "a": "a", "A": "A", "b": "b", "B": "B", "c": "c", "C": "C",
+        "ç": "ç", "Ç": "Ç", "d": "d", "D": "D", "e": "e", "E": "E",
+        "f": "f", "F": "F", "g": "g", "G": "G", "ğ": "ğ", "Ğ": "Ğ",
+        "h": "h", "H": "H", "x": "x", "X": "X", "ı": "ı", "I": "I",
+        "i": "i", "İ": "İ", "j": "j", "J": "J", "k": "k", "K": "K",
+        "l": "l", "L": "L", "m": "m", "M": "M", "n": "n", "N": "N",
+        "o": "o", "O": "O", "ö": "ö", "Ö": "Ö", "p": "p", "P": "P",
+        "q": "q", "Q": "Q", "r": "r", "R": "R", "s": "s", "S": "S",
+        "ş": "ş", "Ş": "Ş", "t": "t", "T": "T", "u": "u", "U": "U",
+        "ü": "ü", "Ü": "Ü", "v": "v", "V": "V", "y": "y", "Y": "Y",
+        "z": "z", "Z": "Z",
+    },
+
+    # Azerbaijani Cyrillic → CTS
+    "aze_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ё": "yo", "Ё": "Yo", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ц": "ts", "Ц": "Ts",
+        "ə": "ä", "Ə": "Ä",
+        "ә": "ä", "Ә": "Ä", "ғ": "ğ", "Ғ": "Ğ", "ө": "ö", "Ө": "Ö",
+        "ү": "ü", "Ү": "Ü", "ҹ": "c", "Ҹ": "C", "ҝ": "g", "Ҝ": "G",
+        "һ": "h", "Һ": "H",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "q", "Г": "Q", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "ж": "c", "Ж": "C", "з": "z", "З": "Z", "и": "i", "И": "İ",
+        "й": "y", "Й": "Y", "к": "k", "К": "K", "л": "l", "Л": "L",
+        "м": "m", "М": "M", "н": "n", "Н": "N", "о": "o", "О": "O",
+        "п": "p", "П": "P", "р": "r", "Р": "R", "с": "s", "С": "S",
+        "т": "t", "Т": "T", "у": "u", "У": "U", "ф": "f", "Ф": "F",
+        "х": "x", "Х": "X", "ч": "ç", "Ч": "Ç", "ш": "ş", "Ш": "Ş",
+        "ы": "ı", "Ы": "I", "э": "e", "Э": "E", "ъ": "", "ь": "",
+    },
+
+    # South Azerbaijani (Perso-Arabic) → CTS
+    "azb_Arab_to_CTS": {
+        # Vowel letters
+        "آ": "a", "ا": "a", "ع": "", "ه": "h",
+        "و": "v", "ی": "y", "ي": "y",
+        # Consonants
+        "ب": "b", "پ": "p", "ت": "t", "ث": "s",
+        "ج": "c", "چ": "ç", "ح": "h", "خ": "x",
+        "د": "d", "ذ": "z", "ر": "r", "ز": "z",
+        "ژ": "j", "س": "s", "ش": "ş", "ص": "s",
+        "ض": "z", "ط": "t", "ظ": "z", "غ": "ğ",
+        "ف": "f", "ق": "q", "ک": "k", "ك": "k",
+        "گ": "g", "ل": "l", "م": "m", "ن": "n",
+        "ء": "",
+    },
+
+    # Kazakh Cyrillic → CTS
+    "kaz_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ё": "yo", "Ё": "Yo", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç", "ж": "c", "Ж": "C",
+        "ц": "ts", "Ц": "Ts",
+        "ә": "ä", "Ә": "Ä", "ғ": "ğ", "Ғ": "Ğ", "қ": "q", "Қ": "Q",
+        "ң": "ñ", "Ң": "Ñ", "ө": "ö", "Ө": "Ö", "ұ": "u", "Ұ": "U",
+        "ү": "ü", "Ү": "Ü", "і": "i", "І": "İ", "һ": "h", "Һ": "H",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "э": "e", "Э": "E", "ы": "ı", "Ы": "I", "ъ": "", "ь": "",
+    },
+
+    # Kazakh Latin (2021) → CTS
+    "kaz_Latn_to_CTS": {
+        "ä": "ä", "Ä": "Ä", "ğ": "ğ", "Ğ": "Ğ", "q": "q", "Q": "Q",
+        "ñ": "ñ", "Ñ": "Ñ", "ö": "ö", "Ö": "Ö", "ū": "u", "Ū": "U",
+        "ü": "ü", "Ü": "Ü", "ı": "ı",
+        "sh": "ş", "Sh": "Ş", "SH": "Ş", "ch": "ç", "Ch": "Ç", "CH": "Ç",
+        "İ": "y",             # Kazakh 2021: İ = /j/ (Cyrillic й) → CTS y
+        "a": "a", "A": "A", "b": "b", "B": "B", "d": "d", "D": "D",
+        "e": "e", "E": "E", "f": "f", "F": "F", "g": "g", "G": "G",
+        "h": "x", "H": "X",   # Kazakh h = /x/ (velar fricative) → CTS x
+        "i": "i", "I": "İ", "j": "c", "J": "C",
+        "k": "k", "K": "K", "l": "l", "L": "L", "m": "m", "M": "M",
+        "n": "n", "N": "N", "o": "o", "O": "O", "p": "p", "P": "P",
+        "r": "r", "R": "R", "s": "s", "S": "S", "t": "t", "T": "T",
+        "u": "u", "U": "U", "v": "v", "V": "V",
+        "y": "ı", "Y": "I",   # Kazakh y = /ɯ/ (back unrounded) → CTS ı
+        "z": "z", "Z": "Z",
+    },
+
+    # Uzbek Latin (1995) → CTS
+    "uzb_Latn_to_CTS": {
+        "sh": "ş", "Sh": "Ş", "SH": "Ş",
+        "ch": "ç", "Ch": "Ç", "CH": "Ç",
+        "ng": "ñ", "Ng": "Ñ", "NG": "Ñ",
+        "g'": "ğ", "G'": "Ğ",
+        "o'": "ö", "O'": "Ö",
+        "yo": "yo", "Yo": "Yo",
+        "yu": "yu", "Yu": "Yu",
+        "ya": "ya", "Ya": "Ya",
+        "'": "",
+        "a": "a", "A": "A", "b": "b", "B": "B", "d": "d", "D": "D",
+        "e": "e", "E": "E", "f": "f", "F": "F", "g": "g", "G": "G",
+        "h": "h", "H": "H", "i": "i", "I": "İ", "j": "c", "J": "C",
+        "k": "k", "K": "K", "l": "l", "L": "L", "m": "m", "M": "M",
+        "n": "n", "N": "N", "o": "o", "O": "O", "p": "p", "P": "P",
+        "q": "q", "Q": "Q", "r": "r", "R": "R", "s": "s", "S": "S",
+        "t": "t", "T": "T", "u": "u", "U": "U", "v": "v", "V": "V",
+        "x": "x", "X": "X", "y": "y", "Y": "Y", "z": "z", "Z": "Z",
+    },
+
+    # Uzbek Cyrillic → CTS
+    "uzb_Cyrl_to_CTS": {
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "нг": "ñ", "Нг": "Ñ",
+        "ғ": "ğ", "Ғ": "Ğ", "қ": "q", "Қ": "Q",
+        "ҳ": "h", "Ҳ": "H", "ў": "ö", "Ў": "Ö",
+        "ж": "c", "Ж": "C",
+        "ё": "yo", "Ё": "Yo", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ц": "ts", "Ц": "Ts",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "э": "e", "Э": "E", "ъ": "", "ь": "",
+    },
+
+    # Kyrgyz Cyrillic → CTS
+    "kir_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç", "ж": "c", "Ж": "C",
+        "ц": "ts", "Ц": "Ts",
+        "ң": "ñ", "Ң": "Ñ", "ө": "ö", "Ө": "Ö", "ү": "ü", "Ү": "Ü",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "ё": "yo", "Ё": "Yo", "з": "z", "З": "Z", "и": "i", "И": "İ",
+        "й": "y", "Й": "Y", "к": "k", "К": "K", "л": "l", "Л": "L",
+        "м": "m", "М": "M", "н": "n", "Н": "N", "о": "o", "О": "O",
+        "п": "p", "П": "P", "р": "r", "Р": "R", "с": "s", "С": "S",
+        "т": "t", "Т": "T", "у": "u", "У": "U", "ф": "f", "Ф": "F",
+        "х": "x", "Х": "X", "ы": "ı", "Ы": "I", "э": "e", "Э": "E",
+        "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya", "ъ": "", "ь": "",
+    },
+
+    # Turkmen Latin → CTS
+    "tuk_Latn_to_CTS": {
+        "şç": "şç", "Şç": "Şç",
+        "ts": "ts", "Ts": "Ts",
+        "ä": "ä", "Ä": "Ä", "ň": "ñ", "Ň": "Ñ",
+        "ö": "ö", "Ö": "Ö", "ü": "ü", "Ü": "Ü",
+        "ç": "ç", "Ç": "Ç", "ş": "ş", "Ş": "Ş",
+        "ž": "j", "Ž": "J",
+        "ý": "y", "Ý": "Y",   # Turkmen ý = /j/ → CTS y
+        "y": "ı", "Y": "I",   # Turkmen y = /ɯ/ → CTS ı
+        "j": "c", "J": "C",
+        "w": "v", "W": "V",   # Turkmen w = /w/ → CTS V slot (Turkmen has no /v/)
+        "a": "a", "A": "A", "b": "b", "B": "B", "d": "d", "D": "D",
+        "e": "e", "E": "E", "f": "f", "F": "F", "g": "g", "G": "G",
+        "h": "h", "H": "H", "i": "i", "I": "İ", "k": "k", "K": "K",
+        "l": "l", "L": "L", "m": "m", "M": "M", "n": "n", "N": "N",
+        "o": "o", "O": "O", "p": "p", "P": "P", "r": "r", "R": "R",
+        "s": "s", "S": "S", "t": "t", "T": "T", "u": "u", "U": "U",
+        "z": "z", "Z": "Z",
+    },
+
+    # Turkmen Cyrillic → CTS
+    "tuk_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ё": "yo", "Ё": "Yo", "ю": "ýu", "Ю": "Ýu", "я": "ýa", "Я": "Ýa",
+        "ц": "ts", "Ц": "Ts",
+        "ә": "ä", "Ә": "Ä", "ң": "ñ", "Ң": "Ñ",
+        "ө": "ö", "Ө": "Ö", "ү": "ü", "Ү": "Ü",
+        "ч": "ç", "Ч": "Ç", "ш": "ş", "Ш": "Ş",
+        "ж": "j", "Ж": "J", "з": "z", "З": "Z",
+        "й": "y", "Й": "Y", "в": "v", "В": "V",   # Turkmen в = /w/ → CTS V slot
+        "а": "a", "А": "A", "б": "b", "Б": "B", "г": "g", "Г": "G",
+        "д": "d", "Д": "D", "е": "e", "Е": "E", "и": "i", "И": "İ",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "h", "Х": "H",
+        "ы": "ı", "Ы": "I",   # Turkmen ы = /ɯ/ → CTS ı
+        "э": "e", "Э": "E", "ъ": "", "ь": "",
+        "х": "h", "Х": "H", "җ": "c", "Җ": "C",
+    },
+
+    # Tatar Cyrillic → CTS
+    "tat_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "j", "Ж": "J",   # Tatar ж = /ʒ/
+        "җ": "c", "Җ": "C",   # Tatar Ж̧ = /dʒ/
+        "ц": "ts", "Ц": "Ts",
+        "ә": "ä", "Ә": "Ä", "ө": "ö", "Ө": "Ö", "ү": "ü", "Ү": "Ü",
+        "ң": "ñ", "Ң": "Ñ", "һ": "h", "Һ": "H",
+        "в": "w", "В": "W",   # Tatar в = /w/
+        "а": "a", "А": "A", "б": "b", "Б": "B", "г": "g", "Г": "G",
+        "д": "d", "Д": "D", "е": "e", "Е": "E", "ё": "yo", "Ё": "Yo",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "ы": "ı", "Ы": "I", "э": "e", "Э": "E",
+        "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya", "ъ": "", "ь": "",
+    },
+
+    # Tatar Latin (Zamanälif) → CTS
+    "tat_Latn_to_CTS": {
+        "şç": "şç", "Şç": "Şç",
+        "ts": "ts", "Ts": "Ts",
+        "ä": "ä", "Ä": "Ä", "ö": "ö", "Ö": "Ö", "ü": "ü", "Ü": "Ü",
+        "ñ": "ñ", "Ñ": "Ñ", "ç": "ç", "Ç": "Ç", "ş": "ş", "Ş": "Ş",
+        "c": "c", "C": "C",   # Zamanälif c = /dʒ/
+        "j": "j", "J": "J",   # Zamanälif j = /ʒ/
+        "w": "w", "W": "W",   # Tatar w = /w/
+        "İ": "İ", "ı": "ı", "I": "I",
+        "a": "a", "A": "A", "b": "b", "B": "B", "d": "d", "D": "D",
+        "e": "e", "E": "E", "f": "f", "F": "F", "g": "g", "G": "G",
+        "h": "h", "H": "H", "i": "i", "k": "k", "K": "K",
+        "l": "l", "L": "L", "m": "m", "M": "M", "n": "n", "N": "N",
+        "o": "o", "O": "O", "p": "p", "P": "P", "r": "r", "R": "R",
+        "s": "s", "S": "S", "t": "t", "T": "T", "u": "u", "U": "U",
+        "x": "x", "X": "X", "y": "y", "Y": "Y", "z": "z", "Z": "Z",
+    },
+
+    # Uyghur Cyrillic (UCS) → CTS
+    "uig_Cyrl_to_CTS": {
+        "ла": "la", "Ла": "La",   # multi-char first
+        "я": "ya", "Я": "Ya", "ю": "yu", "Ю": "Yu",
+        "а": "a", "А": "A", "ә": "e", "Ә": "E",
+        "б": "b", "Б": "B", "п": "p", "П": "P",
+        "т": "t", "Т": "T", "җ": "c", "Җ": "C",
+        "ч": "ç", "Ч": "Ç", "х": "x", "Х": "X",
+        "д": "d", "Д": "D", "р": "r", "Р": "R",
+        "з": "z", "З": "Z", "ж": "j", "Ж": "J",
+        "с": "s", "С": "S", "ш": "ş", "Ш": "Ş",
+        "ф": "f", "Ф": "F", "ң": "ñ", "Ң": "Ñ",
+        "л": "l", "Л": "L", "м": "m", "М": "M",
+        "һ": "h", "Һ": "H", "о": "o", "О": "O",
+        "у": "u", "У": "U", "ө": "ö", "Ө": "Ö",
+        "ү": "ü", "Ү": "Ü", "в": "v", "В": "V",
+        "е": "é", "Е": "É", "и": "i", "И": "I",
+        "й": "y", "Й": "Y", "қ": "q", "Қ": "Q",
+        "к": "k", "К": "K", "г": "g", "Г": "G",
+        "н": "n", "Н": "N", "ғ": "ğ", "Ғ": "Ğ",
+    },
+
+    # Uyghur CTS → Cyrillic (UCS)
+    "uig_CTS_to_Cyrl": {
+        "la": "ла", "La": "Ла",   # multi-char first
+        "ya": "я", "Ya": "Я", "yu": "ю", "Yu": "Ю",
+        "a": "а", "A": "А", "e": "ә", "E": "Ә",
+        "b": "б", "B": "Б", "p": "п", "P": "П",
+        "t": "т", "T": "Т", "c": "җ", "C": "Җ",
+        "ç": "ч", "Ç": "Ч", "x": "х", "X": "Х",
+        "d": "д", "D": "Д", "r": "р", "R": "Р",
+        "z": "з", "Z": "З", "j": "ж", "J": "Ж",
+        "s": "с", "S": "С", "ş": "ш", "Ş": "Ш",
+        "f": "ф", "F": "Ф", "ñ": "ң", "Ñ": "Ң",
+        "l": "л", "L": "Л", "m": "м", "M": "М",
+        "h": "һ", "H": "Һ", "o": "о", "O": "О",
+        "u": "у", "U": "У", "ö": "ө", "Ö": "Ө",
+        "ü": "ү", "Ü": "Ү", "v": "в", "V": "В",
+        "é": "е", "É": "Е", "i": "и", "I": "И",
+        "y": "й", "Y": "Й", "q": "қ", "Q": "Қ",
+        "k": "к", "K": "К", "g": "г", "G": "Г",
+        "n": "н", "N": "Н", "ğ": "ғ", "Ğ": "Ғ",
+    },
+
+    # Uyghur: placeholder entries for pairs handled by special methods
+    "uig_Arab_to_CTS": {},
+    "uig_CTS_to_Arab": {},
+    "uig_Arab_to_Cyrl": {},
+    "uig_Cyrl_to_Arab": {},
+    "uig_Latn_to_Cyrl": {},
+    "uig_Cyrl_to_Latn": {},
+    "uig_Latn_to_CTS": {},
+    "uig_CTS_to_Latn": {},
+
+    # Bashkir Cyrillic → CTS
+    "bak_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "j", "Ж": "J",   # Bashkir ж = /ʒ/
+        "ц": "ts", "Ц": "Ts",
+        "ä": "ä", "Ä": "Ä",   # Bashkir ä (a with breve in some fonts)
+        "ă": "ä", "Ă": "Ä",   # alternative Bashkir reduced a
+        "ö": "ö", "Ö": "Ö",
+        "ü": "ü", "Ü": "Ü",
+        "ҙ": "đ", "Ҙ": "Đ",   # Bashkir /ð/ → CTS Ź (written Đ in Bashkir CTS)
+        "ҫ": "ŧ", "Ҫ": "Ŧ",   # Bashkir /θ/ → CTS Ś (written Ŧ in Bashkir CTS)
+        "ғ": "ğ", "Ғ": "Ğ", "қ": "q", "Қ": "Q",
+        "ң": "ñ", "Ң": "Ñ", "ő": "ö", "Ő": "Ö",
+        "ҡ": "q", "Ҡ": "Q",   # Bashkir q
+        "в": "v", "В": "V",   # Bashkir В = /v/ (has both V and W per CTA)
+        "а": "a", "А": "A", "б": "b", "Б": "B", "г": "g", "Г": "G",
+        "д": "d", "Д": "D", "е": "e", "Е": "E", "ё": "yo", "Ё": "Yo",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "ы": "ı", "Ы": "I", "э": "e", "Э": "E",
+        "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya", "ъ": "", "ь": "",
+        "ү": "ü", "Ү": "Ü",
+    },
+
+    # Crimean Tatar Latin → CTS (already very close)
+    "crh_Latn_to_CTS": {
+        "ts": "ts", "Ts": "Ts",
+        "ğ": "ğ", "Ğ": "Ğ", "q": "q", "Q": "Q",
+        "ñ": "ñ", "Ñ": "Ñ", "c": "c", "C": "C",
+        "ç": "ç", "Ç": "Ç", "ş": "ş", "Ş": "Ş",
+        "İ": "İ", "i": "i", "ı": "ı", "I": "I",
+        "a": "a", "A": "A", "b": "b", "B": "B", "d": "d", "D": "D",
+        "e": "e", "E": "E", "f": "f", "F": "F", "g": "g", "G": "G",
+        "h": "h", "H": "H", "j": "j", "J": "J", "k": "k", "K": "K",
+        "l": "l", "L": "L", "m": "m", "M": "M", "n": "n", "N": "N",
+        "o": "o", "O": "O", "ö": "ö", "Ö": "Ö", "p": "p", "P": "P",
+        "r": "r", "R": "R", "s": "s", "S": "S", "t": "t", "T": "T",
+        "u": "u", "U": "U", "ü": "ü", "Ü": "Ü", "v": "v", "V": "V",
+        "y": "y", "Y": "Y", "z": "z", "Z": "Z",
+    },
+
+    # Crimean Tatar Cyrillic → CTS
+    "crh_Cyrl_to_CTS": {
+        "гъ": "ğ", "Гъ": "Ğ", "дж": "c", "Дж": "C",
+        "къ": "q", "Къ": "Q", "нъ": "ñ", "Нъ": "Ñ",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "j", "Ж": "J", "ц": "ts", "Ц": "Ts",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "h", "Х": "H",
+        "э": "e", "Э": "E", "ы": "ı", "Ы": "I", "ъ": "", "ь": "",
+        "ö": "ö", "Ö": "Ö", "ü": "ü", "Ü": "Ü",
+        "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+    },
+
+    # Chuvash Cyrillic → CTS
+    "chv_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "c", "Ж": "C", "ц": "ts", "Ц": "Ts",
+        "ă": "ä", "Ă": "Ä",   # Chuvash reduced a → ä
+        "ĕ": "e", "Ĕ": "E",   # Chuvash reduced e → e
+        "ҫ": "ş", "Ҫ": "Ş",   # Chuvash palatal sibilant → ş
+        "ӳ": "ü", "Ӳ": "Ü",   # Chuvash ü
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "ё": "yo", "Ё": "Yo", "з": "z", "З": "Z", "и": "i", "И": "İ",
+        "й": "y", "Й": "Y", "к": "k", "К": "K", "л": "l", "Л": "L",
+        "м": "m", "М": "M", "н": "n", "Н": "N", "о": "o", "О": "O",
+        "п": "p", "П": "P", "р": "r", "Р": "R", "с": "s", "С": "S",
+        "т": "t", "Т": "T", "у": "u", "У": "U", "ф": "f", "Ф": "F",
+        "х": "x", "Х": "X", "ы": "ı", "Ы": "I", "э": "e", "Э": "E",
+        "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya", "ъ": "", "ь": "",
+    },
+
+    # Sakha (Yakut) Cyrillic → CTS
+    "sah_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "c", "Ж": "C", "ц": "ts", "Ц": "Ts",
+        "ҕ": "ğ", "Ҕ": "Ğ",   # Sakha voiced uvular fricative
+        "ҥ": "ñ", "Ҥ": "Ñ",   # Sakha ng
+        "ө": "ö", "Ө": "Ö", "ү": "ü", "Ү": "Ü",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "ё": "yo", "Ё": "Yo", "з": "z", "З": "Z", "и": "i", "И": "İ",
+        "й": "y", "Й": "Y", "к": "k", "К": "K", "л": "l", "Л": "L",
+        "м": "m", "М": "M", "н": "n", "Н": "N", "о": "o", "О": "O",
+        "п": "p", "П": "P", "р": "r", "Р": "R", "с": "s", "С": "S",
+        "т": "t", "Т": "T", "у": "u", "У": "U", "ф": "f", "Ф": "F",
+        "х": "x", "Х": "X", "ы": "ı", "Ы": "I", "э": "e", "Э": "E",
+        "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya", "ъ": "", "ь": "",
+    },
+
+    # Karakalpak Latin → CTS
+    "kaa_Latn_to_CTS": {
+        "shch": "şç", "Shch": "Şç",
+        "sh": "ş", "Sh": "Ş", "SH": "Ş",
+        "ch": "ç", "Ch": "Ç", "CH": "Ç",
+        "ts": "ts", "Ts": "Ts",
+        "á": "ä", "Á": "Ä", "ǵ": "ğ", "Ǵ": "Ğ",
+        "ń": "ñ", "Ń": "Ñ", "ó": "ö", "Ó": "Ö",
+        "ú": "ü", "Ú": "Ü", "í": "ı", "Í": "I",
+        "q": "q", "Q": "Q", "h": "h", "H": "H",
+        "a": "a", "A": "A", "b": "b", "B": "B", "d": "d", "D": "D",
+        "e": "e", "E": "E", "f": "f", "F": "F", "g": "g", "G": "G",
+        "i": "i", "I": "İ", "j": "c", "J": "C", "k": "k", "K": "K",
+        "l": "l", "L": "L", "m": "m", "M": "M", "n": "n", "N": "N",
+        "o": "o", "O": "O", "p": "p", "P": "P", "r": "r", "R": "R",
+        "s": "s", "S": "S", "t": "t", "T": "T", "u": "u", "U": "U",
+        "v": "v", "V": "V", "w": "w", "W": "W", "x": "x", "X": "X",
+        "y": "y", "Y": "Y", "z": "z", "Z": "Z",
+    },
+
+    # Karakalpak Cyrillic → CTS
+    "kaa_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "c", "Ж": "C", "ц": "ts", "Ц": "Ts",
+        "ё": "yo", "Ё": "Yo", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ә": "ä", "Ә": "Ä", "ғ": "ğ", "Ғ": "Ğ", "қ": "q", "Қ": "Q",
+        "ң": "ñ", "Ң": "Ñ", "ө": "ö", "Ө": "Ö", "ү": "ü", "Ү": "Ü",
+        "ў": "w", "Ў": "W", "ҳ": "h", "Ҳ": "H",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "ы": "ı", "Ы": "I", "э": "e", "Э": "E", "ъ": "", "ь": "",
+    },
+
+    # Gagauz Latin → CTS
+    "gag_Latn_to_CTS": {
+        "ä": "ä", "Ä": "Ä", "ö": "ö", "Ö": "Ö", "ü": "ü", "Ü": "Ü",
+        "ş": "ş", "Ş": "Ş", "ç": "ç", "Ç": "Ç",
+        # Gagauz has no Ğ per CTA
+        "ţ": "ts", "Ţ": "Ts",   # Gagauz Ţ = /ts/ → CTS Ț
+        "İ": "İ", "i": "i", "ı": "ı", "I": "I",
+        "â": "a", "Â": "A",   # circumflex variants in Gagauz
+        "î": "i", "Î": "İ",
+        "û": "u", "Û": "U",
+        "a": "a", "A": "A", "b": "b", "B": "B", "c": "c", "C": "C",
+        "d": "d", "D": "D", "e": "e", "E": "E", "f": "f", "F": "F",
+        "g": "g", "G": "G", "h": "h", "H": "H", "j": "j", "J": "J",
+        "k": "k", "K": "K", "l": "l", "L": "L", "m": "m", "M": "M",
+        "n": "n", "N": "N", "o": "o", "O": "O", "p": "p", "P": "P",
+        "r": "r", "R": "R", "s": "s", "S": "S", "t": "t", "T": "T",
+        "u": "u", "U": "U", "v": "v", "V": "V", "y": "y", "Y": "Y",
+        "z": "z", "Z": "Z",
+    },
+
+    # Nogai Cyrillic → CTS
+    "nog_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "c", "Ж": "C", "ц": "ts", "Ц": "Ts",
+        "ё": "yo", "Ё": "Yo", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ä": "ä", "Ä": "Ä", "ö": "ö", "Ö": "Ö", "ü": "ü", "Ü": "Ü",
+        "ң": "ñ", "Ң": "Ñ", "ğ": "ğ", "Ğ": "Ğ", "қ": "q", "Қ": "Q",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "w", "В": "W",   # Nogai has W not V
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "ы": "ı", "Ы": "I", "э": "e", "Э": "E", "ъ": "", "ь": "",
+    },
+
+    # Kumyk Cyrillic → CTS
+    "kum_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "c", "Ж": "C", "ц": "ts", "Ц": "Ts",
+        "ё": "yo", "Ё": "Yo", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ä": "ä", "Ä": "Ä", "ö": "ö", "Ö": "Ö", "ü": "ü", "Ü": "Ü",
+        "ң": "ñ", "Ң": "Ñ", "ğ": "ğ", "Ğ": "Ğ", "қ": "q", "Қ": "Q",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "w", "В": "W",   # Kumyk has W not V
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "ы": "ı", "Ы": "I", "э": "e", "Э": "E", "ъ": "", "ь": "",
+    },
+
+    # Karachay-Balkar Cyrillic → CTS
+    "krc_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "c", "Ж": "C", "ц": "ts", "Ц": "Ts",
+        "ё": "yo", "Ё": "Yo", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ä": "ä", "Ä": "Ä", "ö": "ö", "Ö": "Ö", "ü": "ü", "Ü": "Ü",
+        "ң": "ñ", "Ң": "Ñ", "ğ": "ğ", "Ğ": "Ğ", "қ": "q", "Қ": "Q",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "ы": "ı", "Ы": "I", "э": "e", "Э": "E", "ъ": "", "ь": "",
+    },
+
+    # Altai Cyrillic → CTS
+    "alt_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "дж": "c", "Дж": "C",   # Altai /dʒ/ digraph
+        "ж": "j", "Ж": "J",     # Altai ж = /ʒ/
+        "ц": "ts", "Ц": "Ts",
+        "ё": "yo", "Ё": "Yo", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ӓ": "ä", "Ӓ": "Ä",   # Altai ä
+        "ӧ": "ö", "Ӧ": "Ö",   # Altai ö
+        "ӱ": "ü", "Ӱ": "Ü",   # Altai ü
+        "ҥ": "ñ", "Ҥ": "Ñ",   # Altai ng
+        "й": "y", "Й": "Y",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "к": "k", "К": "K",
+        "л": "l", "Л": "L", "м": "m", "М": "M", "н": "n", "Н": "N",
+        "о": "o", "О": "O", "п": "p", "П": "P", "р": "r", "Р": "R",
+        "с": "s", "С": "S", "т": "t", "Т": "T", "у": "u", "У": "U",
+        "ф": "f", "Ф": "F", "х": "x", "Х": "X", "ы": "ı", "Ы": "I",
+        "э": "e", "Э": "E", "ъ": "", "ь": "",
+    },
+
+    # Tuvan Cyrillic → CTS
+    "tyv_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "c", "Ж": "C", "ц": "ts", "Ц": "Ts",
+        "ё": "yo", "Ё": "Yo", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ө": "ö", "Ө": "Ö", "ү": "ü", "Ү": "Ü",
+        "ң": "ñ", "Ң": "Ñ",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "ы": "ı", "Ы": "I", "э": "e", "Э": "E", "ъ": "", "ь": "",
+    },
+
+    # Khakas Cyrillic → CTS
+    "kjh_Cyrl_to_CTS": {
+        "щ": "şç", "Щ": "Şç",
+        "ш": "ş", "Ш": "Ş", "ч": "ç", "Ч": "Ç",
+        "ж": "c", "Ж": "C", "ц": "ts", "Ц": "Ts",
+        "ё": "yo", "Ё": "Yo", "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya",
+        "ӧ": "ö", "Ӧ": "Ö",   # Khakas ö
+        "ӱ": "ü", "Ӱ": "Ü",   # Khakas ü
+        "ң": "ñ", "Ң": "Ñ",
+        "ғ": "ğ", "Ғ": "Ğ",
+        "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+        "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+        "з": "z", "З": "Z", "и": "i", "И": "İ", "й": "y", "Й": "Y",
+        "к": "k", "К": "K", "л": "l", "Л": "L", "м": "m", "М": "M",
+        "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+        "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+        "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+        "ы": "ı", "Ы": "I", "э": "e", "Э": "E", "ъ": "", "ь": "",
+    },
+
+    # Ottoman Turkish Latin (academic) → CTS
+    "ota_Latn_to_CTS": {
+        "ch": "ç", "Ch": "Ç", "CH": "Ç",
+        "sh": "ş", "Sh": "Ş", "SH": "Ş",
+        "gh": "ğ", "Gh": "Ğ", "GH": "Ğ",
+        "ç": "ç", "Ç": "Ç", "ş": "ş", "Ş": "Ş",
+        "ğ": "ğ", "Ğ": "Ğ", "ö": "ö", "Ö": "Ö",
+        "ü": "ü", "Ü": "Ü", "ı": "ı", "İ": "İ", "i": "i",
+        "a": "a", "A": "A", "b": "b", "B": "B", "c": "c", "C": "C",
+        "d": "d", "D": "D", "e": "e", "E": "E", "f": "f", "F": "F",
+        "g": "g", "G": "G", "h": "h", "H": "H", "j": "j", "J": "J",
+        "k": "k", "K": "K", "l": "l", "L": "L", "m": "m", "M": "M",
+        "n": "n", "N": "N", "o": "o", "O": "O", "p": "p", "P": "P",
+        "r": "r", "R": "R", "s": "s", "S": "S", "t": "t", "T": "T",
+        "u": "u", "U": "U", "v": "v", "V": "V", "y": "y", "Y": "Y",
+        "z": "z", "Z": "Z",
+    },
+
+    # Khalaj Latin → CTS (klj; Khalaj is an archaic Turkic language)
+    "klj_Latn_to_CTS": {
+        "ä": "ä", "Ä": "Ä", "ö": "ö", "Ö": "Ö", "ü": "ü", "Ü": "Ü",
+        "ş": "ş", "Ş": "Ş", "ç": "ç", "Ç": "Ç", "ğ": "ğ", "Ğ": "Ğ",
+        "ñ": "ñ", "Ñ": "Ñ", "q": "q", "Q": "Q", "x": "x", "X": "X",
+        "İ": "İ", "i": "i", "ı": "ı", "I": "I",
+        "a": "a", "A": "A", "b": "b", "B": "B", "c": "c", "C": "C",
+        "d": "d", "D": "D", "e": "e", "E": "E", "f": "f", "F": "F",
+        "g": "g", "G": "G", "h": "h", "H": "H", "j": "j", "J": "J",
+        "k": "k", "K": "K", "l": "l", "L": "L", "m": "m", "M": "M",
+        "n": "n", "N": "N", "o": "o", "O": "O", "p": "p", "P": "P",
+        "r": "r", "R": "R", "s": "s", "S": "S", "t": "t", "T": "T",
+        "u": "u", "U": "U", "v": "v", "V": "V", "y": "y", "Y": "Y",
+        "z": "z", "Z": "Z",
     },
 }

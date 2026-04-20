@@ -34,6 +34,7 @@ classifiers = [
 
 dependencies = [
     "numpy>=1.24",
+    "regex>=2022.1.18",
 ]
 
 [project.optional-dependencies]

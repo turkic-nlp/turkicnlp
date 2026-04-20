@@ -285,6 +285,33 @@ print(t.transliterate("Татарстан Республикасы"))
 # → Tatarstan Respublikası
 ```
 
+#### Common Turkic Script (CTS)
+
+All 21 supported languages can be converted to the [Common Turkic Alphabet](https://en.wikipedia.org/wiki/Common_Turkic_alphabet) — a unified (34 letters) Latin-based script designed for cross-language interoperability across the Turkic family. Turkish, which already uses a CTS-compatible alphabet, converts with no changes to most letters:
+
+```python
+from turkicnlp.scripts import Script
+from turkicnlp.scripts.transliterator import Transliterator
+
+# Turkish Latin → CTS (near-identical alphabets)
+t = Transliterator("tur", Script.LATIN, Script.COMMON_TURKIC)
+print(t.transliterate("Türkçe güzel bir dil"))
+# → Türkçe güzel bir dil
+
+# Other languages gain a shared representation
+t = Transliterator("kaz", Script.CYRILLIC, Script.COMMON_TURKIC)
+print(t.transliterate("Қазақстан"))
+# → Qazaqstan
+
+t = Transliterator("aze", Script.LATIN, Script.COMMON_TURKIC)
+print(t.transliterate("Azərbaycan dili"))
+# → Azärbaycan dili
+
+t = Transliterator("tuk", Script.LATIN, Script.COMMON_TURKIC)
+print(t.transliterate("Türkmen dili baýdyr"))
+# → Türkmen dili baydır
+```
+
 #### Old Turkic Runic Script
 
 TurkicNLP supports transliteration of [Old Turkic runic inscriptions](https://en.wikipedia.org/wiki/Old_Turkic_script) (Orkhon-Yenisei script, Unicode block U+10C00–U+10C4F) to Latin:
@@ -786,6 +813,19 @@ TurkicNLP embeddings backend uses encoder pooling on:
 Reference:
 > NLLB Team, Marta R. Costa-jussà, et al. 2022. *No Language Left Behind: Scaling Human-Centered Machine Translation*. [[paper]](https://arxiv.org/abs/2207.04672)
 
+### Common Turkic Alphabet
+
+> [Common Turkic Alphabet](https://en.wikipedia.org/wiki/Common_Turkic_alphabet)
+
+
+### Uyghur Transliteration
+
+> [Uyghur-Multi-Script-Converter](https://github.com/neouyghur/Uyghur-Multi-Script-Converter)
+
+Reference:
+> Osman, T. Uyghur Multi-Script Converter (Version 1.0) [Computer software]
+
+
 ### Other Organisations
 
 - [Apertium](https://apertium.org/) — morphological transducers covering 20+ Turkic languages
@@ -795,3 +835,5 @@ Reference:
 - [Turkic Interlingua](https://github.com/turkic-interlingua) — resources for machine translation for Turkic languages
 - [Turkic UD](https://github.com/ud-turkic) - group working on harmonizing Turkic UD treebanks
 - [TurkLang](https://web.archive.org/web/20260117063647/https://turklang.ieees.org/) - Conference on Computer Processing of Turkic Languages (2013-present)
+- [Turkic Academy](https://turkicacademy.org/en) - facilitates and encourages scientific and educational cooperation among Turkic countries and communities.
+- [Organization of Turkic States](https://turkicstates.org/en) - primary objective is to foster comprehensive cooperation among Turkic States
