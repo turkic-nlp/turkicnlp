@@ -42,6 +42,12 @@ If you use TurkicNLP in your research, please cite:
 ## Code samples
 [Jupyter notebooks are here](https://github.com/turkic-nlp/turkic-nlp-code-samples)
 
+## Discord Channel
+[TurkicNLP discord](https://discord.gg/EMzAY8kE)
+
+## Datasets & Models
+[🤗 HuggingFace](https://huggingface.co/turkicnlp)
+
 ## Features
 
 - **24 Turkic languages** from Turkish to Sakha, Kazakh to Uyghur
