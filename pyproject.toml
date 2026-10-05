@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "turkicnlp"
-version = "0.3.0"
+version = "0.4.0"
 description = "NLP toolkit for Turkic languages"
 readme = "README.md"
 license = "Apache-2.0"
@@ -15,7 +15,7 @@ authors = [
 keywords = [
     "nlp", "toolkit", "turkic", "kazakh", "turkish", "turkmen", "uzbek", "azerbaijani",
     "kyrgyz", "tatar", "uyghur", "stanza", "linguistics",
-    "morphology", "pos-tagging", "dependency-parsing", "ner", "machine-translation", "embeddings"
+    "morphology", "pos-tagging", "dependency-parsing", "asr", "ner", "machine-translation", "embeddings"
 ]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
@@ -42,7 +42,9 @@ hfst = [
     "hfst>=3.12.0.2b0",
 ]
 stanza = [
-    "stanza>=1.8",
+    # The custom Stanza models (aze, uzb, tuk, tat, bak) were trained with
+    # Stanza 1.11; Stanza 1.15 fails to load their parsers (deprel size mismatch).
+    "stanza>=1.8,<1.12",
 ]
 lid = [
     "fasttext-wheel>=0.9",
@@ -52,20 +54,31 @@ translation = [
     "torch>=2.0",
     "transformers>=4.30",
     "tokenizers>=0.13",
+    "sentencepiece>=0.1.99",
+]
+asr = [
+    "omnilingual-asr>=0.2; python_version >= '3.10' and python_version < '3.13'",
+    "soundfile>=0.12",
+    # omnilingual-asr pins torch 2.8 (fairseq2 0.6) but not torchaudio; a newer
+    # torchaudio fails to load against torch 2.8.
+    "torchaudio>=2.8,<2.9; python_version >= '3.10' and python_version < '3.13'",
 ]
 transformers = [
     "torch>=2.0",
     "transformers>=4.30",
     "tokenizers>=0.13",
+    # Needed to build the Glot500 (XLM-R) tokenizer with transformers 4.x
+    "sentencepiece>=0.1.99",
 ]
 all = [
     "hfst>=3.12.0.2b0",
-    "stanza>=1.8",
+    "stanza>=1.8,<1.12",
     "fasttext-wheel>=0.9",
     "huggingface_hub>=0.20",
     "torch>=2.0",
     "transformers>=4.30",
     "tokenizers>=0.13",
+    "sentencepiece>=0.1.99",
 ]
 dev = [
     "pytest>=7.0",

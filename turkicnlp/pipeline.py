@@ -18,6 +18,7 @@ from turkicnlp.scripts.transliterator import Transliterator
 
 # Canonical processor execution order
 PROCESSOR_ORDER: list[str] = [
+    "asr",
     "script_detect",
     "transliterate",
     "tokenize",
@@ -72,6 +73,7 @@ class Pipeline:
         self._requested_processors = processors
         self._processor_configs = processor_configs
         self._autoload = processors is not None
+        self._asr = None  # SpeechRecognizer, created on first from_audio()
 
         if script is None or script == "auto":
             self._script: Optional[Script] = None
@@ -134,7 +136,8 @@ class Pipeline:
         resolved = self._resolve_dependencies(requested)
 
         for proc_name in resolved:
-            if proc_name in ("script_detect", "transliterate", "transliterate_back"):
+            if proc_name in ("script_detect", "transliterate", "transliterate_back", "asr"):
+                # "asr" runs before the text pipeline, see from_audio()
                 continue
 
             backend_key = f"{proc_name}_backend"
@@ -288,6 +291,64 @@ class Pipeline:
             doc.script = str(self._script or detect_script(original_text))
 
         return doc
+
+    def _get_asr(self):
+        """Create the speech recognizer from ``asr_*`` pipeline options."""
+        if self._asr is None:
+            from turkicnlp.asr import DEFAULT_MODEL_CARD, DEFAULT_SEGMENT_SECONDS, SpeechRecognizer
+
+            cfg = self._processor_configs
+            device = cfg.get("asr_device")
+            if device is None and self.use_gpu:
+                device = "cuda"
+            self._asr = SpeechRecognizer(
+                lang=str(cfg.get("asr_lang", self.lang)),
+                model_card=str(cfg.get("asr_model_card", DEFAULT_MODEL_CARD)),
+                script=str(self._script or self._script_config.primary),
+                device=device,
+                dtype=str(cfg.get("asr_dtype", "auto")),
+                batch_size=int(cfg.get("asr_batch_size", 2)),
+                max_segment_seconds=float(
+                    cfg.get("asr_max_segment_seconds", DEFAULT_SEGMENT_SECONDS)
+                ),
+            )
+        return self._asr
+
+    def from_audio(self, audio, sample_rate: Optional[int] = None):
+        """Transcribe speech and run the text processors on the transcript.
+
+        The transcript is produced in the pipeline's input script (``script``
+        or the language's primary script) by Omnilingual ASR
+        (:class:`turkicnlp.asr.SpeechRecognizer`), then processed exactly like
+        text passed to :meth:`__call__`. Options are passed with the ``asr_``
+        prefix, e.g. ``Pipeline("kaz", processors=["asr", "pos"],
+        asr_model_card="omniASR_LLM_300M", asr_device="cpu")``.
+
+        Args:
+            audio: An audio file path, encoded bytes, a waveform array (with
+                ``sample_rate``), a dict with ``waveform``/``sample_rate``,
+                or a list of these.
+            sample_rate: Sample rate of raw waveform arrays.
+
+        Returns:
+            A :class:`Document` (or a list for list input) whose
+            ``audio_segments`` hold the time-aligned segment transcripts.
+        """
+        single = not isinstance(audio, (list, tuple))
+        results = self._get_asr().transcribe(
+            [audio] if single else list(audio),
+            sample_rate=sample_rate,
+            return_details=True,
+        )
+        docs = []
+        for res in results:
+            doc = self(res.text)
+            doc.audio_segments = [
+                {"start": s.start, "end": s.end, "text": s.text} for s in res.segments
+            ]
+            doc._processor_log.insert(0, f"asr:omniasr:{self._asr.model_card}:{res.model_lang}")
+            docs.append(doc)
+        return docs[0] if single else docs
 
     def batch(self, texts: list[str], batch_size: int = 32) -> list[Document]:
         """Process multiple texts.

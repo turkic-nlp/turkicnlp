@@ -57,6 +57,7 @@ If you use TurkicNLP in your research, please cite:
 - **Stanza/UD integration** — pretrained tokenization, POS tagging, lemmatization, dependency parsing, and NER via [Stanza](https://stanfordnlp.github.io/stanza/) models trained on [Universal Dependencies](https://universaldependencies.org/) treebanks
 - **NLLB embeddings + translation backend** — sentence/document vectors and MT via [NLLB-200](https://huggingface.co/facebook/nllb-200-distilled-600M)
 - **Language identification (`LanguageDetection`, GlotLID model)** — FastText-based LID with 1,000+ Glottolog language labels
+- **Speech recognition (`SpeechRecognizer`)** — speech-to-text for 20 Turkic languages via Meta's [Omnilingual ASR](https://github.com/facebookresearch/omnilingual-asr), with output in TurkicNLP scripts and a speech → text → analysis pipeline
 - **Multilingual Glot500 neural models** — POS tagging & dependency parsing (15 languages), morphological analysis & lemmatization (23 languages) via shared [Glot500](https://github.com/cisnlp/Glot500) backbone
 - **Multiple backends** — choose between rule-based, Apertium FST, Stanza, or Glot500 neural backends per processor
 - **License isolation** — library is Apache-2.0; Apertium GPL-3.0 data downloaded separately
@@ -64,17 +65,122 @@ If you use TurkicNLP in your research, please cite:
 
 ## Installation
 
-**Requirements:** Python 3.9, 3.10, 3.11, or 3.12
+**Requirements:** Python 3.9 – 3.12 (speech recognition: Python 3.10 – 3.12)
+
+TurkicNLP has a small core and optional extras for each group of components:
 
 ```bash
-pip install turkicnlp                    # core — tokenization, rule-based processing, CoNLL-U I/O
+pip install turkicnlp                    # core — tokenization, rule-based processing, transliteration, CoNLL-U I/O
 pip install "turkicnlp[hfst]"           # + Apertium FST morphology (Linux and macOS only)
 pip install "turkicnlp[stanza]"         # + Stanza neural models (tokenize, POS, lemma, depparse, NER)
 pip install "turkicnlp[lid]"            # + Language detection (GlotLID model; FastText + HF weights)
 pip install "turkicnlp[translation]"    # + NLLB embeddings and machine translation
-pip install "turkicnlp[transformers]"    # + Glot500 multilingual POS/DepParse/Morph models
-pip install "turkicnlp[all]"            # everything above (Linux and macOS only)
+pip install "turkicnlp[transformers]"   # + Glot500 multilingual POS/DepParse/Morph models
+pip install "turkicnlp[all]"            # all text components above (Linux and macOS only)
+pip install "turkicnlp[asr]"            # + speech recognition (Omnilingual ASR) — see below, use a separate environment
 pip install "turkicnlp[dev]"            # development tools (pytest, black, ruff, mypy)
+```
+
+### Choosing an environment: text-only vs. speech + text
+
+Speech recognition is built on [`omnilingual-asr`](https://github.com/facebookresearch/omnilingual-asr), whose
+dependency `fairseq2` pins `torch==2.8`, `numpy<2` and `huggingface_hub<1`, and therefore `transformers` 4.x.
+All other TurkicNLP components also work with these versions, so there are two tested setups:
+
+| | Text environment | Speech + text environment |
+|---|---|---|
+| Extras | `[all]` | `[all,asr]` |
+| Use it for | all text components | speech recognition **and** all text components |
+| Python | 3.9 – 3.12 | 3.10 – 3.12 |
+| torch / torchaudio | 2.10 / – | 2.8 / 2.8 |
+| numpy | 2.x | 1.26 |
+| transformers / huggingface_hub | 5.x / 1.x | 4.57 / 0.36 |
+| stanza | 1.11 | 1.11 |
+| Exact versions | [`requirements/lock-text.txt`](requirements/lock-text.txt) | [`requirements/lock-speech.txt`](requirements/lock-speech.txt) |
+
+> ⚠️ Do not add `[asr]` to an existing text environment: it downgrades torch, numpy and huggingface_hub,
+> which breaks `transformers` 5.x. Create a fresh environment instead.
+
+#### Text environment
+
+```bash
+python3 -m venv venv
+source venv/bin/activate              # Windows: venv\Scripts\activate
+pip install --upgrade pip
+pip install "turkicnlp[all]"          # from PyPI
+# or, from a clone of this repository:
+pip install -e ".[all]"
+```
+
+#### Speech + text environment
+
+System requirements: `libsndfile` and a C++ compiler with CMake (`kenlm`, a dependency of `omnilingual-asr`, is compiled from source).
+
+```bash
+# macOS
+brew install libsndfile cmake
+# Ubuntu / Debian
+sudo apt-get install libsndfile1 cmake build-essential
+
+python3.10 -m venv venv-asr
+source venv-asr/bin/activate
+pip install --upgrade pip
+pip install "turkicnlp[all,asr]"      # from PyPI (from the first release that includes ASR)
+# or, from a clone of this repository:
+pip install -e ".[all,asr]"
+```
+
+#### Reproducing the tested versions
+
+The lock files pin every package of the two tested environments (Python 3.10, macOS arm64):
+
+```bash
+pip install -r requirements/lock-text.txt   && pip install -e .   # text environment
+pip install -r requirements/lock-speech.txt && pip install -e .   # speech + text environment
+```
+
+#### Version constraints and known issues
+
+- **Stanza < 1.12.** The custom Azerbaijani, Uzbek, Turkmen, Tatar and Bashkir Stanza models were trained with Stanza 1.11;
+  Stanza 1.15 fails to load their parsers (`size mismatch for deprel.scorer`). The extras enforce `stanza>=1.8,<1.12`.
+- **sentencepiece** is needed to build the Glot500 (XLM-R) tokenizer with `transformers` 4.x; it is included in the
+  `[transformers]`, `[translation]` and `[all]` extras.
+- **torchaudio 2.8.** `omnilingual-asr` does not pin torchaudio; newer versions fail to load against torch 2.8
+  (`Symbol not found: _torch_library_impl`). The `[asr]` extra pins `torchaudio>=2.8,<2.9`.
+- **`kenlm` build fails on macOS with `'climits' file not found`.** A stale
+  `/Library/Developer/CommandLineTools/usr/include/c++/v1` left by an old Command Line Tools install shadows the SDK's C++ headers.
+  Either remove it once:
+  ```bash
+  sudo mv /Library/Developer/CommandLineTools/usr/include/c++ /Library/Developer/CommandLineTools/usr/include/c++.old
+  ```
+  or point the compiler at the SDK headers for the install:
+  ```bash
+  export CXXFLAGS="-nostdinc++ -isystem $(xcrun --show-sdk-path)/usr/include/c++/v1"
+  export CMAKE_POLICY_VERSION_MINIMUM=3.5      # kenlm's CMakeLists predates CMake 4
+  pip install -e ".[all,asr]"
+  ```
+- **Memory for speech recognition.** `omniASR_LLM_1B` (9 GB checkpoint) runs in about 6 GB of RAM with the default
+  low-memory loading (memory-mapped checkpoint, bfloat16 weights). For smaller machines use `omniASR_LLM_300M`
+  or a CTC model (`omniASR_CTC_300M`, 1.3 GB).
+
+### Verify the installation
+
+```python
+import turkicnlp
+
+# Core (no downloads)
+from turkicnlp.scripts import Script
+from turkicnlp.scripts.transliterator import Transliterator
+print(Transliterator("kaz", Script.CYRILLIC, Script.LATIN).transliterate("Қазақстан"))   # Qazaqstan
+
+# Text components (downloads models on first use)
+nlp = turkicnlp.Pipeline("kaz", processors=["tokenize", "pos", "lemma", "depparse"])
+doc = nlp("Мен мектепке бардым.")
+print([(w.text, w.upos, w.lemma) for w in doc.words])
+# [('Мен', 'PRON', 'мен'), ('мектепке', 'NOUN', 'мектеп'), ('бардым', 'VERB', 'бар'), ('.', 'PUNCT', '.')]
+
+# Speech environment only
+print(turkicnlp.list_asr_languages(check_model=True))   # {'tur': {'Latn': 'tur_Latn'}, 'aze': {...}, ...}
 ```
 
 ### Platform compatibility
@@ -90,6 +196,7 @@ Installation tests run nightly across all combinations of OS, Python version, an
 | `[transformers]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
 | `[translation]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 |
 | `[all]` | ✅ 3.9 – 3.12 | ✅ 3.9 – 3.12 | ❌ not available |
+| `[asr]` | not yet in CI | ✅ 3.10 (manually tested) | not tested |
 
 > **Windows users:** the `hfst` Python package has no published wheels for Python 3.7 or later on Windows — this is an upstream limitation with no current workaround. All features except Apertium FST morphology work normally on Windows; use `turkicnlp[stanza]` or `turkicnlp[translation]` instead. If you need Apertium FST morphology on Windows, the recommended approach is [Windows Subsystem for Linux (WSL)](https://wiki.apertium.org/wiki/Apertium_on_Windows), where `hfst` installs normally.
 
@@ -158,6 +265,153 @@ limited = turkicnlp.LanguageDetection(
 )
 print(limited.predict("Merhaba dünya!", k=1))
 ```
+
+### Speech Recognition (Omnilingual ASR)
+
+`SpeechRecognizer` wraps Meta's [Omnilingual ASR](https://github.com/facebookresearch/omnilingual-asr) models
+([`omniASR_LLM_1B`](https://huggingface.co/facebook/omniASR-LLM-1B) by default) behind TurkicNLP conventions:
+
+- languages are given as TurkicNLP ISO 639-3 codes (`kaz`, `uzb`, …) and mapped to Omnilingual codes (`kaz_Cyrl`, `uzn_Latn`, …);
+- only the 20 Turkic languages below are accepted; each code is checked against the model's `supported_langs`,
+  and non-Turkic languages (`eng`, `rus`, …) are rejected;
+- transcripts are returned in the language's primary TurkicNLP script (or the one you request), using the toolkit's
+  transliterator where the model writes another script;
+- recordings longer than the model's 40-second limit are split at pauses and the pieces are transcribed and joined;
+- the model is loaded once and shared by all languages; by default it is loaded memory-mapped in bfloat16 (≈ 6 GB RAM).
+
+Requires the [speech + text environment](#speech--text-environment). The model weights are downloaded on first use
+(9.1 GB for `omniASR_LLM_1B`) and cached in `~/.cache/fairseq2/assets/`.
+
+#### Transcribe audio files
+
+```python
+import turkicnlp
+
+asr = turkicnlp.SpeechRecognizer(
+    model_card="omniASR_LLM_1B",   # default; see the model table below
+    device="cpu",                  # default: "cuda" if available, else "cpu"
+    dtype="bfloat16",              # default ("auto"): bfloat16, or float16 on Apple "mps"
+    low_memory=True,               # default: memory-map the checkpoint while loading
+)
+
+files = ["asr_samples/kaz_sample.wav", "asr_samples/tur_sample.wav"]
+texts = asr.transcribe(files, lang=["kaz", "tur"], batch_size=2)
+print(texts)
+# ['мен бүгін мектепке бардым алматы қазақстанның ең үлкен қаласы',
+#  "bugün hava çok güzel ali dün ankara'ya gitti"]
+```
+
+The interface mirrors Omnilingual ASR's `ASRInferencePipeline.transcribe(audio_files, lang=..., batch_size=...)`;
+`lang` is one code for all inputs or a list with one code per input. A single input returns a string, a list returns a list.
+
+#### Segments, details and output script
+
+```python
+res = asr.transcribe("asr_samples/kaz_sample.wav", lang="kaz", return_details=True)
+print(res.lang, res.model_lang, res.script)   # kaz kaz_Cyrl Cyrl
+print(res.text)
+for seg in res.segments:                      # time-aligned pieces (long audio is split at pauses)
+    print(f"[{seg.start:.2f}-{seg.end:.2f}] {seg.text}")
+
+# Ask for another script: Kazakh in the 2021 Latin alphabet
+print(asr.transcribe("asr_samples/kaz_sample.wav", lang="kaz", script="Latn"))
+# men bügın mektepke bardym almaty qazaqstannyñ eñ ülken qalasy
+
+# The model writes Karakalpak and Crimean Tatar in Cyrillic; TurkicNLP returns their primary Latin script
+res = asr.transcribe("kaa_audio.wav", lang="kaa", return_details=True)
+print(res.model_text)   # Cyrillic, as produced by the model
+print(res.text)         # Latin (2016 Karakalpak alphabet)
+```
+
+#### Other input types
+
+```python
+import soundfile as sf
+
+wav, sr = sf.read("asr_samples/tur_sample.wav")
+asr.transcribe(wav, lang="tur", sample_rate=sr)                         # waveform array
+asr.transcribe({"waveform": wav, "sample_rate": sr}, lang="tur")        # dict
+asr.transcribe(open("asr_samples/tur_sample.wav", "rb").read(), lang="tur")   # encoded bytes
+
+# Hugging Face datasets audio columns work directly
+# from datasets import load_dataset
+# ds = load_dataset(..., split="test")
+# asr.transcribe(list(ds["audio"][:8]), lang="kir", batch_size=4)
+```
+
+Stereo audio is converted to mono and resampled to 16 kHz automatically.
+
+#### Speech → text → analysis
+
+```python
+nlp = turkicnlp.Pipeline(
+    "kaz",
+    processors=["asr", "tokenize", "pos", "lemma", "depparse"],
+    asr_model_card="omniASR_LLM_1B",   # asr_* options configure the recognizer
+    asr_device="cpu",                  # also: asr_dtype, asr_batch_size, asr_max_segment_seconds
+)
+doc = nlp.from_audio("asr_samples/kaz_sample.wav")
+print(doc.text)
+print(doc.audio_segments)              # [{'start': 0.0, 'end': 4.86, 'text': '...'}]
+for w in doc.words:
+    print(w.text, w.upos, w.lemma, w.head, w.deprel)
+```
+
+Omnilingual ASR outputs lowercase text without punctuation, so tagging and parsing quality on transcripts can be lower
+than on edited text.
+
+#### Command line
+
+```bash
+python run_asr.py asr_samples/kaz_sample.wav asr_samples/tur_sample.wav --lang kaz tur --device cpu
+python run_asr.py lecture.wav --lang tat --model omniASR_LLM_300M      # smaller model
+python run_asr.py interview.wav --lang uzb --script Cyrl --analyze      # + tokenize/POS/depparse
+```
+
+`asr_samples/` contains two short synthetic test recordings (Kazakh and Turkish).
+
+#### Models and memory
+
+Any Omnilingual ASR model card can be passed as `model_card`:
+
+| Model card | Checkpoint | Notes |
+|---|---|---|
+| `omniASR_LLM_300M` | 6.5 GB | smallest LLM model |
+| `omniASR_LLM_1B` (default) | 9.1 GB | ≈ 6 GB RAM with low-memory loading (tested on a 16 GB MacBook) |
+| `omniASR_LLM_3B` | 17.5 GB | GPU recommended |
+| `omniASR_LLM_7B` | 31.2 GB | best quality; GPU required in practice |
+| `omniASR_CTC_300M` / `_1B` / `_3B` | 1.3 / 3.9 / 12.3 GB | faster, no language conditioning (the language code is ignored) |
+
+If the process is killed for lack of memory, keep `low_memory=True` and `dtype="bfloat16"` (the defaults) or use a smaller model.
+`dtype="float32"` doubles the memory needed.
+
+#### Supported languages
+
+| Language | Code | Omnilingual code(s) | Output script |
+|---|---|---|---|
+| Turkish | `tur` | `tur_Latn` | Latin |
+| Azerbaijani | `aze` | `aze_Latn`, `aze_Cyrl` | Latin |
+| South Azerbaijani | `azb` | `aze_Arab` | Perso-Arabic |
+| Turkmen | `tuk` | `tuk_Latn` | Latin |
+| Gagauz | `gag` | `gag_Latn` | Latin |
+| Kazakh | `kaz` | `kaz_Cyrl` | Cyrillic (Latin via transliteration) |
+| Kyrgyz | `kir` | `kir_Cyrl` | Cyrillic |
+| Tatar | `tat` | `tat_Cyrl` | Cyrillic (Latin via transliteration) |
+| Bashkir | `bak` | `bak_Cyrl` | Cyrillic |
+| Crimean Tatar | `crh` | `crh_Cyrl` | Latin (transliterated) |
+| Karakalpak | `kaa` | `kaa_Cyrl` | Latin (transliterated) |
+| Nogai | `nog` | `nog_Cyrl` | Cyrillic |
+| Kumyk | `kum` | `kum_Cyrl` | Cyrillic |
+| Karachay-Balkar | `krc` | `krc_Cyrl` | Cyrillic |
+| Uzbek | `uzb` | `uzn_Latn`, `uzb_Cyrl` | Latin |
+| Uyghur | `uig` | `uig_Arab`, `uig_Cyrl` | Perso-Arabic |
+| Sakha | `sah` | `sah_Cyrl` | Cyrillic |
+| Altai | `alt` | `alt_Cyrl` | Cyrillic |
+| Khakas | `kjh` | `kjh_Cyrl` | Cyrillic |
+| Chuvash | `chv` | `chv_Cyrl` | Cyrillic |
+
+Not available: Tuvan, Khalaj, Ottoman Turkish and Old Turkic (no Omnilingual language code).
+`turkicnlp.list_asr_languages(check_model=True)` lists the codes supported by the installed model.
 
 ### Machine Translation (NLLB)
 
@@ -708,6 +962,7 @@ Pipeline("azb", processors=["embeddings", "translate"], translate_tgt_lang="eng"
 ```
 
 Notes:
+- Omnilingual ASR checkpoints are managed by fairseq2 and cached in `~/.cache/fairseq2/assets/`.
 - NLLB embeddings and translation use a shared Hugging Face model under `~/.turkicnlp/models/huggingface/`.
 - The NLLB model is downloaded once and reused across supported Turkic languages.
 - The Glot500 backbone is shared between the POS/DepParse and Morph analyzer models under `~/.turkicnlp/models/huggingface/`.
@@ -718,6 +973,7 @@ Notes:
 - **Library code**: [Apache License 2.0](LICENSE)
 - **Stanza models**: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) — managed by Stanza's own download mechanism
 - **Apertium FST data**: [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html) — downloaded separately at runtime, never bundled in the pip package
+- **Omnilingual ASR models and code**: [Apache License 2.0](https://github.com/facebookresearch/omnilingual-asr/blob/main/LICENSE) — downloaded by fairseq2 at runtime
 - **NLLB-200 model weights/tokenizer**: [CC-BY-NC-4.0](https://creativecommons.org/licenses/by-nc/4.0/) — downloaded from Hugging Face at runtime and reused from `~/.turkicnlp/models/huggingface/` (non-commercial license terms apply)
 
 ## Development
@@ -726,7 +982,11 @@ Notes:
 git clone https://github.com/turkic-nlp/turkicnlp.git
 cd turkicnlp
 pip install -e ".[dev]"
-pytest
+python -m pytest        # "python -m" guarantees the pytest of the active environment
+
+# Speech recognition tests run without the model (the backend is mocked);
+# run the full suite in the speech + text environment as well:
+source venv-asr/bin/activate && pip install pytest && python -m pytest
 ```
 
 ## Contributing
@@ -818,6 +1078,15 @@ TurkicNLP embeddings backend uses encoder pooling on:
 
 Reference:
 > NLLB Team, Marta R. Costa-jussà, et al. 2022. *No Language Left Behind: Scaling Human-Centered Machine Translation*. [[paper]](https://arxiv.org/abs/2207.04672)
+
+### Omnilingual ASR
+
+Speech recognition uses Meta's Omnilingual ASR models:
+
+> [facebookresearch/omnilingual-asr](https://github.com/facebookresearch/omnilingual-asr), [facebook/omniASR-LLM-1B](https://huggingface.co/facebook/omniASR-LLM-1B)
+
+Reference:
+> Omnilingual ASR Team. 2025. *Omnilingual ASR: Open-Source Multilingual Speech Recognition for 1600+ Languages*.
 
 ### Common Turkic Alphabet
 

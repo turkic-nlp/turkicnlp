@@ -124,6 +124,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "tur_Latn",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -254,6 +268,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "kaz_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -407,6 +435,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "tat_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -570,6 +612,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "aze_Latn",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -618,6 +674,20 @@
             }
           },
           "default": "nllb"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "aze_Arab",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -738,6 +808,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "kir_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -881,6 +965,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "uzn_Latn",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1023,6 +1121,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "tuk_Latn",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1175,6 +1287,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "bak_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1296,6 +1422,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "uig_Arab",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1387,6 +1527,20 @@
             }
           },
           "default": "rule"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "crh_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Model output is Cyrl; transliterated to Latn by TurkicNLP."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1451,6 +1605,20 @@
             }
           },
           "default": "rule"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "chv_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1515,6 +1683,20 @@
             }
           },
           "default": "rule"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "gag_Latn",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1597,6 +1779,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "sah_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1680,6 +1876,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "kaa_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Model output is Cyrl; transliterated to Latn by TurkicNLP."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1762,6 +1972,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "nog_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1844,6 +2068,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "kum_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1926,6 +2164,20 @@
             }
           },
           "default": "multilingual_glot500_morph"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "krc_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -1990,6 +2242,20 @@
             }
           },
           "default": "rule"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "alt_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }
@@ -2118,6 +2384,20 @@
             }
           },
           "default": "rule"
+        },
+        "asr": {
+          "backends": {
+            "omniasr": {
+              "type": "omniasr",
+              "model_card": "omniASR_LLM_1B",
+              "lang_code": "kjh_Cyrl",
+              "license": "Apache-2.0",
+              "source": "https://github.com/facebookresearch/omnilingual-asr",
+              "quality": "beta",
+              "notes": "Weights downloaded by fairseq2 on first use (~/.cache/fairseq2/assets)."
+            }
+          },
+          "default": "omniasr"
         }
       }
     }

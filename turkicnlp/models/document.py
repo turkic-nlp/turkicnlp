@@ -188,6 +188,7 @@ class Document:
     lang: Optional[str] = None
     embedding: Optional[list[float]] = None
     translation: Optional[str] = None
+    audio_segments: Optional[list[dict]] = None
     _original_text: Optional[str] = field(default=None, repr=False)
 
     @property

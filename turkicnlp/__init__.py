@@ -29,6 +29,15 @@ except PackageNotFoundError:
 
 from turkicnlp.pipeline import Pipeline
 from turkicnlp.language_id import LanguageDetection
+from turkicnlp.asr import SpeechRecognizer, list_asr_languages
 from turkicnlp.resources.downloader import download, list_languages, list_processors
 
-__all__ = ["Pipeline", "LanguageDetection", "download", "list_languages", "list_processors"]
+__all__ = [
+    "Pipeline",
+    "LanguageDetection",
+    "SpeechRecognizer",
+    "list_asr_languages",
+    "download",
+    "list_languages",
+    "list_processors",
+]

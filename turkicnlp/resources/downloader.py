@@ -147,6 +147,10 @@ def download(
                             "Morph analyzer checkpoint not available: %s", exc
                         )
                     continue
+                elif backend_type == "omniasr":
+                    # Omnilingual ASR weights are fetched and cached by fairseq2
+                    # (~/.cache/fairseq2/assets) when the model is first loaded.
+                    continue
                 elif backend_type in ("rule", "builtin", "regex"):
                     # Built-in processors (e.g. rule tokenizers) have no external assets.
                     continue
