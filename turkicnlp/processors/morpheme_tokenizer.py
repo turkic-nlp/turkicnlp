@@ -21,6 +21,7 @@ don't capture, enabling finer segmentation.
 from __future__ import annotations
 
 import json
+import os
 import logging
 import re
 from dataclasses import dataclass
@@ -107,6 +108,14 @@ class _Phonology:
             self.nasals = _LA_NASALS
             self.voiced = _LA_VOICED_OBS | _LA_NASALS
             self.voiceless = _LA_VOICELESS
+        elif script == "Arab":
+            self.back_vowels = _AR_BACK_V
+            self.front_vowels = _AR_FRONT_V
+            self.vowels = _AR_VOWELS | {"ى", "ي"}
+            self.sonorants = set("رلي")
+            self.nasals = set("منڭ")
+            self.voiced = set("بدگغجزژۋ") | self.nasals
+            self.voiceless = set("پتكقچسشخفھ")
         else:
             # Fallback to Cyrillic rules
             self.back_vowels = _CY_BACK_V
@@ -314,6 +323,29 @@ _APT_TAG_TO_KEY: dict[str, str] = {
     "inf": "inf", "ger": "ger", "ger_past": "ger_past",
     # Copula / question
     "cop": "cop", "qst": "qst",
+    # Tags emitted by the Apertium transducers that were previously unmapped
+    "ifi": "past", "pii": "past",                      # definite past (Kipchak/Oghuz), Sakha past
+    "prog": "prog",
+    "fut2": "fut", "pros": "fut",                       # Tatar -ачак, Kumyk prospective
+    "aor2": "aor", "aorp": "aor",
+    "gna_cond": "cond", "gna_cnd": "cond", "prc_cond": "cond", "pcond": "cond",
+    "gna_past": "gna_perf",                            # Tuvan -гаш
+    "gpr_past": "prc_perf", "gpr_nfh": "prc_perf", "gpr_perf": "prc_perf",
+    "gpr_pres": "prc_impf", "gpr_rsub": "prc_impf", "gpr_rsub4": "prc_impf",
+    "gpr_aor": "prc_impf", "prc1": "prc_impf",
+    # future participles are mostly used as finite futures (Oghuz -acak/-jak)
+    "gpr_fut": "fut", "gpr_fut2": "fut", "gpr_fut3": "fut",
+    "ger_impf": "prc_impf", "ger5": "prc_impf", "ger1": "ger",
+    "ger_fut": "fut", "ger_fut2": "fut", "ger_fut3": "fut", "ger_pot": "fut",
+    "ger_pabs": "evid", "ger_nfh": "evid", "ger_aor": "aor", "ger_abst": "ger",
+    "ger_pros": "prc_fut", "ger_hab": "prc_impf",
+}
+
+# Morphosyntactic/lexical tags with no surface morpheme of their own
+_APT_NONMORPHEMIC_TAGS = {
+    "iv", "tv", "TD", "guess", "ant", "m", "f", "mf", "top", "cog", "org", "al", "err_orth", "barb",
+    "pers", "dem", "itg", "ref", "recip", "advl", "emph", "mod_ass", "mod", "ideo", "postadv",
+    "par", "all", "abil", "sp", "pl_sg", "ind", "attr_cop",
 }
 
 # Tags to skip (POS tags, features that don't correspond to a surface morpheme)
@@ -406,7 +438,7 @@ _UD_VERB_SUFFIX_ORDER: list[tuple[frozenset[str], str]] = [
 # Consonant alternation rules (stem-final devoicing reversal)
 # ═══════════════════════════════════════════════════════════════════════════
 
-_STEM_ALTERNATIONS: dict[str, dict[str, str]] = {
+_DEFAULT_STEM_ALTERNATIONS: dict[str, dict[str, str]] = {
     "tur": {"p": "b", "ç": "c", "t": "d", "k": "ğ"},
     "aze": {"p": "b", "ç": "c", "t": "d", "k": "y"},
     "tuk": {"p": "b", "ç": "c", "t": "d", "k": "g"},
@@ -417,6 +449,11 @@ _STEM_ALTERNATIONS: dict[str, dict[str, str]] = {
     "tat": {"п": "б", "к": "г"},
     "bak": {"п": "б", "к": "г"},
     "uzb": {"p": "b", "k": "g"},
+}
+# JSON rules (morpheme_rules.json) override the defaults instead of being discarded
+_STEM_ALTERNATIONS = {
+    lang: {**_DEFAULT_STEM_ALTERNATIONS.get(lang, {}), **_build_stem_alternations().get(lang, {})}
+    for lang in set(_DEFAULT_STEM_ALTERNATIONS) | set(_build_stem_alternations())
 }
 
 
@@ -691,7 +728,9 @@ def _best_matching_allomorph(
 def _hfst_pos_to_upos(pos: str) -> str:
     """Map Apertium POS tag to UD UPOS."""
     return {"v": "VERB", "vaux": "AUX", "n": "NOUN", "np": "PROPN",
-            "adj": "ADJ", "adv": "ADV", "prn": "PRON"}.get(pos, "")
+            "adj": "ADJ", "adv": "ADV", "prn": "PRON", "det": "DET", "num": "NUM",
+            "post": "ADP", "cnjcoo": "CCONJ", "cnjsub": "SCONJ", "cnjadv": "ADV",
+            "ij": "INTJ", "part": "PART", "cop": "AUX"}.get(pos, "")
 
 
 def _strip_infinitive(lemma: str, lang: str) -> str:
@@ -724,8 +763,12 @@ def _strip_infinitive(lemma: str, lang: str) -> str:
     return lemma
 
 
+_APOSTROPHE_SUFFIX_LANGS = {"tur", "aze", "gag", "crh", "tuk", "ota"}
+
+
 def _find_stem_boundary(
-    surface: str, lemma: str, lang: str, upos: str = "",
+    surface: str, lemma: str, lang: str, upos: str = "", lemma_is_stem: bool = False,
+    extend_linking_vowel: bool = True,
 ) -> int:
     """Find where the stem ends in the surface form.
 
@@ -736,15 +779,18 @@ def _find_stem_boundary(
     3. Consonant alternation at stem boundary (kitap→kitab-)
     4. Fallback: longest common prefix
     """
-    # 0. Apostrophe boundary (Turkish proper nouns: İstanbul'da)
-    apos_pos = surface.find("'")
-    if apos_pos == -1:
-        apos_pos = surface.find("\u2019")  # right single quote
-    if apos_pos > 0:
-        return apos_pos
+    # 0. Apostrophe boundary (Turkish proper nouns: İstanbul'da). In Uzbek
+    #    (o', g') and Karakalpak the apostrophe is part of a letter.
+    if lang in _APOSTROPHE_SUFFIX_LANGS:
+        apos_pos = surface.find("'")
+        if apos_pos == -1:
+            apos_pos = surface.find("\u2019")  # right single quote
+        if apos_pos > 0:
+            return apos_pos
 
     # 1. For verbs, strip infinitive ending to get bare stem
-    if upos in ("VERB", "AUX"):
+    #    (Apertium lemmas already are bare stems)
+    if upos in ("VERB", "AUX") and not lemma_is_stem:
         lemma = _strip_infinitive(lemma, lang)
 
     surface_lower = _turkic_lower(surface)
@@ -753,7 +799,7 @@ def _find_stem_boundary(
     # 1b. Handle negative verb lemmas: neural model sometimes returns the
     # negative form as the lemma (e.g., жазбай, білме, bilmir).
     # Try stripping known negative morphemes if the positive root matches the surface.
-    if upos in ("VERB", "AUX"):
+    if upos in ("VERB", "AUX") and not lemma_is_stem:
         _NEG_ENDINGS = [
             # Sorted longest first to avoid partial matches
             "маст", "мест", "meýar", "meýär",  # Chuvash, Turkmen neg.pres
@@ -781,6 +827,7 @@ def _find_stem_boundary(
         # the underlying root vowel (ы/і) may appear in the surface form.
         # E.g., оқу→оқ but surface оқы-ған has root оқы-.
         if (upos in ("VERB", "AUX")
+                and not lemma_is_stem and extend_linking_vowel
                 and stem_len < len(surface) - 1
                 and lemma_lower
                 and lemma_lower[-1] not in (_CY_VOWELS | _LA_VOWELS)):
@@ -817,49 +864,45 @@ def _segment_by_tags(
     tags: list[str],
     suffix_table: dict,
     phon: _Phonology,
+    script: str = "Cyrl",
+    allowed_keys: Optional[set[str]] = None,
 ) -> list[Morpheme]:
-    """Segment suffix chain using an ordered list of Apertium tags.
+    """Segment the suffix chain using an ordered list of (normalised) Apertium tags.
 
-    Each tag is matched to its surface allomorph greedily.
+    Each tag is matched to its surface allomorph (relaxed matching, see
+    :func:`_match_key`); tags without a surface form are skipped.  Leftover
+    material is segmented with suffixes allowed for the word's part of speech.
     """
     stem = surface[:stem_end]
     remaining = surface[stem_end:]
     morphemes = [Morpheme(surface=stem, label="STEM")]
     preceding = stem
 
+    apos = ""
+    if remaining[:1] in ("'", "\u2019"):
+        apos, remaining = remaining[0], remaining[1:]
+
     for tag in tags:
         if not remaining:
             break
-
-        key = _APT_TAG_TO_KEY.get(tag)
-        if not key or tag in _APT_SKIP_TAGS:
+        if tag in _APT_SKIP_TAGS:
             continue
+        key = _APT_TAG_TO_KEY.get(tag) or _TAG_TO_KEY_EXTRA.get(tag)
+        if not key:
+            continue
+        matched = _match_key(key, remaining, preceding, suffix_table, phon, script)
+        if matched:
+            morphemes.append(Morpheme(surface=apos + matched,
+                                      label=_TAG_LABELS.get(key, key.upper())))
+            apos = ""
+            preceding += matched
+            remaining = remaining[len(matched):]
 
-        expected = _resolve_allomorph(key, preceding, suffix_table, phon)
-        if expected and _turkic_lower(remaining).startswith(_turkic_lower(expected)):
-            actual = remaining[:len(expected)]
-            morphemes.append(Morpheme(
-                surface=actual,
-                label=_TAG_LABELS.get(key, key.upper()),
-            ))
-            preceding = preceding + actual
-            remaining = remaining[len(expected):]
-        else:
-            # Try direct greedy match: look for any suffix from the table
-            # that matches the start of remaining
-            matched = _greedy_match_one(remaining, preceding, key, suffix_table, phon)
-            if matched:
-                morphemes.append(Morpheme(
-                    surface=matched,
-                    label=_TAG_LABELS.get(key, key.upper()),
-                ))
-                preceding = preceding + matched
-                remaining = remaining[len(matched):]
-
-    # If there's leftover suffix material, add as unknown morphemes
     if remaining:
-        morphemes.extend(_greedy_segment_remainder(remaining, preceding, suffix_table, phon))
-
+        morphemes.extend(_greedy_segment_remainder(
+            apos + remaining, preceding, suffix_table, phon, allowed_keys))
+    elif apos:
+        morphemes.append(Morpheme(surface=apos, label="?"))
     return morphemes
 
 
@@ -894,6 +937,7 @@ def _greedy_segment_remainder(
     preceding: str,
     suffix_table: dict,
     phon: _Phonology,
+    allowed_keys: Optional[set[str]] = None,
 ) -> list[Morpheme]:
     """Greedily segment leftover suffix material using all known allomorphs."""
     morphemes: list[Morpheme] = []
@@ -920,6 +964,8 @@ def _greedy_segment_remainder(
         best_key = ""
 
         for key, entries in suffix_table.items():
+            if allowed_keys is not None and key not in allowed_keys:
+                continue
             for _, forms in entries:
                 for f in forms:
                     if not f:
@@ -968,6 +1014,8 @@ def _segment_by_ud_features(
     feats: str,
     suffix_table: dict,
     phon: _Phonology,
+    script: str = "Cyrl",
+    allowed_keys: Optional[set[str]] = None,
 ) -> list[Morpheme]:
     """Segment using UD features (neural model output).
 
@@ -981,7 +1029,8 @@ def _segment_by_ud_features(
 
     if not feats or feats == "_":
         if remaining:
-            morphemes.append(Morpheme(surface=remaining, label="?"))
+            morphemes.extend(_greedy_segment_remainder(
+                remaining, preceding, suffix_table, phon, allowed_keys))
         return morphemes
 
     feat_set = set(feats.split("|"))
@@ -1008,8 +1057,8 @@ def _segment_by_ud_features(
         # All features in the required set must be present
         if required_feats <= feat_set:
             # Use _best_matching_allomorph for longest match
-            matched = _best_matching_allomorph(
-                key, remaining, preceding, suffix_table, phon,
+            matched = _match_key(
+                key, remaining, preceding, suffix_table, phon, script,
             )
             if matched:
                 surface_form = apos_prefix + matched
@@ -1029,14 +1078,212 @@ def _segment_by_ud_features(
     # Greedy fallback for unmatched remainder
     if remaining:
         remaining_with_apos = apos_prefix + remaining
-        morphemes.extend(_greedy_segment_remainder(remaining_with_apos, preceding, suffix_table, phon))
+        morphemes.extend(_greedy_segment_remainder(
+            remaining_with_apos, preceding, suffix_table, phon, allowed_keys))
 
     return morphemes
 
 
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Relaxed allomorph matching, tag normalisation, POS-aware suffix sets
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# The extracted suffix tables are incomplete and sometimes attach a form to the
+# wrong phonological context (e.g. Kazakh past -ты after voiced consonants, Turkish
+# causative only -dır/-dir).  When an analyzer tells us WHICH morpheme to expect,
+# we therefore also accept the regular Turkic alternants of the table forms:
+# vowel-harmony variants and the usual alternations of the suffix-initial and
+# suffix-final consonant.  The phonologically resolved form is still preferred.
+
+_VOWEL_CLASSES: dict[str, list[set[str]]] = {
+    "Latn": [set("aeäəoö"), set("ıiuüyo")],
+    "Cyrl": [set("аеәоөэя"), set("ыіуүеөӑӗи")],
+    "Arab": [set("اە"), set("ىۇۈۆو")],
+}
+_CONS_CLASSES: dict[str, list[set[str]]] = {
+    "Latn": [set("ldtnz"), set("gkğq"), set("bpm"), set("cçşsj"), set("yň")],
+    "Cyrl": [set("лдтнҙз"), set("гкғқҕх"), set("бпмв"), set("чшсжҫщһз"), set("йң")],
+    "Arab": [set("لدتن"), set("گكغق"), set("بپم"), set("چشسج")],
+}
+_STRICT_CONS_CLASSES: dict[str, list[set[str]]] = {
+    "Latn": [set("dt"), set("gkğ"), set("cç"), set("bp")],
+    "Cyrl": [set("дтлҙ"), set("гк"), set("ғқ"), set("бп")],
+    "Arab": [set("دت"), set("گك"), set("غق"), set("بپ")],
+}
+_BUFFER_CONSONANTS: dict[str, tuple[str, ...]] = {
+    "Latn": ("y", "n", "s", "ş"),
+    "Cyrl": ("й", "н"),
+    "Arab": ("ي", "ن"),
+}
+_VARIANT_CACHE: dict[tuple[str, str], frozenset[str]] = {}
+
+
+def _class_of(ch: str, classes: list[set[str]]) -> Optional[set[str]]:
+    for c in classes:
+        if ch in c:
+            return c
+    return None
+
+
+def _form_variants(form: str, script: str, strict: bool = False) -> frozenset[str]:
+    """Regular alternants of a suffix form (vowel harmony + initial/final consonant).
+
+    ``strict`` restricts consonant alternation to voicing pairs (used for
+    derivational suffixes, where over-generation would split lexicalised stems).
+    """
+    key = (form, script + ("/strict" if strict else ""))
+    if key in _VARIANT_CACHE:
+        return _VARIANT_CACHE[key]
+    vcls = _VOWEL_CLASSES.get(script, _VOWEL_CLASSES["Cyrl"])
+    ccls = (_STRICT_CONS_CLASSES if strict else _CONS_CLASSES).get(script, _CONS_CLASSES["Cyrl"])
+    options: list[set[str]] = []
+    for i, ch in enumerate(form):
+        lo = ch.lower()
+        alt = _class_of(lo, vcls)
+        if alt is None and (i == 0 or i == len(form) - 1):
+            alt = _class_of(lo, ccls)
+        options.append(alt if alt else {lo})
+    variants = {""}
+    for opt in options:
+        variants = {v + o for v in variants for o in opt}
+        if len(variants) > 4096:  # safety for long forms
+            break
+    result = frozenset(variants)
+    _VARIANT_CACHE[key] = result
+    return result
+
+
+def _table_forms(key: str, suffix_table: dict) -> list[str]:
+    forms: list[str] = []
+    for _, fs in suffix_table.get(key, []):
+        forms.extend(f for f in fs if f)
+    return forms
+
+
+def _match_key(
+    key: str,
+    remaining: str,
+    preceding: str,
+    suffix_table: dict,
+    phon: _Phonology,
+    script: str,
+    relaxed: bool = True,
+) -> Optional[str]:
+    """Match suffix *key* at the start of *remaining*.
+
+    Order of preference: (1) the phonologically resolved form (longest of the
+    candidates for this context), (2) any form of the key in the table,
+    (3) regular alternants of those forms, each optionally preceded by a buffer
+    consonant after a vowel.  Returns the matched surface string or None.
+    """
+    rem = _turkic_lower(remaining)
+    exact = _best_matching_allomorph(key, remaining, preceding, suffix_table, phon)
+    forms = _table_forms(key, suffix_table)
+    cands = [_turkic_lower(f) for f in forms if rem.startswith(_turkic_lower(f))]
+    if exact:
+        cands.append(_turkic_lower(exact))
+    if not cands and relaxed:
+        for f in forms:
+            for v in _form_variants(_turkic_lower(f), script):
+                if v and rem.startswith(v):
+                    cands.append(v)
+    if not cands and relaxed and preceding and preceding[-1:].lower() in phon.vowels:
+        for b in _BUFFER_CONSONANTS.get(script, ()):
+            if rem.startswith(b):
+                for f in forms:
+                    for v in _form_variants(_turkic_lower(f), script):
+                        if v and rem[len(b):].startswith(v) and v[0] in phon.vowels:
+                            cands.append(b + v)
+    if not cands:
+        return None
+    best = max(cands, key=len)
+    return remaining[:len(best)]
+
+
+def _normalize_apertium_tags(tags: list[str]) -> list[str]:
+    """Combine person+number (p1 + pl -> p1pl) and possessive+formal (px2sg + frm)."""
+    out: list[str] = []
+    i = 0
+    while i < len(tags):
+        t = tags[i]
+        nxt = tags[i + 1] if i + 1 < len(tags) else ""
+        if t in ("p1", "p2", "p3") and nxt in ("sg", "pl"):
+            out.append(f"{t}{nxt}")
+            i += 2
+            continue
+        if t == "frm" and out and out[-1] in ("px2sg", "px2pl", "p2sg", "p2pl"):
+            out[-1] = "px2sg_frm" if out[-1].startswith("px") else "p2sg"
+            i += 1
+            continue
+        if t not in _APT_NONMORPHEMIC_TAGS:
+            out.append(t)
+        i += 1
+    return out
+
+
+_TAG_TO_KEY_EXTRA = {
+    "p1sg": "p1sg", "p2sg": "p2sg", "p3sg": "p3sg",
+    "p1pl": "p1pl", "p2pl": "p2pl", "p3pl": "p3pl",
+}
+
+_NOUN_KEYS_EXTRA = {"cop", "qst", "subst", "attr"}
+_VERB_KEYS_EXTRA = {"pl", "cop", "qst", "px1sg", "px2sg", "px3sg", "px1pl", "px2pl", "px3pl"}
+
+
+def _section_keys(lang: str) -> tuple[set[str], set[str]]:
+    rules = _load_json_rules().get("languages", {}).get(lang, {})
+    noun = set(rules.get("noun_suffixes", {}))
+    verb = set(rules.get("verb_suffixes", {}))
+    return noun | _NOUN_KEYS_EXTRA, verb | _VERB_KEYS_EXTRA
+
+
+_DERIV_VERB_KEYS = ("caus", "pass", "coop")
+_DERIV_NOUN_KEYS = ("lyk", "shi", "siz", "ly")
+
+
+def _upos_compatible(a: str, b: str) -> bool:
+    groups = [{"NOUN", "PROPN"}, {"VERB", "AUX"}, {"ADJ"}, {"ADV"}, {"PRON", "DET"},
+              {"CCONJ", "SCONJ"}, {"ADP"}, {"NUM"}, {"PART", "INTJ"}]
+    if not a or not b or a == b:
+        return True
+    return any(a in g and b in g for g in groups)
+
+
+# How the neural lemma breaks ties between transducer readings:
+#   "unanalysed": only penalise whole-word readings when the neural lemma is shorter
+#   "all":        prefer readings whose stem equals the neural stem
+_STEM_AGREEMENT = os.environ.get("TURKICNLP_MORPH_STEM_AGREEMENT", "unanalysed")
+
+
+def _n_unknown(morphemes: list[Morpheme]) -> int:
+    return sum(1 for m in morphemes if m.label == "?")
+
 # ═══════════════════════════════════════════════════════════════════════════
 # MorphemeTokenizer — public API
 # ═══════════════════════════════════════════════════════════════════════════
+
+
+def _convert_suffix_table(table: dict, lang: str, src: str, tgt: str) -> Optional[dict]:
+    """Transliterate all suffix forms of *table* from script *src* to *tgt*."""
+    try:
+        from turkicnlp.scripts import Script
+        from turkicnlp.scripts.transliterator import Transliterator
+        tr = Transliterator(lang, Script(src), Script(tgt))
+    except (ValueError, KeyError):
+        return None
+
+    def conv(form: str) -> str:
+        if not form:
+            return form
+        out = tr.transliterate(form)
+        # suffixes are word-internal: drop the hamza seat added to word-initial vowels
+        return out[1:] if tgt == "Arab" and out.startswith("ئ") else out
+
+    return {
+        key: [(ctx, tuple(conv(f) for f in forms)) for ctx, forms in entries]
+        for key, entries in table.items()
+    }
 
 
 class MorphemeTokenizer:
@@ -1064,6 +1311,7 @@ class MorphemeTokenizer:
         lang: str,
         use_gpu: bool = False,
         script: Optional[str] = None,
+        cache_size: int = 500_000,
     ) -> None:
         if lang not in _LANG_SUFFIX_MAP:
             raise ValueError(
@@ -1073,13 +1321,30 @@ class MorphemeTokenizer:
         self.lang = lang
         self.use_gpu = use_gpu
         self._suffix_table, default_script = _LANG_SUFFIX_MAP[lang]
+        # Suffix tables are stored in one script; if the language's primary
+        # TurkicNLP script differs (Uyghur: tables in Cyrillic, text in Arabic),
+        # convert the tables with the TurkicNLP transliterator.
+        if script is None:
+            try:
+                from turkicnlp.scripts import get_script_config
+                primary = str(get_script_config(lang).primary)
+            except ValueError:
+                primary = default_script
+            if primary != default_script:
+                converted = _convert_suffix_table(self._suffix_table, lang, default_script, primary)
+                if converted is not None:
+                    self._suffix_table, default_script = converted, primary
         self._script = script or default_script
         self._phon = _Phonology(self._script)
+        self._noun_keys, self._verb_keys = _section_keys(lang)
 
         self._neural_available = False
         self._hfst_analyzer = None  # ApertiumMorphProcessor instance
         self._hfst_available = False
         self._loaded = False
+        self._cache: dict[str, SegmentationResult] = {}
+        self._cache_size = cache_size
+        self._base_cache: dict[tuple[str, bool], bool] = {}
 
     def load(self) -> None:
         """Load backends: neural morph model (primary) + HFST (secondary)."""
@@ -1132,20 +1397,48 @@ class MorphemeTokenizer:
     def segment(self, word: str, labels: bool = False) -> SegmentationResult:
         """Segment a single word into morphemes.
 
+        Strategy (evaluated on a 20-language breadth test set):
+
+        1. Apertium first: every reading of the transducer (up to 8) is turned
+           into a segmentation (Apertium lemma = stem, tags = suffix sequence);
+           the reading with the fewest unexplained segments wins, ties go to
+           the transducer's own disambiguation.
+        2. Neural fallback: when the transducer has no analysis, or the best
+           Apertium segmentation leaves unexplained material and the neural
+           analysis explains more, the neural lemma + UD features are used.
+        3. Derivational suffixes inside the stem (causative, passive,
+           -lık/-çı/-sız/-lı, ...) are split off when the remaining base is a
+           word the transducer knows.
+
+        Results are cached per word form.
+
         Args:
             word: A single inflected word form.
             labels: Ignored (labels are always in the result).
-
-        Returns:
-            SegmentationResult with morphemes, segments, and labeled output.
         """
         if not self._loaded:
             raise RuntimeError("Call .load() before .segment()")
+        cached = self._cache.get(word)
+        if cached is None:
+            cached = self._segment_uncached(word)
+            if len(self._cache) < self._cache_size:
+                self._cache[word] = cached
+        return SegmentationResult(
+            word=cached.word,
+            morphemes=[Morpheme(m.surface, m.label) for m in cached.morphemes],
+            source=cached.source,
+        )
 
+    def clear_cache(self) -> None:
+        """Forget cached segmentations."""
+        self._cache.clear()
+        self._base_cache.clear()
+
+    def _segment_uncached(self, word: str) -> SegmentationResult:
         # Handle Tuvan/Sakha analytic verb forms (space-separated person pronouns)
         if " " in word:
             parts = word.split()
-            first_result = self.segment(parts[0])
+            first_result = self._segment_uncached(parts[0])
             for part in parts[1:]:
                 label = _TUVAN_PERSON.get(part, "?")
                 first_result.morphemes.append(Morpheme(surface=part, label=label))
@@ -1160,90 +1453,173 @@ class MorphemeTokenizer:
                 source="skip",
             )
 
-        # --- Strategy 1: HFST analysis (fine-grained tags) ---
-        hfst_result = self._try_hfst(word)
+        # --- Neural analysis (used to rank readings and as fallback) ---
+        neural = self._try_neural(word)
+        neural_upos = neural["upos"] if neural else ""
 
-        # --- Strategy 2: Neural analysis ---
-        neural_result = self._try_neural(word)
+        # --- 1. Apertium readings: fewest unexplained segments, then agreement
+        #        with the neural part of speech, then the transducer's ranking ---
+        neural_stem = -1
+        if neural and neural.get("lemma"):
+            neural_stem = _find_stem_boundary(word, neural["lemma"], self.lang, neural_upos)
+        hfst_best = None  # (morphemes, upos, feats)
+        best_score = None
+        for rank, (morphs, upos, guessed) in enumerate(self._hfst_candidates(word)):
+            mismatch = int(bool(neural_upos) and not _upos_compatible(upos, neural_upos))
+            # agreement of the stem with the neural lemma separates lexicalised
+            # whole-word readings (балалар 'children') from productive ones, and
+            # spurious analyses (ada-m-yň) from the intended stem (adam-yň)
+            stem_disagree = int(
+                neural_stem > 0 and len(morphs[0].surface) != neural_stem
+                and (_STEM_AGREEMENT == "all" or (len(morphs) == 1 and neural_stem < len(word)))
+            )
+            # guesser readings ("<guess>") rank below lexicon readings
+            score = (_n_unknown(morphs), int(guessed), stem_disagree, mismatch, rank)
+            if best_score is None or score < best_score:
+                hfst_best, best_score = (morphs, upos, "_"), score
 
-        # Track UPOS and features for label normalization
-        _upos = ""
-        _feats = "_"
-        if neural_result:
-            _upos = neural_result.get("upos", "")
-            _feats = neural_result.get("feats", "_")
-        elif hfst_result:
-            _upos = _hfst_pos_to_upos(hfst_result.get("pos", ""))
+        neural_best = None
+        if neural and (hfst_best is None or _n_unknown(hfst_best[0]) > 0):
+            neural_best = self._segment_neural(word, neural)
 
-        # --- Hybrid merge ---
-        # Prefer HFST tags for segmentation (finer granularity),
-        # but use neural lemma (better OOV handling)
-        if hfst_result and neural_result:
-            # Use neural lemma, HFST tags
-            lemma = neural_result["lemma"]
-            upos = neural_result.get("upos", "")
-            tags = hfst_result["tags"]
-            stem_end = _find_stem_boundary(word, lemma, self.lang, upos)
-            morphemes = _segment_by_tags(
+        if hfst_best and (neural_best is None
+                          or _n_unknown(hfst_best[0]) <= _n_unknown(neural_best[0])):
+            morphemes, upos, _ = hfst_best
+            feats = neural["feats"] if neural else "_"
+            source = "hfst" if neural is None else "hybrid"
+        elif neural_best:
+            morphemes, upos, feats = neural_best
+            source = "neural"
+        else:
+            return SegmentationResult(word=word, morphemes=[Morpheme(surface=word, label="STEM")],
+                                      source="none")
+
+        # --- 3. Derivation inside the stem (the neural POS, when it agrees in
+        #        class with the reading, decides noun vs. adjective) ---
+        deriv_upos = upos
+        if upos == "NOUN" and neural_upos == "ADJ":
+            deriv_upos = "ADJ"
+        morphemes = self._split_derivation(morphemes, deriv_upos)
+        morphemes = _normalize_labels(morphemes, upos, feats)
+        return SegmentationResult(word=word, morphemes=morphemes, source=source)
+
+    def _allowed_keys(self, upos: str) -> set[str]:
+        return self._verb_keys if upos in ("VERB", "AUX") else self._noun_keys
+
+    def _hfst_candidates(self, word: str):
+        """Yield (morphemes, upos, guessed) for up to 12 transducer readings, best-ranked first."""
+        if not self._hfst_available or self._hfst_analyzer is None:
+            return
+        try:
+            readings = self._hfst_analyzer._analyze(word)
+        except Exception as e:  # noqa: BLE001
+            logger.debug("HFST analysis failed for '%s': %s", word, e)
+            return
+        if not readings:
+            return
+        try:
+            best = self._hfst_analyzer._disambiguate(readings)
+            readings = [best] + [r for r in readings if r is not best]
+        except Exception:  # noqa: BLE001
+            pass
+        seen = set()
+        for r in readings[:12]:
+            lemma = r.get("lemma", "")
+            pos = r.get("pos", "")
+            tags = _normalize_apertium_tags(r.get("feats", []))
+            sig = (lemma, pos, tuple(tags))
+            if not lemma or sig in seen:
+                continue
+            seen.add(sig)
+            upos = _hfst_pos_to_upos(pos)
+            stem_end = _find_stem_boundary(word, lemma, self.lang, upos, lemma_is_stem=True)
+            morphs = _segment_by_tags(
                 word, stem_end, tags, self._suffix_table, self._phon,
+                self._script, self._allowed_keys(upos),
             )
-            result = SegmentationResult(word=word, morphemes=morphemes, source="hybrid")
-            result.morphemes = _normalize_labels(result.morphemes, _upos, _feats)
-            return result
+            yield morphs, upos, "guess" in r.get("feats", [])
 
-        if hfst_result:
-            lemma = hfst_result["lemma"]
-            tags = hfst_result["tags"]
-            # Infer upos from HFST POS tag
-            hfst_upos = _hfst_pos_to_upos(hfst_result.get("pos", ""))
-            stem_end = _find_stem_boundary(word, lemma, self.lang, hfst_upos)
-            morphemes = _segment_by_tags(
-                word, stem_end, tags, self._suffix_table, self._phon,
-            )
-            result = SegmentationResult(word=word, morphemes=morphemes, source="hfst")
-            result.morphemes = _normalize_labels(result.morphemes, _upos, _feats)
-            return result
+    def _segment_neural(self, word: str, neural: dict):
+        """Segmentation from the neural lemma + UD features (with a VERB retry)."""
+        lemma, upos, feats = neural["lemma"], neural["upos"], neural["feats"]
 
-        if neural_result:
-            lemma = neural_result["lemma"]
-            upos = neural_result["upos"]
-            feats = neural_result["feats"]
-            stem_end = _find_stem_boundary(word, lemma, self.lang, upos)
-            morphemes = _segment_by_ud_features(
-                word, stem_end, upos, feats, self._suffix_table, self._phon,
-            )
-            # If neural says NOUN but lemma looks like a verb or segmentation
-            # has unknowns, retry as VERB (neg-lemma stripping often helps)
-            if upos in ("NOUN", "ADJ") and len(morphemes) > 1:
-                n_unknown = sum(1 for m in morphemes if m.label == "?")
-                ll = _turkic_lower(lemma)
-                _VERB_LEMMA_ENDS = (
-                    "mak", "mek", "maq", "mək", "moq",
-                    "maa", "mää",
+        def run(pos: str) -> list[Morpheme]:
+            best = None
+            for extend in (True, False):
+                stem_end = _find_stem_boundary(word, lemma, self.lang, pos,
+                                               extend_linking_vowel=extend)
+                morphs = _segment_by_ud_features(
+                    word, stem_end, pos, feats, self._suffix_table, self._phon,
+                    self._script, self._allowed_keys(pos),
                 )
-                is_verb_lemma = any(ll.endswith(s) for s in _VERB_LEMMA_ENDS)
-                feat_set = set(feats.split("|")) if feats and feats != "_" else set()
-                has_person = any(f.startswith("Person=") for f in feat_set)
-                if n_unknown > 0 or is_verb_lemma:
-                    stem_end_v = _find_stem_boundary(word, lemma, self.lang, "VERB")
-                    morphemes_v = _segment_by_ud_features(
-                        word, stem_end_v, "VERB", feats,
-                        self._suffix_table, self._phon,
-                    )
-                    n_unk_v = sum(1 for m in morphemes_v if m.label == "?")
-                    if n_unk_v < n_unknown:
-                        morphemes = morphemes_v
-                        _upos = "VERB"
-                    elif n_unk_v == n_unknown and is_verb_lemma:
-                        morphemes = morphemes_v
-                        _upos = "VERB"
-            result = SegmentationResult(word=word, morphemes=morphemes, source="neural")
-            result.morphemes = _normalize_labels(result.morphemes, _upos, _feats)
-            return result
+                if best is None or _n_unknown(morphs) < _n_unknown(best):
+                    best = morphs
+            return best
 
-        # Fallback: greedy segmentation with no analysis
-        morphemes = [Morpheme(surface=word, label="STEM")]
-        return SegmentationResult(word=word, morphemes=morphemes, source="none")
+        morphemes = run(upos)
+        if upos in ("NOUN", "ADJ") and len(morphemes) > 1:
+            ll = _turkic_lower(lemma)
+            is_verb_lemma = any(ll.endswith(x) for x in
+                                ("mak", "mek", "maq", "mək", "moq", "maa", "mää"))
+            if _n_unknown(morphemes) > 0 or is_verb_lemma:
+                morphemes_v = run("VERB")
+                if (_n_unknown(morphemes_v) < _n_unknown(morphemes)
+                        or (_n_unknown(morphemes_v) == _n_unknown(morphemes) and is_verb_lemma)):
+                    return morphemes_v, "VERB", feats
+        return morphemes, upos, feats
+
+    def _is_lexical_base(self, base: str, verb: bool) -> bool:
+        """True if the transducer analyses *base* as a bare verb stem / noun or adjective."""
+        key = (base, verb)
+        if key in self._base_cache:
+            return self._base_cache[key]
+        ok = False
+        if self._hfst_available and self._hfst_analyzer is not None and len(base) >= 2:
+            try:
+                for r in self._hfst_analyzer._analyze(base):
+                    if _turkic_lower(r.get("lemma", "")) != _turkic_lower(base):
+                        continue
+                    pos = r.get("pos", "")
+                    if (verb and pos == "v") or (not verb and pos in ("n", "adj")):
+                        ok = True
+                        break
+            except Exception:  # noqa: BLE001
+                ok = False
+        self._base_cache[key] = ok
+        return ok
+
+    def _split_derivation(self, morphemes: list[Morpheme], upos: str) -> list[Morpheme]:
+        """Split derivational suffixes off the stem when the base is a known word."""
+        if not morphemes or morphemes[0].label != "STEM" or not self._hfst_available:
+            return morphemes
+        is_verb = upos in ("VERB", "AUX")
+        if upos not in ("VERB", "AUX", "NOUN", "ADJ"):
+            return morphemes
+        # the derivational suffix must produce the word's part of speech:
+        # -lık/-çı form nouns, -sız/-lı form adjectives, voice suffixes form verbs
+        keys = _DERIV_VERB_KEYS if is_verb else (
+            ("lyk", "shi", "siz", "ly") if upos == "NOUN" else ("siz", "ly"))
+        stem = morphemes[0].surface
+        derived: list[Morpheme] = []
+        for _ in range(2):
+            low = _turkic_lower(stem)
+            found = None
+            for key in keys:
+                for f in _table_forms(key, self._suffix_table):
+                    for v in _form_variants(_turkic_lower(f), self._script, strict=True):
+                        if (len(v) >= 2 or key == "pass") and low.endswith(v) and len(low) - len(v) >= 2:
+                            if found is None or len(v) > len(found[1]):
+                                if self._is_lexical_base(stem[:len(stem) - len(v)], is_verb):
+                                    found = (key, v)
+            if not found:
+                break
+            key, v = found
+            cut = len(stem) - len(v)
+            derived.insert(0, Morpheme(surface=stem[cut:], label=_TAG_LABELS.get(key, key.upper())))
+            stem = stem[:cut]
+        if not derived:
+            return morphemes
+        return [Morpheme(surface=stem, label="STEM")] + derived + morphemes[1:]
 
     def segment_text(self, text: str) -> list[SegmentationResult]:
         """Segment all words in a text string.

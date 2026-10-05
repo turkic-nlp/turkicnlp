@@ -33,6 +33,10 @@ from turkicnlp.processors.base import Processor
 logger = logging.getLogger(__name__)
 
 BOUNDARY = "\u2581"  # ▁
+# NOTE: "▁" is also SentencePiece's own word-boundary symbol. Models trained with
+# this boundary cannot distinguish morpheme from word boundaries when decoding;
+# for new models pass a dedicated boundary (e.g. annotate with boundary="\u2502"
+# and configure sp_tokenize_boundary="\u2502" plus user_defined_symbols in SP).
 
 
 class MorphemeAwareSPTokenizer(Processor):
@@ -58,7 +62,15 @@ class MorphemeAwareSPTokenizer(Processor):
         config: Optional[dict] = None,
     ) -> None:
         super().__init__(lang=lang, script=script, config=config)
-        self._model_path: Optional[str] = (config or {}).get("model_path")
+        cfg = config or {}
+        self._model_path: Optional[str] = cfg.get("model_path")
+        # The SP models are trained on morpheme-boundary-annotated text
+        # (tools/annotate_corpus.py). Encoding raw words would differ from the
+        # training distribution, so by default words are segmented the same way
+        # before encoding. The boundary must match the one used for training.
+        self._segment_input: bool = bool(cfg.get("segment_input", True))
+        self._boundary: str = str(cfg.get("boundary", BOUNDARY))
+        self._segmenter = None
         self.sp = None
 
     def load(self, model_path: str = "") -> None:
@@ -73,7 +85,26 @@ class MorphemeAwareSPTokenizer(Processor):
         resolved = model_path or self._model_path or self._default_model_path(self.lang)
         logger.info("Loading SP model: %s", resolved)
         self.sp = spm.SentencePieceProcessor(model_file=str(resolved))
+        if self._segment_input:
+            try:
+                from turkicnlp.processors.morpheme_tokenizer import MorphemeTokenizer
+
+                self._segmenter = MorphemeTokenizer(lang=self.lang)
+                self._segmenter.load()
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("Morpheme segmentation unavailable (%s); encoding raw words.", exc)
+                self._segmenter = None
         self._loaded = True
+
+    def _prepare(self, word: str) -> str:
+        """Insert morpheme boundaries exactly as in the training corpus."""
+        if self._segmenter is None or len(word) <= 1 or not any(c.isalpha() for c in word):
+            return word
+        try:
+            segs = self._segmenter.segment(word).segments
+        except Exception:  # noqa: BLE001
+            return word
+        return self._boundary.join(segs) if len(segs) > 1 else word
 
     def process(self, doc: Document) -> Document:
         """Annotate each sentence with SentencePiece tokens and IDs.
@@ -88,8 +119,9 @@ class MorphemeAwareSPTokenizer(Processor):
             sp_tokens: list[str] = []
             sp_ids: list[int] = []
             for word in sentence.words:
-                tokens = self.sp.encode(word.text, out_type=str)
-                ids = self.sp.encode(word.text)
+                text = self._prepare(word.text)
+                tokens = self.sp.encode(text, out_type=str)
+                ids = self.sp.encode(text)
                 sp_tokens.extend(tokens)
                 sp_ids.extend(ids)
             sentence.sp_tokens = sp_tokens  # type: ignore[attr-defined]
@@ -107,19 +139,22 @@ class MorphemeAwareSPTokenizer(Processor):
         """
         if self.sp is None:
             raise RuntimeError("Call load() before tokenize_text().")
-        return self.sp.encode(text, out_type=str)
+        return self.sp.encode(" ".join(self._prepare(w) for w in text.split()), out_type=str)
 
     def tokenize_ids(self, text: str) -> list[int]:
         """Tokenize a raw string and return integer IDs."""
         if self.sp is None:
             raise RuntimeError("Call load() before tokenize_ids().")
-        return self.sp.encode(text)
+        return self.sp.encode(" ".join(self._prepare(w) for w in text.split()))
 
     def decode(self, ids: list[int]) -> str:
         """Decode integer IDs back to text."""
         if self.sp is None:
             raise RuntimeError("Call load() before decode().")
-        return self.sp.decode(ids)
+        text = self.sp.decode(ids)
+        # remove inserted morpheme boundaries (SentencePiece decodes "▁" as a space,
+        # so with the default boundary morphemes of one word come back space-separated)
+        return text.replace(self._boundary, "") if self._boundary != BOUNDARY else text
 
     def vocab_size(self) -> int:
         """Return the SP model vocabulary size."""
@@ -138,11 +173,11 @@ class MorphemeAwareSPTokenizer(Processor):
         Tries the TurkicNLP model registry first; falls back to a
         conventional local path ``models/sp/monolingual/sp_{lang}.model``.
         """
-        try:
-            from turkicnlp.models.registry import ModelRegistry  # type: ignore
+        from turkicnlp.resources.registry import ModelRegistry
 
-            return ModelRegistry.get_path(lang, "sp_tokenize")
-        except Exception:
-            fallback = Path("models/sp/monolingual") / f"sp_{lang}.model"
-            logger.debug("ModelRegistry unavailable; using fallback path: %s", fallback)
-            return str(fallback)
+        registry_path = ModelRegistry.default_dir() / "sp_tokenize" / f"sp_{lang}.model"
+        if registry_path.exists():
+            return str(registry_path)
+        fallback = Path("models/sp/monolingual") / f"sp_{lang}.model"
+        logger.debug("No SP model at %s; using fallback path: %s", registry_path, fallback)
+        return str(fallback)

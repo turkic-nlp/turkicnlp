@@ -261,5 +261,9 @@ def _register_builtins() -> None:
     ProcessorRegistry.register("embeddings", "nllb", NLLBEmbeddingsProcessor)
     ProcessorRegistry.register("translate", "nllb", NLLBTranslateProcessor)
 
+    # Morpheme-aware SentencePiece tokenizer (sentencepiece imported on load)
+    from turkicnlp.processors.sp_tokenizer import MorphemeAwareSPTokenizer
+    ProcessorRegistry.register("sp_tokenize", "sentencepiece", MorphemeAwareSPTokenizer)
+
 
 _register_builtins()

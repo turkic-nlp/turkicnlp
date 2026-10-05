@@ -4793,9 +4793,37 @@
                 "B": "тар",
                 "F": "тер"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "лор",
+                "F": "лөр"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "дар",
+                "F": "дер"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "дор",
+                "F": "дөр"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "тор",
+                "F": "төр"
+              }
             }
           ],
-          "source": "wiktionary",
+          "source": "wiktionary+manual-grammar",
           "n_observations": 854
         },
         "px1sg": {
@@ -4908,9 +4936,37 @@
                 "B": "ымыз",
                 "F": "іміз"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ыбыз",
+                "F": "ибиз"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "убуз",
+                "F": "үбүз"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "быз",
+                "F": "биз"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "буз",
+                "F": "бүз"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual+manual-grammar"
         },
         "px2pl": {
           "conditions": [
@@ -5358,9 +5414,16 @@
                 "B": "о",
                 "F": "ө"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "й",
+                "F": "й"
+              }
             }
           ],
-          "source": "wiktionary",
+          "source": "wiktionary+manual-grammar",
           "n_observations": 101
         },
         "fut": {
@@ -5504,9 +5567,23 @@
                 "B": "м",
                 "F": "м"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "мын",
+                "F": "мин"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "мун",
+                "F": "мүн"
+              }
             }
           ],
-          "source": "wiktionary",
+          "source": "wiktionary+manual-grammar",
           "n_observations": 206
         },
         "p2sg": {
@@ -5565,9 +5642,23 @@
                 "B": "быз",
                 "F": "быз"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "быз",
+                "F": "биз"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "буз",
+                "F": "бүз"
+              }
             }
           ],
-          "source": "wiktionary",
+          "source": "wiktionary+manual-grammar",
           "n_observations": 198
         },
         "p2pl": {
@@ -5924,9 +6015,23 @@
                 "B": "ымыз",
                 "F": "іміз"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ыбыз",
+                "F": "ебез"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "быз",
+                "F": "без"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual+manual-grammar"
         },
         "px2pl": {
           "conditions": [
@@ -6317,9 +6422,16 @@
                 "B": "а",
                 "F": "а"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "й",
+                "F": "й"
+              }
             }
           ],
-          "source": "wiktionary",
+          "source": "wiktionary+manual-grammar",
           "n_observations": 14
         },
         "fut": {
@@ -6351,9 +6463,23 @@
                 "B": "ыр",
                 "F": "ыр"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ачак",
+                "F": "әчәк"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ячак",
+                "F": "ячәк"
+              }
             }
           ],
-          "source": "wiktionary",
+          "source": "wiktionary+manual-grammar",
           "n_observations": 14
         },
         "aor": {
@@ -6474,9 +6600,16 @@
                 "B": "быз",
                 "F": "быз"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "быз",
+                "F": "без"
+              }
             }
           ],
-          "source": "wiktionary",
+          "source": "wiktionary+manual-grammar",
           "n_observations": 48
         },
         "p2pl": {
@@ -6693,9 +6826,23 @@
                 "B": "тар",
                 "F": "тәр"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ҙар",
+                "F": "ҙәр"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "нар",
+                "F": "нәр"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual+manual-grammar"
         },
         "px1sg": {
           "conditions": [
@@ -6712,9 +6859,23 @@
                 "B": "ым",
                 "F": "ім"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ым",
+                "F": "ем"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ом",
+                "F": "өм"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual+manual-grammar"
         },
         "px2sg": {
           "conditions": [
@@ -6807,9 +6968,23 @@
                 "B": "ымыз",
                 "F": "іміз"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ыбыҙ",
+                "F": "ебеҙ"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "быҙ",
+                "F": "беҙ"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual+manual-grammar"
         },
         "px2pl": {
           "conditions": [
@@ -6960,9 +7135,16 @@
                 "B": "та",
                 "F": "да"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "нда",
+                "F": "ндә"
+              }
             }
           ],
-          "source": "wiktionary",
+          "source": "wiktionary+manual-grammar",
           "n_observations": 1301
         },
         "abl": {
@@ -7003,7 +7185,7 @@
               }
             }
           ],
-          "source": "wiktionary",
+          "source": "wiktionary+manual-grammar",
           "n_observations": 1301
         },
         "gen": {
@@ -7257,9 +7439,37 @@
                 "B": "ты",
                 "F": "ті"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ды",
+                "F": "де"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ты",
+                "F": "те"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ҙы",
+                "F": "ҙе"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ны",
+                "F": "не"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual+manual-grammar"
         },
         "pres": {
           "conditions": [
@@ -7269,9 +7479,23 @@
                 "B": "а",
                 "F": "е"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "а",
+                "F": "ә"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "й",
+                "F": "й"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual+manual-grammar"
         },
         "fut": {
           "conditions": [
@@ -7288,9 +7512,23 @@
                 "B": "ады",
                 "F": "еді"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "асаҡ",
+                "F": "әсәк"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ясаҡ",
+                "F": "йәсәк"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual+manual-grammar"
         },
         "aor": {
           "conditions": [
@@ -7400,9 +7638,30 @@
                 "B": "ымыз",
                 "F": "іміз"
               }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "быҙ",
+                "F": "беҙ"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "к",
+                "F": "к"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ҡ",
+                "F": "ҡ"
+              }
             }
           ],
-          "source": "manual"
+          "source": "manual+manual-grammar"
         },
         "p2pl": {
           "conditions": [
@@ -10855,748 +11114,702 @@
     },
     "uig": {
       "code": "uig",
-      "script": "Cyrl",
+      "script": "Arab",
       "harmony_type": "2way",
       "stem_alternations": {},
       "noun_suffixes": {
         "pl": {
           "conditions": [
             {
-              "context": "SN",
-              "forms": {
-                "B": "лар",
-                "F": "лар"
-              }
-            },
-            {
-              "context": "T",
+              "context": "VSNDT",
               "forms": {
                 "B": "لار",
-                "F": "لار"
+                "F": "لەر"
               }
             }
           ],
-          "source": "wiktionary",
-          "n_observations": 2862
-        },
-        "px1sg": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "м",
-                "F": "м"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ым",
-                "F": "ім"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "px2sg": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "ң",
-                "F": "ң"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ың",
-                "F": "ің"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "px2sg_frm": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "ңыз",
-                "F": "ңіз"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ыңыз",
-                "F": "іңіз"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "px3sg": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "сы",
-                "F": "сі"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ы",
-                "F": "і"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "px3sp": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "сы",
-                "F": "сі"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ы",
-                "F": "і"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "px1pl": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "мыз",
-                "F": "міз"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ымыз",
-                "F": "іміз"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "px2pl": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "ңыз",
-                "F": "ңіз"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ыңыз",
-                "F": "іңіз"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "px3pl": {
-          "conditions": [
-            {
-              "context": "VS",
-              "forms": {
-                "B": "лары",
-                "F": "лері"
-              }
-            },
-            {
-              "context": "ND",
-              "forms": {
-                "B": "дары",
-                "F": "дері"
-              }
-            },
-            {
-              "context": "T",
-              "forms": {
-                "B": "тары",
-                "F": "тері"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "acc": {
-          "conditions": [
-            {
-              "context": "T",
-              "forms": {
-                "B": "نىڭكىنى",
-                "F": "نىڭكىنى"
-              }
-            }
-          ],
-          "source": "wiktionary",
-          "n_observations": 1025
-        },
-        "dat": {
-          "conditions": [
-            {
-              "context": "T",
-              "forms": {
-                "B": "نىڭكىگە",
-                "F": "نىڭكىگە"
-              }
-            }
-          ],
-          "source": "wiktionary",
-          "n_observations": 1024
-        },
-        "loc": {
-          "conditions": [
-            {
-              "context": "T",
-              "forms": {
-                "B": "نىڭكىدە",
-                "F": "نىڭكىدە"
-              }
-            }
-          ],
-          "source": "wiktionary",
-          "n_observations": 1024
-        },
-        "abl": {
-          "conditions": [
-            {
-              "context": "T",
-              "forms": {
-                "B": "نىڭكىدىن",
-                "F": "نىڭكىدىن"
-              }
-            }
-          ],
-          "source": "wiktionary",
-          "n_observations": 540
+          "source": "manual-arabic"
         },
         "gen": {
           "conditions": [
             {
-              "context": "T",
+              "context": "VSNDT",
               "forms": {
-                "B": "نىڭكىنىڭ",
-                "F": "نىڭكىنىڭ"
+                "B": "نىڭ",
+                "F": "نىڭ"
               }
             }
           ],
-          "source": "wiktionary",
-          "n_observations": 540
+          "source": "manual-arabic"
         },
-        "ins": {
+        "acc": {
           "conditions": [
             {
-              "context": "VN",
+              "context": "VSNDT",
               "forms": {
-                "B": "мен",
-                "F": "мен"
-              }
-            },
-            {
-              "context": "SD",
-              "forms": {
-                "B": "бен",
-                "F": "бен"
-              }
-            },
-            {
-              "context": "T",
-              "forms": {
-                "B": "пен",
-                "F": "пен"
+                "B": "نى",
+                "F": "نى"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
+        },
+        "dat": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "غا",
+                "F": "گە"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "قا",
+                "F": "كە"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "loc": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "دا",
+                "F": "دە"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "تا",
+                "F": "تە"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "abl": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "دىن",
+                "F": "دىن"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "تىن",
+                "F": "تىن"
+              }
+            }
+          ],
+          "source": "manual-arabic"
         },
         "equ": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "дай",
-                "F": "дей"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "subst": {
-          "conditions": [
-            {
-              "context": "VSND",
-              "forms": {
-                "B": "ғы",
-                "F": "гі"
+                "B": "دەك",
+                "F": "دەك"
               }
             },
             {
-              "context": "T",
+              "context": "VSNDT",
               "forms": {
-                "B": "қы",
-                "F": "кі"
+                "B": "چە",
+                "F": "چە"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
         },
-        "attr": {
+        "px1sg": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ғы",
-                "F": "гі"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "ly": {
-          "conditions": [
-            {
-              "context": "VSND",
-              "forms": {
-                "B": "лы",
-                "F": "лі"
+                "B": "ىم",
+                "F": "ىم"
               }
             },
             {
-              "context": "T",
+              "context": "VSNDT",
               "forms": {
-                "B": "ты",
-                "F": "ті"
+                "B": "ۇم",
+                "F": "ۈم"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "م",
+                "F": "م"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
         },
-        "siz": {
+        "px2sg": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "сыз",
-                "F": "сіз"
+                "B": "ىڭ",
+                "F": "ىڭ"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ۇڭ",
+                "F": "ۈڭ"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ڭ",
+                "F": "ڭ"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
+        },
+        "px3sg": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ى",
+                "F": "ى"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "سى",
+                "F": "سى"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "px3sp": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ى",
+                "F": "ى"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "سى",
+                "F": "سى"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "px1pl": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ىمىز",
+                "F": "ىمىز"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "مىز",
+                "F": "مىز"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "px2pl": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ىڭلار",
+                "F": "ىڭلار"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ڭلار",
+                "F": "ڭلار"
+              }
+            }
+          ],
+          "source": "manual-arabic"
         },
         "lyk": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "лық",
-                "F": "лік"
+                "B": "لىق",
+                "F": "لىك"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "لۇق",
+                "F": "لۈك"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
         },
         "shi": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "шы",
-                "F": "ші"
+                "B": "چى",
+                "F": "چى"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
+        },
+        "siz": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "سىز",
+                "F": "سىز"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "ly": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "لىق",
+                "F": "لىك"
+              }
+            }
+          ],
+          "source": "manual-arabic"
         }
       },
       "verb_suffixes": {
-        "neg": {
-          "conditions": [
-            {
-              "context": "VS",
-              "forms": {
-                "B": "ма",
-                "F": "ме"
-              }
-            },
-            {
-              "context": "ND",
-              "forms": {
-                "B": "ба",
-                "F": "бе"
-              }
-            },
-            {
-              "context": "T",
-              "forms": {
-                "B": "па",
-                "F": "пе"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "pass": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "н",
-                "F": "н"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ыл",
-                "F": "іл"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "caus": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "дыр",
-                "F": "дір"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "coop": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "ыс",
-                "F": "іс"
-              }
-            }
-          ],
-          "source": "manual"
-        },
         "past": {
           "conditions": [
             {
-              "context": "VSND",
+              "context": "VSNDT",
               "forms": {
-                "B": "ды",
-                "F": "ді"
+                "B": "دى",
+                "F": "دى"
               }
             },
             {
-              "context": "T",
+              "context": "VSNDT",
               "forms": {
-                "B": "ты",
-                "F": "ті"
+                "B": "تى",
+                "F": "تى"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
         },
         "pres": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "а",
-                "F": "е"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "fut": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "йды",
-                "F": "йді"
+                "B": "ى",
+                "F": "ى"
               }
             },
             {
-              "context": "SNDT",
-              "forms": {
-                "B": "ады",
-                "F": "еді"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "aor": {
-          "conditions": [
-            {
               "context": "VSNDT",
               "forms": {
-                "B": "ар",
-                "F": "ер"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "evid": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "ыпты",
-                "F": "іпті"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "opt": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "айын",
-                "F": "ейін"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "cond": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "са",
-                "F": "се"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "p1sg": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "м",
-                "F": "м"
+                "B": "ي",
+                "F": "ي"
               }
             },
             {
-              "context": "SNDT",
+              "context": "VSNDT",
               "forms": {
-                "B": "ым",
-                "F": "ім"
+                "B": "ا",
+                "F": "ە"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
         },
-        "p2sg": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "ң",
-                "F": "ң"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ың",
-                "F": "ің"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "p1pl": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "мыз",
-                "F": "міз"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ымыз",
-                "F": "іміз"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "p2pl": {
-          "conditions": [
-            {
-              "context": "V",
-              "forms": {
-                "B": "ңыз",
-                "F": "ңіз"
-              }
-            },
-            {
-              "context": "SNDT",
-              "forms": {
-                "B": "ыңыз",
-                "F": "іңіз"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "gna_perf": {
+        "prog": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ып",
-                "F": "іп"
+                "B": "ۋات",
+                "F": "ۋات"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ىۋات",
+                "F": "ىۋات"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
         },
-        "gna_impf": {
+        "neg": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "а",
-                "F": "е"
+                "B": "ما",
+                "F": "مە"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "مى",
+                "F": "مى"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
         },
         "prc_perf": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ған",
-                "F": "ген"
+                "B": "غان",
+                "F": "گەن"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "قان",
+                "F": "كەن"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
         },
         "prc_impf": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "атын",
-                "F": "етін"
+                "B": "ىدىغان",
+                "F": "ىدىغان"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "يدىغان",
+                "F": "يدىغان"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
         },
-        "prc_fut": {
+        "gna_perf": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ар",
-                "F": "ер"
+                "B": "ىپ",
+                "F": "ىپ"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ۇپ",
+                "F": "ۈپ"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "پ",
+                "F": "پ"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
+        },
+        "cond": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "سا",
+                "F": "سە"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "caus": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "دۇر",
+                "F": "دۈر"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "تۇر",
+                "F": "تۈر"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "غۇز",
+                "F": "گۈز"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "قۇز",
+                "F": "كۈز"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "pass": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ىل",
+                "F": "ىل"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ۇل",
+                "F": "ۈل"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ل",
+                "F": "ل"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ن",
+                "F": "ن"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "coop": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ىش",
+                "F": "ىش"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ۇش",
+                "F": "ۈش"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ش",
+                "F": "ش"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "p1sg": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "مەن",
+                "F": "مەن"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "م",
+                "F": "م"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "p2sg": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "سەن",
+                "F": "سەن"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ڭ",
+                "F": "ڭ"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "p3sg": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "دۇ",
+                "F": "دۇ"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "تۇ",
+                "F": "تۇ"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "p1pl": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "مىز",
+                "F": "مىز"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ۇق",
+                "F": "ۈق"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ق",
+                "F": "ك"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "p2pl": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "سىلەر",
+                "F": "سىلەر"
+              }
+            },
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "ڭلار",
+                "F": "ڭلار"
+              }
+            }
+          ],
+          "source": "manual-arabic"
+        },
+        "p3pl": {
+          "conditions": [
+            {
+              "context": "VSNDT",
+              "forms": {
+                "B": "دۇ",
+                "F": "دۇ"
+              }
+            }
+          ],
+          "source": "manual-arabic"
         },
         "inf": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "у",
-                "F": "у"
+                "B": "ماق",
+                "F": "مەك"
               }
             }
           ],
-          "source": "manual"
-        },
-        "ger": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "у",
-                "F": "у"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "ger_past": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "ғаны",
-                "F": "гені"
-              }
-            }
-          ],
-          "source": "manual"
-        },
-        "cop": {
-          "conditions": [
-            {
-              "context": "VSNDT",
-              "forms": {
-                "B": "мын",
-                "F": "мін"
-              }
-            }
-          ],
-          "source": "manual"
+          "source": "manual-arabic"
         },
         "qst": {
           "conditions": [
             {
               "context": "VSNDT",
               "forms": {
-                "B": "ма",
-                "F": "ме"
+                "B": "مۇ",
+                "F": "مۇ"
               }
             }
           ],
-          "source": "manual"
+          "source": "manual-arabic"
         }
       },
       "stats": {
-        "total_entries": 3898,
-        "nouns_with_forms": 2467,
-        "verbs_with_forms": 187
+        "total_entries": 0,
+        "nouns_with_forms": 0,
+        "verbs_with_forms": 0,
+        "note": "Manual Perso-Arabic table (replaces the earlier extracted table, which mixed Kazakh-style Cyrillic and noisy Wiktionary forms)."
       }
     },
     "sah": {
