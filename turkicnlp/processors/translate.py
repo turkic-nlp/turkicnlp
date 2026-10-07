@@ -4,7 +4,9 @@ NLLB-based machine translation processor.
 
 from __future__ import annotations
 
+import html
 import json
+import re
 from importlib import resources
 from pathlib import Path
 
@@ -21,6 +23,22 @@ def _load_nllb_langs() -> dict:
         with resources.open_text("turkicnlp.resources", "nllb_flores200_languages.json") as f:
             _NLLB_LANGS_CACHE = json.load(f)
     return _NLLB_LANGS_CACHE
+
+
+_SPACE_BEFORE_PUNCT = re.compile(r"\s+([.,;:!?)\]}])")
+
+
+def _clean_translation(text: str) -> str:
+    """Undo HTML escaping that NLLB learned from its web training data.
+
+    NLLB sometimes emits entities such as ``&apos;``, ``&quot;`` or ``&amp;``
+    (e.g. ``Türkiye&apos;ye``) instead of the literal characters.
+    """
+    if "&" in text:
+        # Two passes handle double-escaped output such as ``&amp;apos;``.
+        text = html.unescape(html.unescape(text))
+    text = _SPACE_BEFORE_PUNCT.sub(r"\1", text)
+    return text.strip()
 
 
 def _resolve_nllb_lang(value: str, param_name: str) -> str:
@@ -136,7 +154,8 @@ class NLLBTranslateProcessor(Processor):
                 num_beams=self._num_beams,
                 max_new_tokens=self._max_new_tokens,
             )
-        return self._tokenizer.batch_decode(generated, skip_special_tokens=True)
+        decoded = self._tokenizer.batch_decode(generated, skip_special_tokens=True)
+        return [_clean_translation(t) for t in decoded]
 
     def process(self, doc: Document) -> Document:
         """Attach sentence and document translation output."""

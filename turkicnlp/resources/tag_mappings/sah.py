@@ -10,7 +10,5 @@ class SakhaTagMapper(CommonTurkicTagMapper):
 
     FEAT_MAP: dict[str, str] = {
         **CommonTurkicTagMapper.FEAT_MAP,
-        "evid": "Evident=Nfh",
-        "cvb": "VerbForm=Conv",
         "par": "Case=Par",
     }

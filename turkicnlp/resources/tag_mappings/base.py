@@ -21,6 +21,11 @@ DEFAULT_POS_MAP: dict[str, str] = {
     "num": "NUM",
     "ij": "INTJ",
     "part": "PART",
+    # Question clitic mI (apertium-tur/gag use <qst> or <encl> as its POS).
+    "qst": "PART",
+    "encl": "PART",
+    # Copula (e.g. kaz е<cop> "еді", tur i<cop> "idi").
+    "cop": "AUX",
     "punct": "PUNCT",
     "sym": "SYM",
 }
@@ -60,7 +65,17 @@ class TagMapper:
             UD-format feature string (e.g. ``Case=Dat|Number=Sing``).
         """
         ud_feats, _ = self.map_ud_feats(apertium_feats)
-        return "|".join(sorted(ud_feats)) if ud_feats else "_"
+        # Mapped values may bundle several features ("Tense=Past|VerbForm=Part").
+        # Flatten, keep the first value per feature name, and sort like UD does.
+        merged: dict[str, str] = {}
+        for value in ud_feats:
+            for feat in value.split("|"):
+                name, _, val = feat.partition("=")
+                if name and val and name not in merged:
+                    merged[name] = val
+        if not merged:
+            return "_"
+        return "|".join(f"{k}={merged[k]}" for k in sorted(merged, key=str.lower))
 
     def map_ud_feats(self, apertium_feats: list[str]) -> tuple[list[str], list[str]]:
         """Map Apertium features to UD and report unknown tags.

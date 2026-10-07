@@ -10,8 +10,6 @@ class KumykTagMapper(CommonTurkicTagMapper):
 
     FEAT_MAP: dict[str, str] = {
         **CommonTurkicTagMapper.FEAT_MAP,
-        "evid": "Evident=Nfh",
-        "cvb": "VerbForm=Conv",
         "pers": "PronType=Prs",
         "dem": "PronType=Dem",
     }

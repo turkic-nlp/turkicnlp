@@ -83,8 +83,8 @@ class ApertiumMorphProcessor(Processor):
         """
         model_path = Path(model_path)
 
-        analyzer_files = list(model_path.glob("*.automorf.hfst"))
-        if not analyzer_files:
+        analyzer_path = self._select_fst_file(model_path, "automorf")
+        if analyzer_path is None:
             raise FileNotFoundError(
                 f"No .automorf.hfst file found in {model_path}. "
                 f"Run: turkicnlp.download('{self.lang}') to download Apertium data."
@@ -98,13 +98,12 @@ class ApertiumMorphProcessor(Processor):
                 "Install it with: pip install hfst"
             ) from exc
 
-        analyzer_path = analyzer_files[0]
         istream = hfst.HfstInputStream(str(analyzer_path))
         self._analyzer = istream.read()
 
-        generator_files = list(model_path.glob("*.autogen.hfst"))
-        if generator_files:
-            gstream = hfst.HfstInputStream(str(generator_files[0]))
+        generator_path = self._select_fst_file(model_path, "autogen")
+        if generator_path is not None:
+            gstream = hfst.HfstInputStream(str(generator_path))
             self._generator = gstream.read()
 
         from turkicnlp.resources.tag_mappings import load_tag_map
@@ -227,7 +226,11 @@ class ApertiumMorphProcessor(Processor):
 
                 word.lemma = lemma
                 word.upos = self._tag_mapper.to_ud_pos(best["pos"])
-                raw_feats = self._tag_mapper.to_ud_feats(best["feats"])
+                feat_tags = list(best["feats"])
+                if best["pos"] in ("qst", "encl"):
+                    # The question clitic carries its type in the POS slot.
+                    feat_tags.insert(0, "qst")
+                raw_feats = self._tag_mapper.to_ud_feats(feat_tags)
                 word.feats = self._normalize_ud_feats_for_upos(word.upos, raw_feats)
 
         log_extra = ""
@@ -290,6 +293,39 @@ class ApertiumMorphProcessor(Processor):
     def _normalize_hyphens(self, text: str) -> str:
         return "".join("-" if ch in self._HYPHEN_CHARS else ch for ch in text)
 
+    def _select_fst_file(self, model_path: Path, kind: str) -> Optional[Path]:
+        """Pick the main ``*.{kind}.hfst`` transducer in ``model_path``.
+
+        Apertium releases can ship several transducers side by side, e.g.
+        ``krc.automorf.hfst``, ``krc@Cyrl.automorf.hfst`` and
+        ``krc@Seegmiller.automorf.hfst`` (a romanisation), or
+        ``uzb_guesser.automorf.hfst``. ``glob()`` order is filesystem
+        dependent, so choose deterministically: ``{lang}.{kind}.hfst``, then
+        ``{lang}@{script}.{kind}.hfst``, then any non-guesser, non-variant file.
+        """
+        files = sorted(model_path.glob(f"*.{kind}.hfst"))
+        if not files:
+            return None
+        by_name = {f.name: f for f in files}
+        script = str(self._apertium_script) if self._apertium_script else None
+        for name in (
+            f"{self.lang}.{kind}.hfst",
+            f"{self.lang}@{script}.{kind}.hfst" if script else None,
+        ):
+            if name and name in by_name:
+                return by_name[name]
+        plain = [f for f in files if "@" not in f.name and "guesser" not in f.name]
+        return (plain or files)[0]
+
+    # Combining marks used only to mark stress (e.g. Karachay-Balkar "барды́").
+    _STRESS_MARKS = {"\u0300", "\u0301"}
+
+    @classmethod
+    def _strip_stress_marks(cls, text: str) -> str:
+        decomposed = unicodedata.normalize("NFD", text)
+        stripped = "".join(ch for ch in decomposed if ch not in cls._STRESS_MARKS)
+        return unicodedata.normalize("NFC", stripped)
+
     @staticmethod
     def _strip_diacritics(text: str) -> str:
         decomposed = unicodedata.normalize("NFD", text)
@@ -308,6 +344,11 @@ class ApertiumMorphProcessor(Processor):
         add(surface.lower())
         add(normalized)
         add(normalized.lower())
+
+        # Remove stress accents only (keeps й, ё, ў, ӑ, ...).
+        destressed = self._strip_stress_marks(normalized)
+        add(destressed)
+        add(destressed.lower())
 
         stripped = self._strip_diacritics(normalized)
         add(stripped)

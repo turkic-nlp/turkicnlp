@@ -75,7 +75,14 @@ def test_common_turkic_mappers(lang: str) -> None:
 @pytest.mark.parametrize(
     ("lang", "feat", "expected"),
     [
-        ("tur", "ifi", "Evident=Nfh"),
+        ("tur", "ifi", "Tense=Past"),
+        ("tur", "ifi", "Evident=Fh"),
+        ("tur", "past", "Evident=Nfh"),
+        ("kaz", "ifi", "Tense=Past"),
+        ("uzb", "ifi", "Tense=Past"),
+        ("kir", "gna_perf", "VerbForm=Conv"),
+        ("tur", "gna_impf", "VerbForm=Conv"),
+        ("kaz", "gpr_past", "VerbForm=Part"),
         ("tuk", "qst", "PartType=Int"),
         ("kaz", "evid", "Evident=Nfh"),
         ("chv", "prl", "Case=Prol"),
@@ -87,3 +94,24 @@ def test_common_turkic_mappers(lang: str) -> None:
 def test_language_specific_feat_overrides(lang: str, feat: str, expected: str) -> None:
     mapper = load_tag_map(lang)
     assert expected in mapper.to_ud_feats([feat])
+
+
+@pytest.mark.parametrize("lang", ["tur", "aze", "uzb", "kaz", "kir", "tat", "gag", "crh", "tuk", "uig"])
+def test_ifi_is_definite_past_not_evidential(lang: str) -> None:
+    """<ifi> is the -DI past in every Apertium Turkic analyser (geldi, келді)."""
+    feats = load_tag_map(lang).to_ud_feats(["ifi", "p3", "sg"])
+    assert "Tense=Past" in feats
+    assert "Evident=Nfh" not in feats
+
+
+@pytest.mark.parametrize(
+    ("pos", "upos"), [("qst", "PART"), ("encl", "PART"), ("cop", "AUX")]
+)
+def test_clitic_and_copula_pos(pos: str, upos: str) -> None:
+    for lang in ("tur", "gag", "kaz", "alt"):
+        assert load_tag_map(lang).to_ud_pos(pos) == upos
+
+
+def test_composite_feature_values_are_flattened_and_sorted() -> None:
+    feats = load_tag_map("kaz").to_ud_feats(["gpr_past", "pl"])
+    assert feats == "Number=Plur|Tense=Past|VerbForm=Part"

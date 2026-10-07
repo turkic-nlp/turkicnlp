@@ -10,8 +10,6 @@ class ChuvashTagMapper(CommonTurkicTagMapper):
 
     FEAT_MAP: dict[str, str] = {
         **CommonTurkicTagMapper.FEAT_MAP,
-        "evid": "Evident=Nfh",
-        "cvb": "VerbForm=Conv",
         "prl": "Case=Prol",
         "ter": "Case=Ter",
     }

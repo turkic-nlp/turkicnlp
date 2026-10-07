@@ -36,6 +36,34 @@ PROCESSOR_ORDER: list[str] = [
 ]
 
 
+# Processors that ``Pipeline(lang)`` (``processors=None``) does not load by
+# default: they download large models or need optional extras. Request them
+# explicitly, e.g. ``Pipeline("kaz", processors=["tokenize", "translate"])``.
+OPTIONAL_PROCESSORS: frozenset[str] = frozenset(
+    {"asr", "translate", "embeddings", "sentiment", "sp_tokenize", "morpheme_tokenize", "langid"}
+)
+
+
+def default_processors(proc_catalog: dict) -> list[str]:
+    """Processors loaded when the user does not name any.
+
+    Takes the processors the catalog lists for the language/script, drops the
+    optional heavy ones (:data:`OPTIONAL_PROCESSORS`) and, when both an Apertium
+    ``morph`` and the neural ``morph_neural`` analyser exist, keeps only
+    ``morph`` so the two do not overwrite each other's UPOS/FEATS.
+    """
+    from turkicnlp.resources.registry import ProcessorRegistry
+
+    names = [p for p in proc_catalog if p not in OPTIONAL_PROCESSORS]
+    if "morph" in names and "morph_neural" in names:
+        names.remove("morph_neural")
+    registered = ProcessorRegistry._registry
+    names = [p for p in names if p in registered or p == "tokenize"]
+    if "tokenize" not in names:
+        names.insert(0, "tokenize")
+    return names
+
+
 class Pipeline:
     """Main entry point. Constructs a chain of Processors for a language
     and runs documents through them.
@@ -47,7 +75,9 @@ class Pipeline:
 
     Args:
         lang: ISO 639-3 language code.
-        processors: Processor names to use. ``None`` uses all available.
+        processors: Processor names to use. ``None`` loads the default set for
+            the language (catalog processors without the optional heavy ones in
+            :data:`OPTIONAL_PROCESSORS`, see :func:`default_processors`).
         script: Script code (``Cyrl``, ``Latn``, ``Arab``) or ``auto``.
         transliterate_to: Target script for transliteration bridging.
         model_dir: Override default model directory.
@@ -131,7 +161,7 @@ class Pipeline:
 
         requested = self._requested_processors
         if requested is None:
-            requested = list(proc_catalog.keys())
+            requested = default_processors(proc_catalog)
 
         resolved = self._resolve_dependencies(requested)
 

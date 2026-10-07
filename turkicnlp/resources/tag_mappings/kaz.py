@@ -11,8 +11,6 @@ class KazakhTagMapper(CommonTurkicTagMapper):
     FEAT_MAP: dict[str, str] = {
         **CommonTurkicTagMapper.FEAT_MAP,
         # Kazakh-specific additions commonly present in Apertium analyses.
-        "evid": "Evident=Nfh",
-        "cvb": "VerbForm=Conv",
         "pers": "PronType=Prs",
         "dem": "PronType=Dem",
     }

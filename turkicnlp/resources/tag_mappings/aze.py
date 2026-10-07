@@ -10,8 +10,6 @@ class AzerbaijaniTagMapper(CommonTurkicTagMapper):
 
     FEAT_MAP: dict[str, str] = {
         **CommonTurkicTagMapper.FEAT_MAP,
-        "ifi": "Evident=Nfh",
-        "prog": "Aspect=Prog",
         "pers": "PronType=Prs",
         "dem": "PronType=Dem",
         "qst": "PartType=Int",

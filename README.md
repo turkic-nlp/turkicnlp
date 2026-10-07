@@ -14,11 +14,26 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License: Apache-2.0"></a>
-  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9%20|%203.10%20|%203.11%20|%203.12-blue.svg" alt="Python 3.9 | 3.10 | 3.11 | 3.12"></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.10%20|%203.11%20|%203.12-blue.svg" alt="Python 3.10 | 3.11 | 3.12"></a>
   <img src="https://img.shields.io/badge/status-pre--alpha-orange.svg" alt="Status: Pre-Alpha">
   <img src="https://img.shields.io/badge/languages-24_Turkic-green.svg" alt="24 Turkic Languages">
   <a href="https://github.com/turkic-nlp/turkicnlp/actions/workflows/test-installation.yml"><img src="https://github.com/turkic-nlp/turkicnlp/actions/workflows/test-installation.yml/badge.svg" alt="Package Installation Tests"></a>
 </p>
+
+<p align="center">
+  <a href="#installation"><strong>Install</strong></a> ·
+  <a href="#quick-start"><strong>Quick start</strong></a> ·
+  <a href="ROADMAP.md"><strong>Roadmap</strong></a> ·
+  <a href="CONTRIBUTING.md"><strong>Contributing</strong></a> ·
+  <a href="https://arxiv.org/pdf/2602.19174">Paper</a> ·
+  <a href="https://github.com/turkic-nlp/turkic-nlp-code-samples">Notebooks</a> ·
+  <a href="https://huggingface.co/turkicnlp">🤗 Models &amp; data</a> ·
+  <a href="https://discord.gg/CeVTbGpmMQ">Discord</a>
+</p>
+
+> **Help us cover every Turkic language.** Native speakers, linguists and developers are all welcome — see
+> **[CONTRIBUTING.md](CONTRIBUTING.md)** for how to get started, and **[ROADMAP.md](ROADMAP.md)** for planned
+> features, known issues and open ideas you can pick up.
 
 ## Citation
 
@@ -36,17 +51,16 @@ If you use TurkicNLP in your research, please cite:
 }
 ```
 
-## Arxiv preprint
-[Read it here](https://arxiv.org/pdf/2602.19174)
+## Links
 
-## Code samples
-[Jupyter notebooks are here](https://github.com/turkic-nlp/turkic-nlp-code-samples)
-
-## Discord Channel
-[TurkicNLP discord](https://discord.gg/CeVTbGpmMQ)
-
-## Datasets & Models
-[🤗 HuggingFace](https://huggingface.co/turkicnlp)
+| | |
+|---|---|
+| Paper (arXiv) | [arxiv.org/abs/2602.19174](https://arxiv.org/abs/2602.19174) |
+| Code samples (Jupyter notebooks) | [turkic-nlp/turkic-nlp-code-samples](https://github.com/turkic-nlp/turkic-nlp-code-samples) |
+| Datasets & models | [🤗 huggingface.co/turkicnlp](https://huggingface.co/turkicnlp) |
+| Community | [Discord](https://discord.gg/CeVTbGpmMQ) |
+| Planned work and known issues | [ROADMAP.md](ROADMAP.md) |
+| How to contribute | [CONTRIBUTING.md](CONTRIBUTING.md) |
 
 ## Features
 
@@ -54,8 +68,10 @@ If you use TurkicNLP in your research, please cite:
 - **Script-aware from the ground up** — Latin, Cyrillic, Perso-Arabic, Old Turkic Runic
 - **Automatic script detection** and bidirectional transliteration
 - **[Apertium FST morphology](https://wiki.apertium.org/wiki/Turkic_languages)** for ~20 Turkic languages via Python-native `hfst` bindings (no system install)
-- **Stanza/UD integration** — pretrained tokenization, POS tagging, lemmatization, dependency parsing, and NER via [Stanza](https://stanfordnlp.github.io/stanza/) models trained on [Universal Dependencies](https://universaldependencies.org/) treebanks
-- **NLLB embeddings + translation backend** — sentence/document vectors and MT via [NLLB-200](https://huggingface.co/facebook/nllb-200-distilled-600M)
+- **Stanza/UD integration** — pretrained tokenization, POS tagging, lemmatization and dependency parsing via [Stanza](https://stanfordnlp.github.io/stanza/) models trained on [Universal Dependencies](https://universaldependencies.org/) treebanks (9 languages, 5 of them custom-trained), plus NER for Turkish and Kazakh
+- **Morpheme segmentation (`MorphemeTokenizer`)** — splits words into labelled morphemes by combining Apertium and the neural analyzer (89% exact segmentation on a 483-word test set in 20 languages)
+- **Morpheme-aware subword tokenization (`sp_tokenize`)** — SentencePiece over morpheme-segmented text, for training language models
+- **NLLB embeddings + translation backend** — sentence/document vectors and MT via [NLLB-200](https://huggingface.co/facebook/nllb-200-distilled-600M) (11 Turkic languages)
 - **Language identification (`LanguageDetection`, GlotLID model)** — FastText-based LID with 1,000+ Glottolog language labels
 - **Speech recognition (`SpeechRecognizer`)** — speech-to-text for 20 Turkic languages via Meta's [Omnilingual ASR](https://github.com/facebookresearch/omnilingual-asr), with output in TurkicNLP scripts and a speech → text → analysis pipeline
 - **Multilingual Glot500 neural models** — POS tagging & dependency parsing (15 languages), morphological analysis & lemmatization (23 languages) via shared [Glot500](https://github.com/cisnlp/Glot500) backbone
@@ -65,7 +81,8 @@ If you use TurkicNLP in your research, please cite:
 
 ## Installation
 
-**Requirements:** Python 3.9 – 3.12 (speech recognition: Python 3.10 – 3.12)
+**Requirements:** Python 3.10 – 3.12. The core package and most extras still install on Python 3.9, but then
+pip resolves `transformers` 4.x (transformers 5 requires Python ≥ 3.10), and speech recognition is not available.
 
 TurkicNLP has a small core and optional extras for each group of components:
 
@@ -91,7 +108,7 @@ All other TurkicNLP components also work with these versions, so there are two t
 |---|---|---|
 | Extras | `[all]` | `[all,asr]` |
 | Use it for | all text components | speech recognition **and** all text components |
-| Python | 3.9 – 3.12 | 3.10 – 3.12 |
+| Python | 3.10 – 3.12 | 3.10 – 3.12 |
 | torch / torchaudio | 2.10 / – | 2.8 / 2.8 |
 | numpy | 2.x | 1.26 |
 | transformers / huggingface_hub | 5.x / 1.x | 4.57 / 0.36 |
@@ -163,6 +180,9 @@ pip install -r requirements/lock-speech.txt && pip install -e .   # speech + tex
   low-memory loading (memory-mapped checkpoint, bfloat16 weights). For smaller machines use `omniASR_LLM_300M`
   or a CTC model (`omniASR_CTC_300M`, 1.3 GB).
 
+Open issues of the components themselves (e.g. low Apertium coverage for some languages) are tracked in
+[ROADMAP.md → Known issues](ROADMAP.md#2-known-issues).
+
 ### Verify the installation
 
 ```python
@@ -222,6 +242,12 @@ for sentence in doc.sentences:
 # Export to CoNLL-U
 print(doc.to_conllu())
 ```
+
+`turkicnlp.Pipeline("kaz")` without `processors=` loads the default set for the language: the tokenizer and the
+morphology, POS, lemma, feature, parsing and NER processors listed in the catalog (Apertium morphology is preferred
+over the neural analyzer when both exist). Processors that download large models or need an extra environment —
+`translate`, `embeddings`, `sp_tokenize`, `asr` — are loaded only when you name them. See
+[Processors and backends](#processors-and-backends) for all names.
 
 ### Embeddings (NLLB)
 
@@ -432,6 +458,7 @@ print(doc.translation)
 print(doc._processor_log)  # ['translate:nllb']
 ```
 
+HTML entities that NLLB sometimes produces (`&apos;`, `&quot;`) are converted back to plain characters.
 `translate_tgt_lang` accepts either ISO-639-3 (`"eng"`, `"tuk"`, `"kaz"`) or explicit [Flores-200 codes](https://github.com/facebookresearch/flores/tree/main/flores200#languages-in-flores-200) (`"eng_Latn"`, `"kaz_Cyrl"`).
 
 ### Using the Stanza Backend
@@ -547,7 +574,7 @@ print(t.transliterate("Татарстан Республикасы"))
 
 #### Common Turkic Script (CTS)
 
-All 21 supported languages can be converted to the [Common Turkic Alphabet](https://en.wikipedia.org/wiki/Common_Turkic_alphabet) — a unified (34 letters) Latin-based script designed for cross-language interoperability across the Turkic family. Turkish, which already uses a CTS-compatible alphabet, converts with no changes to most letters:
+Every supported language except Old Turkic (23 languages) can be converted to the [Common Turkic Alphabet](https://en.wikipedia.org/wiki/Common_Turkic_alphabet) — a unified (34 letters) Latin-based script designed for cross-language interoperability across the Turkic family. Turkish, which already uses a CTS-compatible alphabet, converts with no changes to most letters:
 
 ```python
 from turkicnlp.scripts import Script
@@ -616,9 +643,20 @@ for sentence in doc.sentences:
         print(f"{word.text:12} {word.upos:6} head={word.head} {word.deprel}")
 ```
 
-### Morpheme Tokenizer (Hybrid Neural + FST)
+### Morpheme Tokenizer (Hybrid FST + Neural)
 
-The `MorphemeTokenizer` segments inflected Turkic words into labeled surface morphemes. It uses the neural morph model (Glot500) as its primary analyzer, enriched by Apertium HFST transducers and language-specific suffix allomorph tables with phonological rules (vowel harmony, consonant context). Requires `pip install "turkicnlp[transformers]"`.
+The `MorphemeTokenizer` segments inflected Turkic words into labelled surface morphemes. For every word it converts
+each Apertium HFST reading into a segmentation by matching the reading's tags against language-specific suffix
+allomorph tables (vowel harmony, consonant alternations, buffer consonants), and keeps the reading that explains the
+whole word, breaking ties by agreement with the neural (Glot500) lemma and part of speech. Derivational suffixes are
+split only when the transducer confirms the shorter stem. When the transducer has no usable reading, the neural
+analysis is segmented instead. Requires `pip install "turkicnlp[hfst,transformers]"` (works with only one of the
+two, with lower accuracy).
+
+On a 483-word test set covering 13 word categories in 20 languages, the hybrid segments 89% of the words exactly
+(Apertium only: 79%, neural only: 68%). The test set and the evaluation script are in the paper's companion
+repository; segmentation is weakest for derivation and in languages with small Apertium lexicons
+(see [ROADMAP.md](ROADMAP.md#2-known-issues)).
 
 ```python
 from turkicnlp.processors.morpheme_tokenizer import MorphemeTokenizer
@@ -668,7 +706,27 @@ print(result.labeled)
 # [('bola', 'STEM'), ('lar', 'PLUR'), ('ning', 'GEN')]
 ```
 
-The tokenizer supports all 16 languages with suffix allomorph tables: Turkish, Azerbaijani, Kazakh, Uzbek, Kyrgyz, Tatar, Bashkir, Turkmen, Crimean Tatar, Sakha, Khakas, Tuvan, Altai, Chuvash, Gagauz, and Kumyk.
+Suffix allomorph tables exist for all 24 languages (`turkicnlp/resources/morpheme_rules.json`); the Apertium path is
+available for the 20 languages with a transducer. Results are cached per word (`MorphemeTokenizer(lang, cache_size=...)`).
+
+### Morpheme-aware subword tokenization (`sp_tokenize`)
+
+`sp_tokenize` encodes text with a SentencePiece model trained on morpheme-segmented text. Input words are segmented
+with the `MorphemeTokenizer` first, so pieces do not cross morpheme boundaries. It adds `sp_tokens` and `sp_ids` to
+every sentence. Pretrained models are not released yet ([ROADMAP.md](ROADMAP.md#5-tokenization-for-language-models));
+train one on your corpus with `turkicnlp/tools/annotate_corpus.py` + SentencePiece and pass its path:
+
+```python
+import turkicnlp
+
+nlp = turkicnlp.Pipeline(
+    "kaz",
+    processors=["tokenize", "sp_tokenize"],
+    sp_tokenize_model_path="models/sp/sp_kaz.model",
+)
+doc = nlp("Мен мектептерімізден оқыдым")
+print(doc.sentences[0].sp_tokens)
+```
 
 ### Neural Morphological Analyzer & Lemmatizer (Glot500)
 
@@ -735,67 +793,68 @@ The table below shows all supported languages with their available scripts and p
 | ◇ | [Glot500](https://github.com/cisnlp/Glot500) Neural | Multilingual POS tagger & dependency parser (Glot500 backbone, 15 languages) |
 | ◈ | [Glot500](https://github.com/cisnlp/Glot500) Neural Morph | Multilingual morphological analyzer & lemmatizer (Glot500 backbone, 23 languages) |
 | ★ | [NLLB](https://huggingface.co/facebook/nllb-200-distilled-600M) | Embeddings and machine translation via NLLB-200 |
+| ◎ | [Omnilingual ASR](https://github.com/facebookresearch/omnilingual-asr) | Speech recognition (`SpeechRecognizer`, speech + text environment) |
 | ○ | Planned | Implementation planned |
 | — | | Not available yet |
 
 ### Oghuz Branch
 
-| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
-|---|---|---|---|---|---|---|---|---|---|---|
-| [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | ● | ★ | ★ |
-| [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
-| [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | ■ | — | — | — | — | — | ★ | ★ |
-| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
-| [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate | ASR |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| [Turkish](https://en.wikipedia.org/wiki/Turkish_language) | `tur` | Latn | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | ● | ★ | ★ | ◎ |
+| [Azerbaijani](https://en.wikipedia.org/wiki/Azerbaijani_language) | `aze` | Latn, Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ | ◎ |
+| [Iranian Azerbaijani](https://en.wikipedia.org/wiki/South_Azerbaijani_language) | `azb` | Arab | ■ | — | — | — | — | — | ★ | ★ | ◎ |
+| [Turkmen](https://en.wikipedia.org/wiki/Turkmen_language) | `tuk` | Latn, Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ | ◎ |
+| [Gagauz](https://en.wikipedia.org/wiki/Gagauz_language) | `gag` | Latn | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — | ◎ |
 
 ### Kipchak Branch
 
-| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
-|---|---|---|---|---|---|---|---|---|---|---|
-| [Kazakh](https://en.wikipedia.org/wiki/Kazakh_language) | `kaz` | Cyrl, Latn | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | ● | ★ | ★ |
-| [Kyrgyz](https://en.wikipedia.org/wiki/Kyrgyz_language) | `kir` | Cyrl | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | — | ★ | ★ |
-| [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
-| [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
-| [Crimean Tatar](https://en.wikipedia.org/wiki/Crimean_Tatar_language) | `crh` | Latn, Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | ★ | ★ |
-| [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
-| [Nogai](https://en.wikipedia.org/wiki/Nogai_language) | `nog` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇  | — | — | — |
-| [Kumyk](https://en.wikipedia.org/wiki/Kumyk_language) | `kum` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
-| [Karachay-Balkar](https://en.wikipedia.org/wiki/Karachay-Balkar_language) | `krc` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate | ASR |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| [Kazakh](https://en.wikipedia.org/wiki/Kazakh_language) | `kaz` | Cyrl, Latn | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | ● | ★ | ★ | ◎ |
+| [Kyrgyz](https://en.wikipedia.org/wiki/Kyrgyz_language) | `kir` | Cyrl | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | — | ★ | ★ | ◎ |
+| [Tatar](https://en.wikipedia.org/wiki/Tatar_language) | `tat` | Cyrl, Latn | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ | ◎ |
+| [Bashkir](https://en.wikipedia.org/wiki/Bashkir_language) | `bak` | Cyrl | ■▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ | ◎ |
+| [Crimean Tatar](https://en.wikipedia.org/wiki/Crimean_Tatar_language) | `crh` | Latn, Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | ★ | ★ | ◎ |
+| [Karakalpak](https://en.wikipedia.org/wiki/Karakalpak_language) | `kaa` | Latn, Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — | ◎ |
+| [Nogai](https://en.wikipedia.org/wiki/Nogai_language) | `nog` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇  | — | — | — | ◎ |
+| [Kumyk](https://en.wikipedia.org/wiki/Kumyk_language) | `kum` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — | ◎ |
+| [Karachay-Balkar](https://en.wikipedia.org/wiki/Karachay-Balkar_language) | `krc` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — | ◎ |
 
 ### Karluk Branch
 
-| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
-|---|---|---|---|---|---|---|---|---|---|---|
-| [Uzbek](https://en.wikipedia.org/wiki/Uzbek_language) | `uzb` | Latn, Cyrl | ■ ▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ |
-| [Uyghur](https://en.wikipedia.org/wiki/Uyghur_language) | `uig` | Arab, Latn | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | — | ★ | ★ |
+| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate | ASR |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| [Uzbek](https://en.wikipedia.org/wiki/Uzbek_language) | `uzb` | Latn, Cyrl | ■ ▲ | ◆ ◈ | ▲ ◇ | ▲ ◈ | ▲ ◇ | — | ★ | ★ | ◎ |
+| [Uyghur](https://en.wikipedia.org/wiki/Uyghur_language) | `uig` | Arab, Latn | ■ ● | ◆ ◈ | ● ◇ | ● ◈ | ● ◇ | — | ★ | ★ | ◎ |
 
 ### Siberian Branch
 
-| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
-|---|---|---|---|---|---|---|---|---|---|---|
-| [Sakha (Yakut)](https://en.wikipedia.org/wiki/Sakha_language) | `sah` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
-| [Altai](https://en.wikipedia.org/wiki/Altai_language) | `alt` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
-| [Tuvan](https://en.wikipedia.org/wiki/Tuvan_language) | `tyv` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
-| [Khakas](https://en.wikipedia.org/wiki/Khakas_language) | `kjh` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate | ASR |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| [Sakha (Yakut)](https://en.wikipedia.org/wiki/Sakha_language) | `sah` | Cyrl | ■ | ◆ ◈ | ◇ ◈ | ◈ | ◇ | — | — | — | ◎ |
+| [Altai](https://en.wikipedia.org/wiki/Altai_language) | `alt` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — | ◎ |
+| [Tuvan](https://en.wikipedia.org/wiki/Tuvan_language) | `tyv` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — | — |
+| [Khakas](https://en.wikipedia.org/wiki/Khakas_language) | `kjh` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — | ◎ |
 
 ### Oghur Branch
 
-| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
-|---|---|---|---|---|---|---|---|---|---|---|
-| [Chuvash](https://en.wikipedia.org/wiki/Chuvash_language) | `chv` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate | ASR |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| [Chuvash](https://en.wikipedia.org/wiki/Chuvash_language) | `chv` | Cyrl | ■ | ◆ ◈ | ◈ | ◈ | — | — | — | — | ◎ |
 
 ### Arghu Branch
 
-| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
-|---|---|---|---|---|---|---|---|---|---|---|
-| [Khalaj](https://en.wikipedia.org/wiki/Khalaj_language) | `klj` | Latn | ■ | ◈ | ◈ | ◈ | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate | ASR |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| [Khalaj](https://en.wikipedia.org/wiki/Khalaj_language) | `klj` | Latn | ■ | ◈ | ◈ | ◈ | — | — | — | — | — |
 
 ### Historical Languages
 
-| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate |
-|---|---|---|---|---|---|---|---|---|---|---|
-| [Ottoman Turkish](https://en.wikipedia.org/wiki/Ottoman_Turkish_language) | `ota` | Arab, Latn | ■ | ◈ | ◇ ◈ | ◈ | ◇ | — | — | — |
-| [Old Turkic](https://en.wikipedia.org/wiki/Old_Turkic_language) | `otk` | Orkh, Latn | ■ | — | — | — | — | — | — | — |
+| Language | Code | Script(s) | Tokenize | Morph | POS | Lemma | DepParse | NER | Embed | Translate | ASR |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| [Ottoman Turkish](https://en.wikipedia.org/wiki/Ottoman_Turkish_language) | `ota` | Arab, Latn | ■ | ◈ | ◇ ◈ | ◈ | ◇ | — | — | — | — |
+| [Old Turkic](https://en.wikipedia.org/wiki/Old_Turkic_language) | `otk` | Orkh, Latn | ■ | — | — | — | — | — | — | — | — |
 
 ### Stanza/UD Model Details
 
@@ -842,14 +901,15 @@ Bidirectional script conversion is available for all multi-script languages. The
 | Uyghur | ↔ Bidirectional | Perso-Arabic ↔ Latin | Uyghur Latin Yéziqi (ULY) |
 | Ottoman Turkish | → One-way | Latin → Perso-Arabic | Academic transcription |
 | Old Turkic | → One-way | Runic → Latin | Turkological convention |
+| All except Old Turkic (23) | → native script to CTS | Latin / Cyrillic / Perso-Arabic → CTS | [Common Turkic Alphabet](https://en.wikipedia.org/wiki/Common_Turkic_alphabet) |
 
 ### Apertium FST Quality Levels
 
 | Level | Description | Languages |
 |---|---|---|
 | **Production** | >90% coverage on news text | Turkish, Kazakh, Tatar |
-| **Stable** | Good coverage, actively maintained | Azerbaijani, Kyrgyz, Uzbek |
-| **Beta** | Reasonable coverage, some gaps | Turkmen, Bashkir, Uyghur, Crimean Tatar, Chuvash |
+| **Stable** | Good coverage, actively maintained | Kyrgyz, Uzbek |
+| **Beta** | Reasonable coverage, some gaps | Azerbaijani (many common verbs missing), Turkmen, Bashkir, Uyghur, Crimean Tatar, Chuvash |
 | **Prototype** | Limited coverage, experimental | Gagauz, Sakha, Karakalpak, Nogai, Kumyk, Karachay-Balkar, Altai, Tuvan, Khakas |
 
 ### Model Catalog and Apertium Downloads
@@ -859,7 +919,13 @@ TurkicNLP uses a model catalog to define download sources per language/script/pr
 - `turkicnlp/resources/catalog.json` (packaged default)
 - Remote override: `ModelRegistry.CATALOG_URL` (or `TURKICNLP_CATALOG_URL`)
 
-For each language, the catalog stores the Apertium source repo and the expected FST script. When `turkicnlp.download()` is called, it reads the catalog and downloads precompiled `.hfst` binaries from the `url` fields. If a language has no URL configured, download will fail with a clear error until the catalog is populated with hosted binaries (for example, a `turkic-nlp/apertium-data` releases repository).
+For each language and script, the catalog lists the available processors, their backends, the default backend and
+the download source. `turkicnlp.download()` reads it and fetches what is missing: precompiled Apertium `.hfst`
+transducers from the [turkic-nlp/apertium-data](https://github.com/turkic-nlp/apertium-data) releases (built by CI
+from the upstream Apertium repositories), custom Stanza and Glot500 checkpoints from
+[turkic-nlp/trained-stanza-models](https://github.com/turkic-nlp/trained-stanza-models/releases), and Hugging Face
+models (Glot500 backbone, NLLB). When a release contains several transducers (e.g. `krc@Seegmiller`, `uzb_guesser`),
+the main `<lang>.automorf.hfst` is used.
 
 #### Download folder
 All models and resources are downloaded into this folder: `~/.turkicnlp`.
@@ -915,6 +981,30 @@ Pipeline("azb", processors=["embeddings", "translate"], translate_tgt_lang="eng"
     ▼
   Document ─── annotated with all layers
 ```
+
+### Processors and backends
+
+Use these names in `Pipeline(lang, processors=[...])`; pick a backend with `<name>_backend="..."` and pass options
+as `<name>_<option>=...` (e.g. `translate_tgt_lang="eng"`). Dependencies are added automatically.
+
+| Processor | Backends (default first where the catalog has several) | Adds | Loaded by default |
+|---|---|---|---|
+| `tokenize` | `rule`, `rule_arabic`, `stanza` | sentences, tokens, words | ✓ |
+| `mwt` | `neural` (rule-based), `stanza` | multi-word token expansion | ✓ (where available) |
+| `morph` | `apertium` | lemma, UPOS, feats (HFST) | ✓ |
+| `morph_neural` | `multilingual_glot500_morph` | UPOS, feats, lemma | ✓ if no `morph` |
+| `pos` | `stanza`, `multilingual_glot500_model` | UPOS, XPOS, feats | ✓ |
+| `feats` | `multilingual_glot500_morph` | UD features | ✓ |
+| `lemma` | `stanza`, `multilingual_glot500_morph` | lemma | ✓ |
+| `depparse` | `stanza`, `multilingual_glot500_model` | head, deprel | ✓ |
+| `ner` | `stanza` (tur, kaz) | BIO tags, entity spans | ✓ |
+| `embeddings` | `nllb` | sentence/document vectors | – |
+| `translate` | `nllb` | sentence/document translation | – |
+| `sp_tokenize` | `sentencepiece` | `sp_tokens`, `sp_ids` | – |
+| `asr` | Omnilingual ASR (via `Pipeline.from_audio`) | transcript | – |
+
+`turkicnlp.list_processors("kaz")` lists what the catalog offers for a language. `sentiment` and the
+`neural` backends of `tokenize`, `pos`, `lemma`, `depparse` and `ner` are placeholders and not usable yet.
 
 ### Key Abstractions
 
@@ -991,14 +1081,11 @@ source venv-asr/bin/activate && pip install pytest && python -m pytest
 
 ## Contributing
 
-Contributions are welcome, especially:
-
-- **New language support** — tag mappings, abbreviation lists, test data
-- **Neural model training** — POS taggers, parsers, NER models
-- **Apertium FST improvements** — better coverage for prototype-level languages
-- **Other** -  any other aspect that you want
-
-Create issues, Pull Requests etc.
+Contributions are very welcome — from checking analyses in your language to adding new components. Read
+**[CONTRIBUTING.md](CONTRIBUTING.md)** for the development setup, how to add a language or a processor, tests, code
+style and the pull-request process, and browse **[ROADMAP.md](ROADMAP.md)** for open tasks (items marked **S** are
+good first issues). Questions are welcome on [Discord](https://discord.gg/CeVTbGpmMQ) or in
+[GitHub issues](https://github.com/turkic-nlp/turkicnlp/issues).
 
 
 

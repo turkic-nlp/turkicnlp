@@ -37,3 +37,23 @@ class TestPipelineInit:
         pipe = Pipeline("tur", processors=None)
         resolved = pipe._resolve_dependencies(["translate"])
         assert "translate" in resolved
+
+
+class TestDefaultProcessors:
+    def test_optional_processors_are_not_loaded_by_default(self) -> None:
+        from turkicnlp.pipeline import OPTIONAL_PROCESSORS, default_processors
+
+        catalog = {p: {} for p in [
+            "morph", "tokenize", "pos", "lemma", "depparse", "ner",
+            "embeddings", "translate", "morph_neural", "feats", "asr",
+        ]}
+        names = default_processors(catalog)
+        assert not set(names) & OPTIONAL_PROCESSORS
+        assert "morph" in names and "morph_neural" not in names
+        assert "tokenize" in names and "depparse" in names
+
+    def test_morph_neural_kept_without_apertium(self) -> None:
+        from turkicnlp.pipeline import default_processors
+
+        names = default_processors({"tokenize": {}, "morph_neural": {}, "translate": {}})
+        assert names == ["tokenize", "morph_neural"]

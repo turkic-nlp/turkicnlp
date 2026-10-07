@@ -11,8 +11,9 @@ class TurkishTagMapper(CommonTurkicTagMapper):
     FEAT_MAP: dict[str, str] = {
         **CommonTurkicTagMapper.FEAT_MAP,
         # Turkish-specific tags seen in Apertium streams.
-        "ifi": "Evident=Nfh",
-        "prog": "Aspect=Prog",
+        # apertium-tur: <ifi> = -DI (witnessed past), <past> = -mIş (reported past).
+        "ifi": "Evident=Fh|Tense=Past",
+        "past": "Evident=Nfh|Tense=Past",
         "pers": "PronType=Prs",
         "dem": "PronType=Dem",
         "qst": "PartType=Int",

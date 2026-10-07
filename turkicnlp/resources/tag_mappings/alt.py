@@ -10,6 +10,4 @@ class AltaiTagMapper(CommonTurkicTagMapper):
 
     FEAT_MAP: dict[str, str] = {
         **CommonTurkicTagMapper.FEAT_MAP,
-        "evid": "Evident=Nfh",
-        "cvb": "VerbForm=Conv",
     }

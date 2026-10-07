@@ -135,3 +135,12 @@ def test_translate_processor_unsupported_target(monkeypatch):
         assert "Unsupported translate_tgt_lang='zzz'" in str(exc)
     else:
         raise AssertionError("Expected ValueError for unsupported target language")
+
+
+def test_clean_translation_unescapes_html_entities():
+    from turkicnlp.processors.translate import _clean_translation
+
+    assert _clean_translation("Türkiye&apos;ye gittim .") == "Türkiye'ye gittim."
+    assert _clean_translation("&quot;Salam&quot; &amp; xoş") == '"Salam" & xoş'
+    assert _clean_translation("it&amp;apos;s") == "it's"
+    assert _clean_translation("Plain text") == "Plain text"

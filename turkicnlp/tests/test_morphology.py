@@ -260,3 +260,33 @@ def test_load_requires_hfst(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> 
     proc = ApertiumMorphProcessor(lang="kaz")
     proc.load(model_dir)
     assert proc._analyzer is not None
+
+
+class TestFstFileSelection:
+    """Apertium releases ship several transducers side by side."""
+
+    @pytest.mark.parametrize(
+        ("lang", "files", "expected"),
+        [
+            ("krc", ["krc@Seegmiller.automorf.hfst", "krc@Cyrl.automorf.hfst", "krc.automorf.hfst"], "krc.automorf.hfst"),
+            ("kaz", ["kaz@Arab.automorf.hfst", "kaz@Cyrl.automorf.hfst"], "kaz@Cyrl.automorf.hfst"),
+            ("uzb", ["uzb_guesser.automorf.hfst", "uzb.automorf.hfst"], "uzb.automorf.hfst"),
+            ("tur", ["tur.automorf.hfst"], "tur.automorf.hfst"),
+        ],
+    )
+    def test_main_transducer_is_chosen(self, tmp_path: Path, lang: str, files: list[str], expected: str) -> None:
+        for name in files:
+            (tmp_path / name).write_bytes(b"")
+        proc = ApertiumMorphProcessor(lang=lang)
+        assert proc._select_fst_file(tmp_path, "automorf").name == expected
+
+    def test_no_transducer(self, tmp_path: Path) -> None:
+        assert ApertiumMorphProcessor(lang="kaz")._select_fst_file(tmp_path, "automorf") is None
+
+
+def test_stress_marks_are_stripped_for_lookup() -> None:
+    proc = ApertiumMorphProcessor(lang="krc")
+    variants = proc._lookup_variants("барды́")
+    assert "барды" in variants
+    # й must survive: only stress accents are removed in the first fallback.
+    assert ApertiumMorphProcessor._strip_stress_marks("кий́") == "кий"
